@@ -6,6 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { LoggerMiddleware } from './commons/middlewares/logger.middleware';
+import { SubjectsModule } from './modules/subjects/subjects.module';
+import { StudyGroupsModule } from './modules/study-groups/study-groups.module';
+import { SemesterReportModule } from './modules/semester-report/semester-report.module';
 
 @Module({
   imports: [
@@ -24,7 +27,10 @@ import { LoggerMiddleware } from './commons/middlewares/logger.middleware';
       logging: process.env.DB_LOG === 'true' ? true : false,
       namingStrategy: new SnakeNamingStrategy()
     }),
-    StudentsModule
+    StudentsModule,
+    SubjectsModule,
+    StudyGroupsModule,
+    SemesterReportModule
   ],
   controllers: [AppController],
   providers: [AppService],

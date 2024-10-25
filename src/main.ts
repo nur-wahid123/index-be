@@ -2,10 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { TransformInterceptor } from './commons/interceptors/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { logger: ['error', 'warn', 'debug', 'log'] });
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.useGlobalInterceptors(new TransformInterceptor());
   // app.useGlobalFilters(new HttpExceptionFilter());
   const port: number = +process.env.APP_PORT || 3000
   app.use(cookieParser());

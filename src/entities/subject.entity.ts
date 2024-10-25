@@ -1,8 +1,9 @@
 import { Column, Entity, ManyToMany } from "typeorm";
 import { StudyGroup } from "./study-group.entity";
+import { BaseEntity } from "./base-entity/base.entity";
 
 @Entity('subjects')
-export class Subject {
+export class Subject extends BaseEntity {
 
     @Column({ nullable: false })
     name!: string
@@ -13,5 +14,8 @@ export class Subject {
 
     @ManyToMany(() => StudyGroup, (studyGroup) => studyGroup.subjects)
     studyGroups: StudyGroup[]
+
+    @Column({ nullable: false, default: false })
+    is_primary!: boolean
 
 }

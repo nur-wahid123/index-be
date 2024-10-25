@@ -12,12 +12,46 @@ import { StudyGroup } from "src/entities/study-group.entity";
 import { SubDistrict } from "src/entities/subdistrict.entity";
 import { Transportation } from "src/entities/transportation.entity";
 import { CreateStudentDto } from "src/modules/students/dto/create-student.dto";
-import { DataSource, Repository } from "typeorm";
+import { DataSource, Repository, SelectQueryBuilder } from "typeorm";
+import { FilterStudentDto } from "src/modules/students/dto/filter-student.dto";
 
 @Injectable()
 export class StudentRepository extends Repository<Student> {
     constructor(private readonly dataSource: DataSource) {
         super(Student, dataSource.createEntityManager())
+    }
+
+    /**
+     * Find all students with the given filter
+     * @param filter - a filter student dto
+     * @returns Promise of an array of Student objects
+     */
+    findAll(filter: FilterStudentDto, limit: number) {
+        const qb = this.dataSource.createQueryBuilder(Student, 'student')
+            .leftJoinAndSelect('student.religion', 'religion')
+            .leftJoinAndSelect('student.mother', 'mother')
+            .leftJoinAndSelect('student.father', 'father')
+            .leftJoinAndSelect('student.studyGroup', 'studyGroup')
+        this.applyFilters(qb, filter)
+        qb.limit(limit)
+        return qb.getMany()
+
+    }
+
+    applyFilters(qb: SelectQueryBuilder<Student>, filter: FilterStudentDto) {
+        const { search, name, studentSchoolId } = filter
+
+        if (search) {
+            qb.andWhere('LOWER(student.name) LIKE LOWER(:search)', { search: `%${search}%` })
+        }
+
+        if (name) {
+            qb.andWhere('LOWER(student.name) LIKE LOWER(:name)', { name: `%${name}%` })
+        }
+
+        if (studentSchoolId) {
+            qb.andWhere('student.student_school_id = :studentSchoolId', { studentSchoolId })
+        }
     }
 
     async createBatch(createStudentDto: CreateStudentDto[]) {
