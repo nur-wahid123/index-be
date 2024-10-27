@@ -14,6 +14,7 @@ import { Transportation } from "src/entities/transportation.entity";
 import { CreateStudentDto } from "src/modules/students/dto/create-student.dto";
 import { DataSource, Repository, SelectQueryBuilder } from "typeorm";
 import { FilterStudentDto } from "src/modules/students/dto/filter-student.dto";
+import { PageOptionsDto } from "src/commons/dto/page-option.dto";
 
 @Injectable()
 export class StudentRepository extends Repository<Student> {
@@ -26,15 +27,22 @@ export class StudentRepository extends Repository<Student> {
      * @param filter - a filter student dto
      * @returns Promise of an array of Student objects
      */
-    findAll(filter: FilterStudentDto, limit: number) {
+    findAll(filter: FilterStudentDto,pageOptionsDto:PageOptionsDto) {
+        const {take,skip,order} = pageOptionsDto
         const qb = this.dataSource.createQueryBuilder(Student, 'student')
             .leftJoinAndSelect('student.religion', 'religion')
             .leftJoinAndSelect('student.mother', 'mother')
             .leftJoinAndSelect('student.father', 'father')
             .leftJoinAndSelect('student.studyGroup', 'studyGroup')
+            .leftJoinAndSelect('student.semesterReports', 'semesterReports')
         this.applyFilters(qb, filter)
-        qb.limit(limit)
-        return qb.getMany()
+        if(take && skip){
+            qb
+            .offset(take)
+            .limit(skip)
+        }
+        qb.orderBy('student.id',order)
+        return qb.getManyAndCount()
 
     }
 
@@ -62,10 +70,9 @@ export class StudentRepository extends Repository<Student> {
             for (let i = 0; i < createStudentDto.length; i++) {
                 const student = createStudentDto[i]
                 let newStudent = await queryRunner.manager.findOne(Student, { where: { studentNationalId: student.studentNationalId }, select: { name: true } })
-                if (newStudent) {
-                    continue;
+                if (!newStudent) {
+                    newStudent = new Student()
                 }
-                newStudent = new Student()
                 newStudent.name = student.name
                 newStudent.studentSchoolId = student.studentSchoolId
                 newStudent.gender = student.gender

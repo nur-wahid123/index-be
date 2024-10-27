@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { FilterStudentDto } from './dto/filter-student.dto';
+import { PageOptionsDto } from 'src/commons/dto/page-option.dto';
 
 @Controller('students')
 export class StudentsController {
@@ -12,8 +13,8 @@ export class StudentsController {
     return this.studentsService.createBatch(createStudentDto);
   }
 
-  @Get()
-  findAll(@Query() filter: FilterStudentDto, @Query() limit: { limit: number }) {
-    return this.studentsService.findAll(filter, limit.limit);
+  @Get('list')
+  findAll(@Query() filter: FilterStudentDto, @Query() pageOptionsDto:PageOptionsDto) {
+    return this.studentsService.findAll(filter, pageOptionsDto);
   }
 }
