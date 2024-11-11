@@ -14,6 +14,7 @@ async function bootstrap() {
   app.use(cookieParser());
   const corsDev: string[] = process?.env?.CORS_DEV?.split(',') ?? ['null'];
   const corsStg: string[] = process?.env?.CORS_STG?.split(',') ?? ['null'];
+  app.setGlobalPrefix(`api/backend`);
   app.enableCors({
     origin: [...corsDev, ...corsStg],
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'CONNECT', 'OPTIONS'],
