@@ -36,6 +36,10 @@ export class Student extends BaseEntity {
     @Expose({ name: 'date_of_birth' })
     dateOfBirth: Date;
 
+    @Column({ nullable: false, type: 'boolean', default: true })
+    @Expose({ name: 'is_active' })
+    isActive: boolean;
+
     @Column({ nullable: true, unique: true })
     nik?: string;
 
@@ -109,6 +113,7 @@ export class Student extends BaseEntity {
     @ManyToOne(() => StudyGroup, (studyGroup) => studyGroup.students, {
         nullable: true,
     })
+    @Expose({ name: 'study_group' })
     studyGroup: StudyGroup;
 
     @Column({ nullable: true })
