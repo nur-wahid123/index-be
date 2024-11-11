@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToMany } from "typeorm";
 import { StudyGroup } from "./study-group.entity";
 import { BaseEntity } from "./base-entity/base.entity";
+import { Expose } from "class-transformer";
 
 @Entity('subjects')
 export class Subject extends BaseEntity {
@@ -13,6 +14,7 @@ export class Subject extends BaseEntity {
      */
 
     @ManyToMany(() => StudyGroup, (studyGroup) => studyGroup.subjects)
+    @Expose({ name: 'study_groups' })
     studyGroups: StudyGroup[]
 
     @Column({ nullable: false, default: false })

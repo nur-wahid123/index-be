@@ -170,7 +170,7 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
         try {
             await queryRunner.manager.save(createSemesterReport, { chunk: 1000 });
             await queryRunner.commitTransaction();
-            return `${createSemesterReport.length} semester report created`;
+            return `${createSemesterReport.length} semester report created but ${failedId.length} failed ids [${failedId.map((d)=>`${d},`)}]`;
         } catch (error) {
             await queryRunner.rollbackTransaction();
             console.log(error);
