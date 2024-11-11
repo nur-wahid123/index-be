@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base-entity/base.entity';
 import { Expose } from 'class-transformer';
-import { Gender } from 'src/enums/gender.enum';
+import { Gender } from './../enums/gender.enum';
 import { Religion } from './religion.entity';
 import { SubDistrict } from './subdistrict.entity';
 import { KindOfStay } from './kindofstay.entity';
@@ -11,6 +11,7 @@ import { StudyGroup } from './study-group.entity';
 import { Bank } from './bank.entity';
 import { Parents } from './parents.entity';
 import { SemesterReport } from './semester.entity';
+import { ClassEntity } from './class.entity';
 
 @Entity('students')
 export class Student extends BaseEntity {
@@ -207,4 +208,7 @@ export class Student extends BaseEntity {
 
     @OneToMany(() => SemesterReport, (semesterReport) => semesterReport.student)
     semesterReports: SemesterReport[];
+
+    @ManyToOne(()=>ClassEntity, (classEntity) => classEntity.students)
+    class?:ClassEntity
 }

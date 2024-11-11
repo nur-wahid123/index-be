@@ -9,31 +9,26 @@ import { LoggerMiddleware } from './commons/middlewares/logger.middleware';
 import { SubjectsModule } from './modules/subjects/subjects.module';
 import { StudyGroupsModule } from './modules/study-groups/study-groups.module';
 import { SemesterReportModule } from './modules/semester-report/semester-report.module';
+import { typeOrmAsyncConfig } from './commons/configs/database.config';
+import { UserService } from './modules/user/user.service';
+import { UserRepository } from './repositories/user.repository';
+import HashPassword from './commons/utils/hash-password.util';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
-      password: process.env.DB_PASSWORD,
-      username: process.env.DB_USERNAME,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      database: process.env.DB_NAME,
-      synchronize: true,
-      logging: process.env.DB_LOG === 'true' ? true : false,
-      namingStrategy: new SnakeNamingStrategy()
-    }),
+    TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
     StudentsModule,
     SubjectsModule,
     StudyGroupsModule,
-    SemesterReportModule
+    SemesterReportModule,
+    AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, UserService, HashPassword, UserRepository],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

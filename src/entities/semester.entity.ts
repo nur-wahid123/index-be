@@ -4,7 +4,7 @@ import { Student } from './student.entity';
 import { Score } from './score.entity';
 import { Expose } from 'class-transformer';
 import { ExtracurricularScore } from './extracurricular-score.entity';
-import { Semester } from 'src/enums/semester.enum';
+import { Semester } from './../enums/semester.enum';
 
 @Entity('semester_reports')
 export class SemesterReport extends BaseEntity {

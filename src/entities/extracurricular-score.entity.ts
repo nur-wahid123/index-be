@@ -1,4 +1,4 @@
-import { ExtracurricularScoreEnum } from "src/enums/extracurricular-score.enum";
+import { ExtracurricularScoreEnum } from "./../enums/extracurricular-score.enum";
 import { Column, Entity, ManyToOne } from "typeorm";
 import { SemesterReport } from "./semester.entity";
 import { BaseEntity } from "./base-entity/base.entity";
