@@ -5,6 +5,6 @@ import { SemesterReportRepository } from 'src/repositories/semester-report.repos
 
 @Module({
   controllers: [SemesterReportController],
-  providers: [SemesterReportService,SemesterReportRepository],
+  providers: [SemesterReportService, SemesterReportRepository],
 })
 export class SemesterReportModule {}

@@ -7,4 +7,4 @@ import { SubjectRepository } from 'src/repositories/subject.repository';
   controllers: [SubjectsController],
   providers: [SubjectsService, SubjectRepository],
 })
-export class SubjectsModule { }
+export class SubjectsModule {}

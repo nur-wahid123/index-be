@@ -1,11 +1,11 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsOptional, IsString } from 'class-validator';
 
 export class FilterDto {
-    @IsOptional()
-    @IsString()
-    search?: string
+  @IsOptional()
+  @IsString()
+  search?: string;
 
-    @IsOptional()
-    @IsString()
-    code?: string
+  @IsOptional()
+  @IsString()
+  code?: string;
 }

@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { StudyGroupsService } from './study-groups.service';
 import { BatchLinkSubjectDto, LinkSubjectDto } from './dto/link-subject.dto';
-
+import { JwtAuthGuard } from 'src/commons/guards/jwt-auth.guard';
+@UseGuards(JwtAuthGuard)
 @Controller('study-groups')
 export class StudyGroupsController {
-  constructor(private readonly studyGroupsService: StudyGroupsService) { }
+  constructor(private readonly studyGroupsService: StudyGroupsService) {}
 
   @Post('link-subject')
   linkSubject(@Body() subjectDto: LinkSubjectDto) {

@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { StudentsModule } from './modules/students/students.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { LoggerMiddleware } from './commons/middlewares/logger.middleware';
 import { SubjectsModule } from './modules/subjects/subjects.module';
 import { StudyGroupsModule } from './modules/study-groups/study-groups.module';
@@ -25,7 +24,7 @@ import { AuthModule } from './modules/auth/auth.module';
     SubjectsModule,
     StudyGroupsModule,
     SemesterReportModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, UserService, HashPassword, UserRepository],

@@ -7,4 +7,4 @@ import { StudentRepository } from 'src/repositories/student.repository';
   controllers: [StudentsController],
   providers: [StudentsService, StudentRepository],
 })
-export class StudentsModule { }
+export class StudentsModule {}

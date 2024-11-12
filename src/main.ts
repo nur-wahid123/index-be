@@ -7,11 +7,13 @@ import { AppModule } from './app.module';
 import { UserService } from './modules/user/user.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { logger: ['error', 'warn', 'debug', 'log'] });
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn', 'debug', 'log'],
+  });
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
-  const port: number = +process.env.APP_PORT || 3000
+  const port: number = +process.env.APP_PORT || 3000;
   app.use(cookieParser());
   const userService = app.get(UserService);
   const corsDev: string[] = process?.env?.CORS_DEV?.split(',') ?? ['null'];
@@ -26,8 +28,8 @@ async function bootstrap() {
     userService.init();
   }
   await app.listen(port, () => {
-    console.log("listening to port : " + port);
-    console.log("url : http://localhost:" + port);
+    console.log('listening to port : ' + port);
+    console.log('url : http://localhost:' + port);
   });
 }
 bootstrap();

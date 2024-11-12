@@ -1,26 +1,21 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
-import { BaseEntity } from "./base-entity/base.entity";
-import { Student } from "./student.entity";
-import { Subject } from "./subject.entity";
-import { ClassEntity } from "./class.entity";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
+import { BaseEntity } from './base-entity/base.entity';
+import { Subject } from './subject.entity';
+import { ClassEntity } from './class.entity';
 
 @Entity('study_groups')
 export class StudyGroup extends BaseEntity {
+  @Column({ nullable: false })
+  name!: string;
 
-    @Column({ nullable: false })
-    name!: string
+  /**
+   * Relations
+   */
 
-    /**
-     * Relations
-     */
+  @ManyToMany(() => Subject, (subject) => subject.studyGroups)
+  @JoinTable()
+  subjects: Subject[];
 
-    @OneToMany(() => Student, (student) => student.studyGroup)
-    students: Student[]
-
-    @ManyToMany(() => Subject, (subject) => subject.studyGroups)
-    @JoinTable()
-    subjects: Subject[]
-
-    @OneToMany(()=>ClassEntity,(classEntity)=>classEntity.studyGroup)
-    classes: ClassEntity[]
+  @OneToMany(() => ClassEntity, (classEntity) => classEntity.studyGroup)
+  classes: ClassEntity[];
 }

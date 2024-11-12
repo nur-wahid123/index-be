@@ -7,4 +7,4 @@ import { StudyGroupRepository } from 'src/repositories/study-group.repository';
   controllers: [StudyGroupsController],
   providers: [StudyGroupsService, StudyGroupRepository],
 })
-export class StudyGroupsModule { }
+export class StudyGroupsModule {}

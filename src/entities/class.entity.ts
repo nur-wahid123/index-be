@@ -1,19 +1,18 @@
-import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
-import { BaseEntity } from "./base-entity/base.entity";
-import { Student } from "./student.entity";
-import { StudyGroup } from "./study-group.entity";
-import { Expose } from "class-transformer";
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { BaseEntity } from './base-entity/base.entity';
+import { Student } from './student.entity';
+import { StudyGroup } from './study-group.entity';
+import { Expose } from 'class-transformer';
 
 @Entity('class')
-export class ClassEntity extends BaseEntity{
+export class ClassEntity extends BaseEntity {
+  @Column({ nullable: false })
+  name?: string;
 
-    @Column({ nullable: false })
-    name?: string
+  @OneToMany(() => Student, (student) => student.class)
+  students: Student[];
 
-    @OneToMany(() => Student, (student) => student.class)
-    students: Student[]
-
-    @ManyToOne(()=>StudyGroup, (studyGroup) => studyGroup.classes)
-    @Expose({ name: 'study_group' })
-    studyGroup: StudyGroup
+  @ManyToOne(() => StudyGroup, (studyGroup) => studyGroup.classes)
+  @Expose({ name: 'study_group' })
+  studyGroup: StudyGroup;
 }

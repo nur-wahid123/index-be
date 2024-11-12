@@ -8,7 +8,7 @@ import { Semester } from './../enums/semester.enum';
 
 @Entity('semester_reports')
 export class SemesterReport extends BaseEntity {
-  @Column({type: 'enum', enum: Semester, nullable: false})
+  @Column({ type: 'enum', enum: Semester, nullable: false })
   semester: Semester;
 
   @ManyToOne(() => Student, (student) => student.semesterReports)
@@ -17,8 +17,11 @@ export class SemesterReport extends BaseEntity {
   @OneToMany(() => Score, (score) => score.semesterReport)
   scores: Score[];
 
-  @OneToMany(()=> ExtracurricularScore, (extracurricularScore) => extracurricularScore.semesterReport)
-  extracurricularScores: ExtracurricularScore[]
+  @OneToMany(
+    () => ExtracurricularScore,
+    (extracurricularScore) => extracurricularScore.semesterReport,
+  )
+  extracurricularScores: ExtracurricularScore[];
 
   @Column({ nullable: false, type: 'varchar' })
   @Expose({ name: 'schhol_year' })

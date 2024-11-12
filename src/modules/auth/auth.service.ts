@@ -37,19 +37,17 @@ export class AuthService {
 
   async login(dto: UserLoginDto): Promise<Token> {
     try {
-      
       const user: User = await this.usersService.findByUsername(dto.username);
       if (!user) {
         throw new ForbiddenException('Username Or Password are incorrect');
       }
-      
+
       const payload = await this.validateUser(dto);
-      
+
       const token = await this.getToken(payload);
       return token;
     } catch (error) {
       console.log(error);
-      
     }
   }
 

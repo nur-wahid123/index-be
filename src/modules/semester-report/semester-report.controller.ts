@@ -1,11 +1,15 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { SemesterReportService } from './semester-report.service';
-import { CreateBatchSemesterReportDto, CreateSemesterReportDto } from './dto/create-semester-report.dto';
-import { BatchValidationPipe } from 'src/commons/validations/batch.validation';
+import {
+  CreateBatchSemesterReportDto,
+  CreateSemesterReportDto,
+} from './dto/create-semester-report.dto';
+import { JwtAuthGuard } from 'src/commons/guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('semester-report')
 export class SemesterReportController {
-  constructor(private readonly semesterReportService: SemesterReportService) { }
+  constructor(private readonly semesterReportService: SemesterReportService) {}
 
   @Get('list')
   async getSemesterReportList() {

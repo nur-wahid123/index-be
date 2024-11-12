@@ -58,21 +58,21 @@ export class UserService {
    * @returns promise of user
    */
   async createUser(createUserDto: CreateUserDto): Promise<User> {
-      const user: User = new User();
-      user.name = createUserDto.name;
-      user.age = createUserDto.age;
-      if (await this.isUsernameExists(createUserDto.username)) {
-        throw new BadRequestException('Username Sudah digunakan');
-      }
-      user.username = createUserDto.username;
-      if (await this.isEmailExists(createUserDto.email)) {
-        throw new BadRequestException('Email Sudah digunakan');
-      }
-      user.email = createUserDto.email;
-      const salt = await genSalt(10);
-      user.password = await hash(createUserDto.password, salt);
-      user.gender = createUserDto.gender;
-      return this.userRepository.createUser(user);
+    const user: User = new User();
+    user.name = createUserDto.name;
+    user.age = createUserDto.age;
+    if (await this.isUsernameExists(createUserDto.username)) {
+      throw new BadRequestException('Username Sudah digunakan');
+    }
+    user.username = createUserDto.username;
+    if (await this.isEmailExists(createUserDto.email)) {
+      throw new BadRequestException('Email Sudah digunakan');
+    }
+    user.email = createUserDto.email;
+    const salt = await genSalt(10);
+    user.password = await hash(createUserDto.password, salt);
+    user.gender = createUserDto.gender;
+    return this.userRepository.createUser(user);
   }
 
   async isUsernameExists(username: string): Promise<boolean> {
@@ -127,7 +127,7 @@ export class UserService {
    * @returns promise of udpate user
    */
   updateUser(id: number, updateUserDto: UpdateUserDto) {
-    return 'Okay';
+    return { id, updateUserDto };
   }
 
   /**

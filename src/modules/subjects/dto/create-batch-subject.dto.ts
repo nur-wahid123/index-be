@@ -1,3 +1,3 @@
 export class CreateBatchSubjectDto {
-    name!: string;
+  name!: string;
 }
