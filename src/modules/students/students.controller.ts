@@ -9,6 +9,7 @@ import { JwtAuthGuard } from 'src/commons/guards/jwt-auth.guard';
 @Controller('students')
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
+
   @Post('create-batch')
   createBatch(@Body() createStudentDto: CreateStudentDto[]) {
     return this.studentsService.createBatch(createStudentDto);

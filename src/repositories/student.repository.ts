@@ -27,21 +27,26 @@ export class StudentRepository extends Repository<Student> {
    * @param filter - a filter student dto
    * @returns Promise of an array of Student objects
    */
-  findAll(filter: FilterStudentDto, pageOptionsDto: PageOptionsDto) {
-    const { take, skip, order } = pageOptionsDto;
-    const qb = this.dataSource
-      .createQueryBuilder(Student, 'student')
-      .leftJoinAndSelect('student.religion', 'religion')
-      .leftJoinAndSelect('student.mother', 'mother')
-      .leftJoinAndSelect('student.father', 'father')
-      .leftJoinAndSelect('student.studyGroup', 'studyGroup')
-      .leftJoinAndSelect('student.semesterReports', 'semesterReports');
-    this.applyFilters(qb, filter);
-    if (take && skip) {
-      qb.offset(take).limit(skip);
+  async findAll(filter: FilterStudentDto, pageOptionsDto: PageOptionsDto) {
+    try {
+      const { take, skip, order } = pageOptionsDto;
+      const qb = this.dataSource
+        .createQueryBuilder(Student, 'student')
+        .leftJoinAndSelect('student.religion', 'religion')
+        .leftJoinAndSelect('student.mother', 'mother')
+        .leftJoinAndSelect('student.father', 'father')
+        .leftJoinAndSelect('student.class', 'class')
+        .leftJoinAndSelect('student.semesterReports', 'semesterReports');
+      this.applyFilters(qb, filter);
+      if (take && skip) {
+        qb.offset(take).limit(skip);
+      }
+      qb.orderBy('student.id', order);
+      const result = await qb.getManyAndCount();
+      return result;
+    } catch (error) {
+      console.log(error);
     }
-    qb.orderBy('student.id', order);
-    return qb.getManyAndCount();
   }
 
   applyFilters(qb: SelectQueryBuilder<Student>, filter: FilterStudentDto) {

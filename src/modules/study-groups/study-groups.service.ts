@@ -1,21 +1,43 @@
 import { Injectable } from '@nestjs/common';
 import { StudyGroupRepository } from '../../repositories/study-group.repository';
 import { BatchLinkSubjectDto, LinkSubjectDto } from './dto/link-subject.dto';
+import { CreateStudyGroupDto } from './dto/create-study-group.dto';
+import { StudyGroup } from 'src/entities/study-group.entity';
+import { UpdateStudyGroupDto } from './dto/update-study-group.dto';
 
 @Injectable()
 export class StudyGroupsService {
   constructor(private readonly studyGroupRepository: StudyGroupRepository) {}
 
-  linkSubject(subjectDto: LinkSubjectDto) {
-    return this.studyGroupRepository.linkSubject(subjectDto);
+  createStudyGroup(createStudyGroupDto: CreateStudyGroupDto, userId: number) {
+    const studyGroupEntity = new StudyGroup();
+    studyGroupEntity.name = createStudyGroupDto.name;
+    studyGroupEntity.createdBy = userId;
+    return this.studyGroupRepository.saveStudyGroup(studyGroupEntity);
   }
 
-  detachSubject(subjectDto: LinkSubjectDto) {
-    return this.studyGroupRepository.detachSubject(subjectDto);
+  updateStudyGroup(
+    id: number,
+    updateStudyGroupDto: UpdateStudyGroupDto,
+    userId: number,
+  ) {
+    const studyGroupEntity = new StudyGroup();
+    studyGroupEntity.id = id;
+    studyGroupEntity.name = updateStudyGroupDto.name;
+    studyGroupEntity.updatedBy = userId;
+    return this.studyGroupRepository.updateStudyGroup(studyGroupEntity);
   }
 
-  linkBatchSubject(subjectDto: BatchLinkSubjectDto) {
-    return this.studyGroupRepository.linkBatchSubject(subjectDto);
+  linkSubject(subjectDto: LinkSubjectDto, userId: number) {
+    return this.studyGroupRepository.linkSubject(subjectDto, userId);
+  }
+
+  detachSubject(subjectDto: LinkSubjectDto, userId: number) {
+    return this.studyGroupRepository.detachSubject(subjectDto, userId);
+  }
+
+  linkBatchSubject(subjectDto: BatchLinkSubjectDto, userId: number) {
+    return this.studyGroupRepository.linkBatchSubject(subjectDto, userId);
   }
 
   findAll() {

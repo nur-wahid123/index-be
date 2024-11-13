@@ -9,6 +9,10 @@ export class ClassEntity extends BaseEntity {
   @Column({ nullable: false })
   name?: string;
 
+  /**
+   * Relationship
+   */
+
   @OneToMany(() => Student, (student) => student.class)
   students: Student[];
 
