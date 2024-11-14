@@ -156,6 +156,7 @@ export class StudyGroupRepository extends Repository<StudyGroup> {
       const isStudyGroupExists = await queryRunner.manager.findOne(StudyGroup, {
         where: { id: studyGroup.id },
         select: ['id', 'classes'],
+        relations: ['classes'],
       });
       if (!isStudyGroupExists) {
         throw new NotFoundException('Study Group not found');

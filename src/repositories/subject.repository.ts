@@ -50,6 +50,7 @@ export class SubjectRepository extends Repository<Subject> {
       const isSubjectExists = await queryRunner.manager.findOne(Subject, {
         where: { id: subject.id },
         select: ['id', 'studyGroups'],
+        relations: ['studyGroups'],
       });
       if (!isSubjectExists) {
         throw new NotFoundException('Subject not found');

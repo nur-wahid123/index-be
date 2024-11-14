@@ -53,6 +53,7 @@ export class ClassRepository extends Repository<ClassEntity> {
       const isClassExist = await queryRunner.manager.findOne(ClassEntity, {
         where: { id: classEntity.id },
         select: ['id', 'students'],
+        relations: ['students'],
       });
       if (!isClassExist) {
         throw new NotFoundException('Class not found');
