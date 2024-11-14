@@ -48,6 +48,7 @@ export class AuthService {
       return token;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   }
 

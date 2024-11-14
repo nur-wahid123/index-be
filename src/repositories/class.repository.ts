@@ -1,12 +1,14 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { PageOptionsDto } from 'src/commons/dto/page-option.dto';
 import { ClassEntity } from 'src/entities/class.entity';
+import { StudyGroup } from 'src/entities/study-group.entity';
 import { QueryClassDto } from 'src/modules/class/dto/query-class.dto';
-import { DataSource, Repository, SelectQueryBuilder } from 'typeorm';
+import { DataSource, Not, Repository, SelectQueryBuilder } from 'typeorm';
 
 @Injectable()
 export class ClassRepository extends Repository<ClassEntity> {
@@ -43,17 +45,47 @@ export class ClassRepository extends Repository<ClassEntity> {
     }
   }
 
+  async removeClass(classEntity: ClassEntity) {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    try {
+      await queryRunner.startTransaction();
+      const isClassExist = await queryRunner.manager.findOne(ClassEntity, {
+        where: { id: classEntity.id },
+        select: ['id', 'students'],
+      });
+      if (!isClassExist) {
+        throw new NotFoundException('Class not found');
+      }
+      if (isClassExist.students.length > 0) {
+        throw new BadRequestException(['Class has students']);
+      }
+      await queryRunner.manager.save(classEntity);
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      console.log(error);
+      if (error instanceof InternalServerErrorException) {
+        throw new InternalServerErrorException('Internal server error');
+      } else {
+        throw error;
+      }
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
   async updateClass(classEntity: ClassEntity) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     try {
       await queryRunner.startTransaction();
       const isClassExist = await queryRunner.manager.findOne(ClassEntity, {
-        where: { name: classEntity.name },
+        where: { name: classEntity.name, id: Not(classEntity.id) },
         lock: { mode: 'pessimistic_write' },
       });
       if (isClassExist) {
-        throw new NotFoundException('Class already exist');
+        throw new BadRequestException(['Class name already exist']);
       }
       const classToUpdate = await queryRunner.manager.findOne(ClassEntity, {
         where: { id: classEntity.id },
@@ -61,6 +93,14 @@ export class ClassRepository extends Repository<ClassEntity> {
       });
       if (!classToUpdate) {
         throw new NotFoundException('Class not found');
+      }
+      if (classEntity.studyGroup) {
+        const studyGroup = await queryRunner.manager.findOne(StudyGroup, {
+          where: { id: classEntity.studyGroup.id },
+        });
+        if (!studyGroup) {
+          throw new NotFoundException('Study Group not found');
+        }
       }
       await queryRunner.manager.save(classEntity);
       await queryRunner.commitTransaction();
@@ -89,32 +129,11 @@ export class ClassRepository extends Repository<ClassEntity> {
       if (isClassExist) {
         throw new NotFoundException('Class already exist');
       }
-      await queryRunner.manager.save(classEntity);
-      await queryRunner.commitTransaction();
-      return classEntity;
-    } catch (error) {
-      await queryRunner.rollbackTransaction();
-      console.log(error);
-      if (error instanceof InternalServerErrorException) {
-        throw new InternalServerErrorException('Internal server error');
-      } else {
-        throw error;
-      }
-    } finally {
-      await queryRunner.release();
-    }
-  }
-
-  async deleteClass(classEntity) {
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    try {
-      await queryRunner.startTransaction();
-      const isClassExist = await queryRunner.manager.findOne(ClassEntity, {
-        where: { id: classEntity.id },
+      const studyGroup = await queryRunner.manager.findOne(StudyGroup, {
+        where: { id: classEntity.studyGroup.id },
       });
-      if (!isClassExist) {
-        throw new NotFoundException('Class not found');
+      if (!studyGroup) {
+        throw new NotFoundException('Study Group not found');
       }
       await queryRunner.manager.save(classEntity);
       await queryRunner.commitTransaction();

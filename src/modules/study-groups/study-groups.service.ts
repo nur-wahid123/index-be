@@ -44,6 +44,10 @@ export class StudyGroupsService {
     return this.studyGroupRepository.linkBatchSubject(subjectDto, userId);
   }
 
+  findOne(id: number) {
+    return this.studyGroupRepository.findOne({ where: { id: id } });
+  }
+
   async findAll(filter: FilterDto, pageOptionsDto: PageOptionsDto) {
     const [data, itemCount] = await this.studyGroupRepository.findAll(
       filter,
@@ -51,5 +55,13 @@ export class StudyGroupsService {
     );
     const meta = new PageMetaDto({ pageOptionsDto, itemCount });
     return new PageDto(data, meta);
+  }
+
+  async remove(id: number, userId: number) {
+    const studyGroup = new StudyGroup();
+    studyGroup.id = id;
+    studyGroup.deletedAt = new Date();
+    studyGroup.deletedBy = userId;
+    return this.studyGroupRepository.removeStudyGroup(studyGroup);
   }
 }

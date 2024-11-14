@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -69,8 +70,18 @@ export class StudyGroupsController {
     return this.studyGroupsService.linkBatchSubject(subjectDto, +payload.sub);
   }
 
+  @Get('detail/:id')
+  findOne(@Param('id') id: string) {
+    return this.studyGroupsService.findOne(+id);
+  }
+
   @Get('list')
   findAll(@Query() query: FilterDto, @Query() pageOptionsDto: PageOptionsDto) {
     return this.studyGroupsService.findAll(query, pageOptionsDto);
+  }
+
+  @Delete('delete/:id')
+  remove(@Param('id') id: string, @Payload() payload: JwtPayload) {
+    return this.studyGroupsService.remove(+id, +payload.sub);
   }
 }

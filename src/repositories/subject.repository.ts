@@ -1,10 +1,11 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { Subject } from '../entities/subject.entity';
-import { DataSource, Repository, SelectQueryBuilder } from 'typeorm';
+import { DataSource, Not, Repository, SelectQueryBuilder } from 'typeorm';
 import QuerySubjectDto from 'src/modules/subjects/dto/query-subject.dto';
 import { PageOptionsDto } from 'src/commons/dto/page-option.dto';
 
@@ -41,13 +42,43 @@ export class SubjectRepository extends Repository<Subject> {
     }
   }
 
+  async removeSubject(subject: Subject) {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    try {
+      await queryRunner.startTransaction();
+      const isSubjectExists = await queryRunner.manager.findOne(Subject, {
+        where: { id: subject.id },
+        select: ['id', 'studyGroups'],
+      });
+      if (!isSubjectExists) {
+        throw new NotFoundException('Subject not found');
+      }
+      if (isSubjectExists.studyGroups.length > 0) {
+        throw new BadRequestException(['Subject has study groups']);
+      }
+      await queryRunner.manager.save(subject);
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      console.log(error);
+      if (error instanceof InternalServerErrorException) {
+        throw new InternalServerErrorException('Internal server error');
+      } else {
+        throw error;
+      }
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
   async updateSubject(subject: Subject) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     try {
       await queryRunner.startTransaction();
       const isSubjectExists = await queryRunner.manager.findOne(Subject, {
-        where: { name: subject.name },
+        where: { name: subject.name, id: Not(subject.id) },
       });
       if (isSubjectExists) {
         throw new NotFoundException('Subject already exist');

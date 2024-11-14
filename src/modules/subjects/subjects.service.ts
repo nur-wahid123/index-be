@@ -21,6 +21,14 @@ export class SubjectsService {
     return this.subjectRepository.saveSubject(newSubject);
   }
 
+  removeSubject(id: number, userId: number) {
+    const subject = new Subject();
+    subject.id = id;
+    subject.deletedAt = new Date();
+    subject.deletedBy = userId;
+    return this.subjectRepository.removeSubject(subject);
+  }
+
   updateSubject(
     id: number,
     createSubjectDto: CreateSubjectDto,

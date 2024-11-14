@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -142,6 +143,37 @@ export class StudyGroupRepository extends Repository<StudyGroup> {
     } catch (err) {
       await queryRunner.rollbackTransaction();
       throw new InternalServerErrorException(err);
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async removeStudyGroup(studyGroup: StudyGroup) {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    try {
+      await queryRunner.startTransaction();
+      const isStudyGroupExists = await queryRunner.manager.findOne(StudyGroup, {
+        where: { id: studyGroup.id },
+        select: ['id', 'classes'],
+      });
+      if (!isStudyGroupExists) {
+        throw new NotFoundException('Study Group not found');
+      }
+      if (isStudyGroupExists.classes.length > 0) {
+        throw new BadRequestException(['Study Group has classes']);
+      }
+      await queryRunner.manager.save(studyGroup);
+      await queryRunner.commitTransaction();
+      return studyGroup;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      console.log(error);
+      if (error instanceof InternalServerErrorException) {
+        throw new InternalServerErrorException('Internal server error');
+      } else {
+        throw error;
+      }
     } finally {
       await queryRunner.release();
     }

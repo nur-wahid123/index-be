@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -61,5 +62,10 @@ export class SubjectsController {
   @Get('detail/:id')
   find(@Param('id') id: string) {
     return this.subjectsService.find(+id);
+  }
+
+  @Delete('delete/:id')
+  remove(@Param('id') id: string, @Payload() payload: JwtPayload) {
+    return this.subjectsService.removeSubject(+id, +payload.sub);
   }
 }

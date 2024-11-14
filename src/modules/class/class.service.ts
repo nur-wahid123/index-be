@@ -7,6 +7,7 @@ import { PageOptionsDto } from 'src/commons/dto/page-option.dto';
 import { PageMetaDto } from 'src/commons/dto/page-meta.dto';
 import { PageDto } from 'src/commons/dto/page.dto';
 import { UpdateClassDto } from './dto/update-class.dto';
+import { StudyGroup } from 'src/entities/study-group.entity';
 
 @Injectable()
 export class ClassService {
@@ -14,6 +15,9 @@ export class ClassService {
 
   createClass(createClassDto: CreateClassDto, userId: number) {
     const classEntity = new ClassEntity();
+    const stGr = new StudyGroup();
+    stGr.id = createClassDto.studyGroupId;
+    classEntity.studyGroup = stGr;
     classEntity.name = createClassDto.name.toUpperCase();
     classEntity.createdBy = userId;
     return this.classRepository.saveClass(classEntity);
@@ -24,6 +28,9 @@ export class ClassService {
     classEntity.id = id;
     classEntity.name = updateClassDto.name;
     classEntity.updatedBy = userId;
+    const stGr = new StudyGroup();
+    stGr.id = updateClassDto.studyGroupId;
+    classEntity.studyGroup = stGr;
     return this.classRepository.updateClass(classEntity);
   }
 
@@ -32,11 +39,14 @@ export class ClassService {
     classEntity.id = id;
     classEntity.deletedAt = new Date();
     classEntity.deletedBy = userId;
-    return this.classRepository.deleteClass(classEntity);
+    return this.classRepository.removeClass(classEntity);
   }
 
   async findClass(id: number) {
-    return this.classRepository.findOne({ where: { id: id } });
+    return this.classRepository.findOne({
+      where: { id: id },
+      relations: { studyGroup: true },
+    });
   }
 
   async findAllClass(query: QueryClassDto, pageOptionsDto: PageOptionsDto) {
