@@ -4,6 +4,10 @@ import { BatchLinkSubjectDto, LinkSubjectDto } from './dto/link-subject.dto';
 import { CreateStudyGroupDto } from './dto/create-study-group.dto';
 import { StudyGroup } from 'src/entities/study-group.entity';
 import { UpdateStudyGroupDto } from './dto/update-study-group.dto';
+import { FilterDto } from 'src/commons/dto/filter.dto';
+import { PageOptionsDto } from 'src/commons/dto/page-option.dto';
+import { PageMetaDto } from 'src/commons/dto/page-meta.dto';
+import { PageDto } from 'src/commons/dto/page.dto';
 
 @Injectable()
 export class StudyGroupsService {
@@ -40,9 +44,12 @@ export class StudyGroupsService {
     return this.studyGroupRepository.linkBatchSubject(subjectDto, userId);
   }
 
-  findAll() {
-    return this.studyGroupRepository.find({
-      relations: { subjects: true },
-    });
+  async findAll(filter: FilterDto, pageOptionsDto: PageOptionsDto) {
+    const [data, itemCount] = await this.studyGroupRepository.findAll(
+      filter,
+      pageOptionsDto,
+    );
+    const meta = new PageMetaDto({ pageOptionsDto, itemCount });
+    return new PageDto(data, meta);
   }
 }

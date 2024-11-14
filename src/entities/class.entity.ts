@@ -13,7 +13,7 @@ export class ClassEntity extends BaseEntity {
    * Relationship
    */
 
-  @OneToMany(() => Student, (student) => student.class)
+  @OneToMany(() => Student, (student) => student.studentClass)
   students: Student[];
 
   @ManyToOne(() => StudyGroup, (studyGroup) => studyGroup.classes)

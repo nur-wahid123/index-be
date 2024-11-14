@@ -5,6 +5,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { StudyGroupsService } from './study-groups.service';
@@ -13,6 +14,8 @@ import { JwtAuthGuard } from 'src/commons/guards/jwt-auth.guard';
 import { CreateStudyGroupDto } from './dto/create-study-group.dto';
 import { Payload } from 'src/commons/decorators/payload.decorator';
 import { JwtPayload } from '../auth/jwt-payload.interface';
+import { PageOptionsDto } from 'src/commons/dto/page-option.dto';
+import { FilterDto } from 'src/commons/dto/filter.dto';
 @UseGuards(JwtAuthGuard)
 @Controller('study-groups')
 export class StudyGroupsController {
@@ -66,8 +69,8 @@ export class StudyGroupsController {
     return this.studyGroupsService.linkBatchSubject(subjectDto, +payload.sub);
   }
 
-  @Get()
-  findAll() {
-    return this.studyGroupsService.findAll();
+  @Get('list')
+  findAll(@Query() query: FilterDto, @Query() pageOptionsDto: PageOptionsDto) {
+    return this.studyGroupsService.findAll(query, pageOptionsDto);
   }
 }

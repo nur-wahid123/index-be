@@ -82,9 +82,9 @@ export class SubjectRepository extends Repository<Subject> {
       .where((qb) => {
         this.applyFilters(qb, filter);
       })
-      .skip(skip);
-    if (page && skip) {
-      query.take(take);
+      .take(take);
+    if (page && take) {
+      query.skip(skip);
     }
     query.orderBy('subject.id', order);
     return query.getManyAndCount();

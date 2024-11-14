@@ -314,7 +314,7 @@ export class StudentRepository extends Repository<Student> {
             classEntity.name = student.studyGroup;
             await queryRunner.manager.save(classEntity);
           }
-          newStudent.class = classEntity;
+          newStudent.studentClass = classEntity;
         }
         if (student.nationalTestNumber) {
           newStudent.nationalTestNumber = student.nationalTestNumber;

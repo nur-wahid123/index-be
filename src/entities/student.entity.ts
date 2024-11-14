@@ -203,5 +203,6 @@ export class Student extends BaseEntity {
   semesterReports: SemesterReport[];
 
   @ManyToOne(() => ClassEntity, (classEntity) => classEntity.students)
-  class?: ClassEntity;
+  @Expose({ name: 'student_class' })
+  studentClass?: ClassEntity;
 }

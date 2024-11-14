@@ -39,6 +39,11 @@ export class ClassController {
     return this.classService.findAllClass(query, pageOptionsDto);
   }
 
+  @Get('detail/:id')
+  findClass(@Param('id') id: string) {
+    return this.classService.findClass(+id);
+  }
+
   @Patch('update/:id')
   updateClass(
     @Param('id') id: string,

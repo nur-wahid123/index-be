@@ -14,7 +14,7 @@ export class ClassService {
 
   createClass(createClassDto: CreateClassDto, userId: number) {
     const classEntity = new ClassEntity();
-    classEntity.name = createClassDto.name;
+    classEntity.name = createClassDto.name.toUpperCase();
     classEntity.createdBy = userId;
     return this.classRepository.saveClass(classEntity);
   }
@@ -33,6 +33,10 @@ export class ClassService {
     classEntity.deletedAt = new Date();
     classEntity.deletedBy = userId;
     return this.classRepository.deleteClass(classEntity);
+  }
+
+  async findClass(id: number) {
+    return this.classRepository.findOne({ where: { id: id } });
   }
 
   async findAllClass(query: QueryClassDto, pageOptionsDto: PageOptionsDto) {

@@ -9,7 +9,9 @@ import {
   BatchLinkSubjectDto,
   LinkSubjectDto,
 } from '../modules/study-groups/dto/link-subject.dto';
-import { DataSource, In, Repository } from 'typeorm';
+import { DataSource, In, Repository, SelectQueryBuilder } from 'typeorm';
+import { FilterDto } from 'src/commons/dto/filter.dto';
+import { PageOptionsDto } from 'src/commons/dto/page-option.dto';
 
 @Injectable()
 export class StudyGroupRepository extends Repository<StudyGroup> {
@@ -142,6 +144,43 @@ export class StudyGroupRepository extends Repository<StudyGroup> {
       throw new InternalServerErrorException(err);
     } finally {
       await queryRunner.release();
+    }
+  }
+
+  findAll(filter: FilterDto, pageOptionsDto: PageOptionsDto) {
+    try {
+      const { page, take, skip, order } = pageOptionsDto;
+      const query = this.dataSource
+        .createQueryBuilder(StudyGroup, 'studyGroup')
+        .leftJoinAndSelect('studyGroup.subjects', 'subjects')
+        .leftJoinAndSelect('studyGroup.classes', 'class')
+        .leftJoin('class.students', 'students')
+        .addSelect('students.id')
+        .addSelect('students.name')
+        .where((qb) => {
+          this.applyFilters(qb, filter);
+        })
+        .take(take);
+      if (page && take) {
+        query.skip(skip);
+      }
+      query.orderBy('studyGroup.id', order);
+      return query.getManyAndCount();
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  applyFilters(qb: SelectQueryBuilder<StudyGroup>, filter: FilterDto) {
+    const { search } = filter;
+    if (search) {
+      qb.andWhere(
+        '(LOWER(studyGroup.name) LIKE LOWER(:search) or LOWER(subjects.name) LIKE LOWER(:search))',
+        {
+          search: `%${search}%`,
+        },
+      );
     }
   }
 
