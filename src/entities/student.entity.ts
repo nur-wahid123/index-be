@@ -15,30 +15,30 @@ import { ClassEntity } from './class.entity';
 @Entity('students')
 export class Student extends BaseEntity {
   @Column({ nullable: false })
-  name!: string;
+  name?: string;
 
   @Column({ nullable: true })
   @Expose({ name: 'student_school_id' })
-  studentSchoolId!: string;
+  studentSchoolId?: string;
 
   @Column({ nullable: false, enum: Gender })
-  gender!: Gender;
+  gender?: Gender;
 
   @Column({ nullable: false, unique: true })
   @Expose({ name: 'student_national_id' })
-  studentNationalId!: string;
+  studentNationalId?: string;
 
   @Column({ nullable: true })
   @Expose({ name: 'place_of_birth' })
-  placeOfBirth: string;
+  placeOfBirth?: string;
 
   @Column({ nullable: true })
   @Expose({ name: 'date_of_birth' })
-  dateOfBirth: Date;
+  dateOfBirth?: Date;
 
   @Column({ nullable: false, type: 'boolean', default: true })
   @Expose({ name: 'is_active' })
-  isActive: boolean;
+  isActive?: boolean;
 
   @Column({ nullable: true, unique: true })
   nik?: string;
@@ -46,13 +46,13 @@ export class Student extends BaseEntity {
   @ManyToOne(() => Religion, (religion) => religion.students, {
     nullable: true,
   })
-  religion: Religion;
+  religion?: Religion;
 
   @Column({ nullable: true })
-  address: string;
+  address?: string;
 
   @Column({ nullable: true })
-  hamlet: string;
+  hamlet?: string;
 
   @Column({ nullable: true })
   ward?: string;
@@ -93,22 +93,22 @@ export class Student extends BaseEntity {
 
   @Column({ nullable: false, type: 'boolean', default: false })
   @Expose({ name: 'is_kps' })
-  isKps!: boolean;
+  isKps?: boolean;
 
   @Column({ nullable: true })
   @Expose({ name: 'kps_id' })
   kpsId?: string;
 
   @ManyToOne(() => Parents, (parent) => parent.students, { nullable: true })
-  father: Parents;
+  father?: Parents;
 
   @ManyToOne(() => Parents, (parent) => parent.students, { nullable: true })
-  mother: Parents;
+  mother?: Parents;
 
   @ManyToOne(() => Guardian, (guardian) => guardian.students, {
     nullable: true,
   })
-  guardian: Guardian;
+  guardian?: Guardian;
 
   @Column({ nullable: true })
   @Expose({ name: 'national_test_number' })
@@ -138,7 +138,7 @@ export class Student extends BaseEntity {
   birthCertificateRegistrationId?: string;
 
   @ManyToOne(() => Bank, (bank) => bank.students, { nullable: true })
-  bank: Bank;
+  bank?: Bank;
 
   @Column({ nullable: true })
   @Expose({ name: 'bank_account_number' })
@@ -150,7 +150,7 @@ export class Student extends BaseEntity {
 
   @Column({ nullable: false, default: false, type: 'boolean' })
   @Expose({ name: 'is_pip_worthy' })
-  isPipWorthy: boolean;
+  isPipWorthy?: boolean;
 
   @Column({ nullable: true })
   @Expose({ name: 'reason_pip_worthy' })
@@ -200,7 +200,7 @@ export class Student extends BaseEntity {
    */
 
   @OneToMany(() => SemesterReport, (semesterReport) => semesterReport.student)
-  semesterReports: SemesterReport[];
+  semesterReports?: SemesterReport[];
 
   @ManyToOne(() => ClassEntity, (classEntity) => classEntity.students)
   @Expose({ name: 'student_class' })

@@ -20,8 +20,9 @@ export class ClassRepository extends Repository<ClassEntity> {
     const { take, skip, order, page } = pageOptionsDto;
     const qb = this.dataSource
       .createQueryBuilder(ClassEntity, 'class')
-      .leftJoinAndSelect('class.students', 'student')
+      .leftJoin('class.students', 'student')
       .leftJoinAndSelect('class.studyGroup', 'studyGroup')
+      .addSelect(['student.id'])
       .skip(skip);
     this.applyFilters(qb, filter);
     if (page && skip) {

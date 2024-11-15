@@ -16,17 +16,17 @@ export class Parents extends BaseEntity {
   @ManyToOne(() => Education, (education) => education.parents, {
     nullable: true,
   })
-  education: Education;
+  education?: Education;
 
   @ManyToOne(() => Job, (job) => job.parents, { nullable: true })
-  job: Job;
+  job?: Job;
 
   @ManyToOne(() => Income, (income) => income.parents, { nullable: true })
-  income: Income;
+  income?: Income;
 
   @Column({ nullable: true, unique: true })
   nik?: string;
 
   @OneToMany(() => Student, (student) => student.father)
-  students: Student[];
+  students?: Student[];
 }

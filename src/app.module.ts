@@ -14,6 +14,7 @@ import { UserRepository } from './repositories/user.repository';
 import HashPassword from './commons/utils/hash-password.util';
 import { AuthModule } from './modules/auth/auth.module';
 import { ClassModule } from './modules/class/class.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ClassModule } from './modules/class/class.module';
     SemesterReportModule,
     AuthModule,
     ClassModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService, UserService, HashPassword, UserRepository],

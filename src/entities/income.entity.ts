@@ -6,11 +6,11 @@ import { Parents } from './parents.entity';
 @Entity('incomes')
 export class Income extends BaseEntity {
   @Column({ nullable: false })
-  name!: string;
+  name?: string;
 
   @OneToMany(() => Parents, (parent) => parent.income)
-  parents: Parents[];
+  parents?: Parents[];
 
   @OneToMany(() => Guardian, (guardian) => guardian.income)
-  guardians: Guardian[];
+  guardians?: Guardian[];
 }

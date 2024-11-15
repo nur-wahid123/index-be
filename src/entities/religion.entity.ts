@@ -5,8 +5,8 @@ import { Student } from './student.entity';
 @Entity('religions')
 export class Religion extends BaseEntity {
   @Column({ nullable: false })
-  name!: string;
+  name?: string;
 
   @OneToMany(() => Student, (student) => student.religion, { nullable: true })
-  students: Student[];
+  students?: Student[];
 }

@@ -5,8 +5,8 @@ import { Student } from './student.entity';
 @Entity('subdistricts')
 export class SubDistrict extends BaseEntity {
   @Column({ nullable: false })
-  name!: string;
+  name?: string;
 
   @OneToMany(() => Student, (student) => student.subDistrict)
-  students: Student[];
+  students?: Student[];
 }

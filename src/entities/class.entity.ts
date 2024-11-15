@@ -14,9 +14,9 @@ export class ClassEntity extends BaseEntity {
    */
 
   @OneToMany(() => Student, (student) => student.studentClass)
-  students: Student[];
+  students?: Student[];
 
   @ManyToOne(() => StudyGroup, (studyGroup) => studyGroup.classes)
   @Expose({ name: 'study_group' })
-  studyGroup: StudyGroup;
+  studyGroup?: StudyGroup;
 }

@@ -6,11 +6,11 @@ import { Guardian } from './guardian.entity';
 @Entity('educations')
 export class Education extends BaseEntity {
   @Column({ nullable: false })
-  name!: string;
+  name?: string;
 
   @OneToMany(() => Parents, (parent) => parent.education)
-  parents: Parents[];
+  parents?: Parents[];
 
   @OneToMany(() => Guardian, (guardian) => guardian.education)
-  guardians: Guardian[];
+  guardians?: Guardian[];
 }

@@ -6,11 +6,11 @@ import { Subject } from './subject.entity';
 @Entity()
 export class Score extends BaseEntity {
   @Column('decimal')
-  scoreValue: number;
+  scoreValue?: number;
 
   @ManyToOne(() => SemesterReport, (semesterReport) => semesterReport.scores)
-  semesterReport: SemesterReport;
+  semesterReport?: SemesterReport;
 
   @ManyToOne(() => Subject)
-  subject: Subject;
+  subject?: Subject;
 }

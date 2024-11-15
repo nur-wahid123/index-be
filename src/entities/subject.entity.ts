@@ -6,7 +6,7 @@ import { Expose } from 'class-transformer';
 @Entity('subjects')
 export class Subject extends BaseEntity {
   @Column({ nullable: false })
-  name!: string;
+  name?: string;
 
   /**
    * Relations
@@ -14,8 +14,8 @@ export class Subject extends BaseEntity {
 
   @ManyToMany(() => StudyGroup, (studyGroup) => studyGroup.subjects)
   @Expose({ name: 'study_groups' })
-  studyGroups: StudyGroup[];
+  studyGroups?: StudyGroup[];
 
   @Column({ nullable: false, default: false })
-  is_primary!: boolean;
+  is_primary?: boolean;
 }

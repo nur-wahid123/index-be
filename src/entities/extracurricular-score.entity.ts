@@ -7,11 +7,11 @@ import { Extracurricular } from './extracurricular.entity';
 @Entity()
 export class ExtracurricularScore extends BaseEntity {
   @Column({ nullable: false, enum: ExtracurricularScoreEnum })
-  score!: ExtracurricularScoreEnum;
+  score?: ExtracurricularScoreEnum;
 
   @ManyToOne(() => SemesterReport)
-  semesterReport: SemesterReport;
+  semesterReport?: SemesterReport;
 
   @ManyToOne(() => Extracurricular)
-  extracurricular: Extracurricular;
+  extracurricular?: Extracurricular;
 }

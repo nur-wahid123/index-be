@@ -6,7 +6,7 @@ import { ClassEntity } from './class.entity';
 @Entity('study_groups')
 export class StudyGroup extends BaseEntity {
   @Column({ nullable: false })
-  name!: string;
+  name?: string;
 
   /**
    * Relations
@@ -14,8 +14,8 @@ export class StudyGroup extends BaseEntity {
 
   @ManyToMany(() => Subject, (subject) => subject.studyGroups)
   @JoinTable()
-  subjects: Subject[];
+  subjects?: Subject[];
 
   @OneToMany(() => ClassEntity, (classEntity) => classEntity.studyGroup)
-  classes: ClassEntity[];
+  classes?: ClassEntity[];
 }

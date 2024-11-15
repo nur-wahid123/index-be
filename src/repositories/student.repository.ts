@@ -32,15 +32,24 @@ export class StudentRepository extends Repository<Student> {
       const { take, skip, order } = pageOptionsDto;
       const qb = this.dataSource
         .createQueryBuilder(Student, 'student')
-        .leftJoinAndSelect('student.religion', 'religion')
-        .leftJoinAndSelect('student.mother', 'mother')
-        .leftJoinAndSelect('student.father', 'father')
-        .leftJoinAndSelect('student.class', 'class')
-        .leftJoinAndSelect('student.semesterReports', 'semesterReports');
-      this.applyFilters(qb, filter);
-      if (take && skip) {
-        qb.offset(take).limit(skip);
-      }
+        .leftJoin('student.religion', 'religion')
+        .leftJoin('student.mother', 'mother')
+        .leftJoin('student.father', 'father')
+        .leftJoin('student.studentClass', 'studentClass')
+        .leftJoin('student.semesterReports', 'semesterReports')
+        .select([
+          'student.id',
+          'student.name',
+          'student.studentSchoolId',
+          'student.studentNationalId',
+        ])
+        .addSelect(['religion.name', 'religion.id'])
+        .addSelect(['studentClass.name', 'studentClass.id'])
+        .where((qb) => {
+          this.applyFilters(qb, filter);
+        })
+        .skip(skip)
+        .take(take);
       qb.orderBy('student.id', order);
       const result = await qb.getManyAndCount();
       return result;

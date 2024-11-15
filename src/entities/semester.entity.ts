@@ -9,44 +9,44 @@ import { Semester } from './../enums/semester.enum';
 @Entity('semester_reports')
 export class SemesterReport extends BaseEntity {
   @Column({ type: 'enum', enum: Semester, nullable: false })
-  semester: Semester;
+  semester?: Semester;
 
   @ManyToOne(() => Student, (student) => student.semesterReports)
-  student: Student;
+  student?: Student;
 
   @OneToMany(() => Score, (score) => score.semesterReport)
-  scores: Score[];
+  scores?: Score[];
 
   @OneToMany(
     () => ExtracurricularScore,
     (extracurricularScore) => extracurricularScore.semesterReport,
   )
-  extracurricularScores: ExtracurricularScore[];
+  extracurricularScores?: ExtracurricularScore[];
 
   @Column({ nullable: false, type: 'varchar' })
   @Expose({ name: 'schhol_year' })
-  schholYear: string;
+  schholYear?: string;
 
   @Column({ nullable: false })
   @Expose({ name: 'total_score' })
-  totalScore: number;
+  totalScore?: number;
 
   @Column({ nullable: true, type: 'decimal' })
   @Expose({ name: 'average_score' })
-  averageScore: number;
+  averageScore?: number;
 
   @Column({ nullable: false, default: 0 })
   @Expose({ name: 'sick_days' })
-  sickDays: number;
+  sickDays?: number;
 
   @Column({ nullable: false, default: 0 })
   @Expose({ name: 'absent_days' })
-  absentDays: number;
+  absentDays?: number;
 
   @Column({ nullable: false, default: 0 })
   @Expose({ name: 'leave_days' })
-  leaveDays: number;
+  leaveDays?: number;
 
   @Column({ nullable: false, default: 0 })
-  ranking: number;
+  ranking?: number;
 }

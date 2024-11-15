@@ -16,17 +16,17 @@ export class Guardian extends BaseEntity {
   @ManyToOne(() => Education, (education) => education.guardians, {
     nullable: true,
   })
-  education: Education;
+  education?: Education;
 
   @ManyToOne(() => Job, (job) => job.guardians, { nullable: true })
-  job: Job;
+  job?: Job;
 
   @ManyToOne(() => Income, (income) => income.guardians, { nullable: true })
-  income: Income;
+  income?: Income;
 
   @Column({ nullable: true, unique: true })
   nik?: string;
 
   @OneToMany(() => Student, (student) => student.guardian)
-  students: Student[];
+  students?: Student[];
 }
