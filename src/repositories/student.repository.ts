@@ -22,6 +22,23 @@ export class StudentRepository extends Repository<Student> {
     super(Student, dataSource.createEntityManager());
   }
 
+  findOneStudent(id: string) {
+    return this.findOne({
+      where: { studentNationalId: id },
+      relations: {
+        bank: true,
+        father: true,
+        mother: true,
+        guardian: true,
+        kindOfStay: true,
+        studentClass: true,
+        semesterReports: true,
+        transportation: true,
+        subDistrict: true,
+      },
+    });
+  }
+
   /**
    * Find all students with the given filter
    * @param filter - a filter student dto
@@ -58,7 +75,10 @@ export class StudentRepository extends Repository<Student> {
     }
   }
 
-  applyFilters(qb: SelectQueryBuilder<Student>, filter: FilterStudentDto) {
+  private applyFilters(
+    qb: SelectQueryBuilder<Student>,
+    filter: FilterStudentDto,
+  ) {
     const { search, name, studentSchoolId } = filter;
 
     if (search) {
@@ -89,7 +109,7 @@ export class StudentRepository extends Repository<Student> {
         const student = createStudentDto[i];
         let newStudent = await queryRunner.manager.findOne(Student, {
           where: { studentNationalId: student.studentNationalId },
-          select: { name: true },
+          select: { name: true, id: true },
         });
         if (!newStudent) {
           newStudent = new Student();
@@ -110,6 +130,7 @@ export class StudentRepository extends Repository<Student> {
         if (student.religion) {
           let religion = await queryRunner.manager.findOne(Religion, {
             where: { name: student.religion },
+            select: { name: true, id: true },
           });
           if (!religion) {
             religion = new Religion();
@@ -130,6 +151,7 @@ export class StudentRepository extends Repository<Student> {
         if (student.subDistrict) {
           let subDistrict = await queryRunner.manager.findOne(SubDistrict, {
             where: { name: student.subDistrict },
+            select: { name: true, id: true },
           });
           if (!subDistrict) {
             subDistrict = new SubDistrict();
@@ -144,6 +166,7 @@ export class StudentRepository extends Repository<Student> {
         if (student.kindOfStay) {
           let kindOfStay = await queryRunner.manager.findOne(KindOfStay, {
             where: { name: student.kindOfStay },
+            select: { name: true, id: true },
           });
           if (!kindOfStay) {
             kindOfStay = new KindOfStay();
@@ -155,7 +178,10 @@ export class StudentRepository extends Repository<Student> {
         if (student.transportation) {
           let transportation = await queryRunner.manager.findOne(
             Transportation,
-            { where: { name: student.transportation } },
+            {
+              where: { name: student.transportation },
+              select: { id: true, name: true },
+            },
           );
           if (!transportation) {
             transportation = new Transportation();
@@ -240,6 +266,7 @@ export class StudentRepository extends Repository<Student> {
             motherStudent.yearOfBirth = student.mother.yearOfBirth;
             let education = await queryRunner.manager.findOne(Education, {
               where: { name: student.mother.education },
+              select: { name: true, id: true },
             });
             if (!education) {
               education = new Education();
@@ -249,6 +276,7 @@ export class StudentRepository extends Repository<Student> {
             motherStudent.education = education;
             let job = await queryRunner.manager.findOne(Job, {
               where: { name: student.mother.job },
+              select: { name: true, id: true },
             });
             if (!job) {
               job = new Job();
@@ -258,6 +286,7 @@ export class StudentRepository extends Repository<Student> {
             motherStudent.job = job;
             let income = await queryRunner.manager.findOne(Income, {
               where: { name: student.mother.income },
+              select: { name: true, id: true },
             });
             if (!income) {
               income = new Income();
@@ -275,6 +304,7 @@ export class StudentRepository extends Repository<Student> {
           if (student.guardian.nik) {
             guardianStudent = await queryRunner.manager.findOne(Guardian, {
               where: { nik: student.guardian.nik },
+              select: { name: true, id: true },
             });
           }
           if (!guardianStudent) {
@@ -284,6 +314,7 @@ export class StudentRepository extends Repository<Student> {
             guardianStudent.yearOfBirth = student.guardian.yearOfBirth;
             let education = await queryRunner.manager.findOne(Education, {
               where: { name: student.guardian.education },
+              select: { name: true, id: true },
             });
             if (!education) {
               education = new Education();
@@ -293,6 +324,7 @@ export class StudentRepository extends Repository<Student> {
             guardianStudent.education = education;
             let job = await queryRunner.manager.findOne(Job, {
               where: { name: student.guardian.job },
+              select: { name: true, id: true },
             });
             if (!job) {
               job = new Job();
@@ -302,6 +334,7 @@ export class StudentRepository extends Repository<Student> {
             guardianStudent.job = job;
             let income = await queryRunner.manager.findOne(Income, {
               where: { name: student.guardian.income },
+              select: { name: true, id: true },
             });
             if (!income) {
               income = new Income();
@@ -317,6 +350,7 @@ export class StudentRepository extends Repository<Student> {
         if (student.studyGroup) {
           let classEntity = await queryRunner.manager.findOne(ClassEntity, {
             where: { name: student.studyGroup },
+            select: { name: true, id: true },
           });
           if (!classEntity) {
             classEntity = new ClassEntity();
@@ -347,6 +381,7 @@ export class StudentRepository extends Repository<Student> {
         if (student.bank) {
           let bank = await queryRunner.manager.findOne(Bank, {
             where: { name: student.bank },
+            select: { name: true, id: true },
           });
           if (!bank) {
             bank = new Bank();

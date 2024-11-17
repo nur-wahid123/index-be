@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { FilterStudentDto } from './dto/filter-student.dto';
@@ -21,5 +29,10 @@ export class StudentsController {
     @Query() pageOptionsDto: PageOptionsDto,
   ) {
     return this.studentsService.findAll(filter, pageOptionsDto);
+  }
+
+  @Get('detail/:id')
+  findOne(@Param('id') id: string) {
+    return this.studentsService.findOne(id);
   }
 }

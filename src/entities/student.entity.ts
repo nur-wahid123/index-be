@@ -60,6 +60,7 @@ export class Student extends BaseEntity {
   @ManyToOne(() => SubDistrict, (subDistrict) => subDistrict.students, {
     nullable: true,
   })
+  @Expose({ name: 'sub_district' })
   subDistrict?: SubDistrict;
 
   @Column({ nullable: true })
@@ -69,6 +70,7 @@ export class Student extends BaseEntity {
   @ManyToOne(() => KindOfStay, (kindOfStay) => kindOfStay.students, {
     nullable: true,
   })
+  @Expose({ name: 'kind_of_stay' })
   kindOfStay?: KindOfStay;
 
   @ManyToOne(
@@ -200,6 +202,7 @@ export class Student extends BaseEntity {
    */
 
   @OneToMany(() => SemesterReport, (semesterReport) => semesterReport.student)
+  @Expose({ name: 'semester_reports' })
   semesterReports?: SemesterReport[];
 
   @ManyToOne(() => ClassEntity, (classEntity) => classEntity.students)

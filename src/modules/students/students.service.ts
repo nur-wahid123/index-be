@@ -22,4 +22,8 @@ export class StudentsService {
     const pageMetaDto = new PageMetaDto({ pageOptionsDto, itemCount });
     return new PageDto(entities, pageMetaDto);
   }
+
+  async findOne(id: string) {
+    return this.studentRepository.findOneStudent(id);
+  }
 }

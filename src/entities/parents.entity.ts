@@ -4,6 +4,7 @@ import { Education } from './education.entity';
 import { Job } from './job.entity';
 import { Income } from './income.entity';
 import { Student } from './student.entity';
+import { Expose } from 'class-transformer';
 
 @Entity('parents')
 export class Parents extends BaseEntity {
@@ -11,6 +12,7 @@ export class Parents extends BaseEntity {
   name?: string;
 
   @Column({ nullable: true, default: 0 })
+  @Expose({ name: 'year_of_birth' })
   yearOfBirth?: number;
 
   @ManyToOne(() => Education, (education) => education.parents, {
