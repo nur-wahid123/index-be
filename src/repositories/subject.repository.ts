@@ -113,10 +113,9 @@ export class SubjectRepository extends Repository<Subject> {
       .leftJoinAndSelect('subject.studyGroups', 'studyGroup')
       .where((qb) => {
         this.applyFilters(qb, filter);
-      })
-      .take(take);
+      });
     if (page && take) {
-      query.skip(skip);
+      query.skip(skip).take(take);
     }
     query.orderBy('subject.id', order);
     return query.getManyAndCount();
