@@ -7,7 +7,6 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  Res,
   UseFilters,
   UseGuards,
   UseInterceptors,
@@ -15,7 +14,6 @@ import {
 import { AuthService } from './auth.service';
 import { UserLoginDto } from './dto/login-user.dto';
 import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
-import { Response } from 'express';
 import { JwtPayload } from './jwt-payload.interface';
 import { Payload } from 'src/commons/decorators/payload.decorator';
 import { JwtAuthGuard } from 'src/commons/guards/jwt-auth.guard';
@@ -47,8 +45,7 @@ export class AuthController {
   }
 
   @Delete('logout')
-  logout(@Res() res: Response) {
-    res.clearCookie('jwt');
-    return res.send({ message: 'Logout Successfull' });
+  logout() {
+    return this.authService.logout();
   }
 }

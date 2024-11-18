@@ -45,7 +45,10 @@ export class StudyGroupsService {
   }
 
   findOne(id: number) {
-    return this.studyGroupRepository.findOne({ where: { id: id } });
+    return this.studyGroupRepository.findOne({
+      where: { id: id },
+      relations: { subjects: true },
+    });
   }
 
   async findAll(filter: FilterDto, pageOptionsDto: PageOptionsDto) {

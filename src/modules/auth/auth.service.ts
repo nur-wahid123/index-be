@@ -60,8 +60,12 @@ export class AuthService {
     };
     const token = await this.jwtService.signAsync(payload, {
       secret: process.env.USER_KEY_SECRET,
-      expiresIn: '1d',
+      expiresIn: process.env.EXPIRY_TOKEN_TIME || '2h',
     });
     return { access_token: token };
+  }
+
+  logout() {
+    return { message: 'logout success' };
   }
 }

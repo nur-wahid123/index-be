@@ -15,6 +15,7 @@ import HashPassword from './commons/utils/hash-password.util';
 import { AuthModule } from './modules/auth/auth.module';
 import { ClassModule } from './modules/class/class.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { ExtracuricularModule } from './modules/extracuricular/extracuricular.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
     AuthModule,
     ClassModule,
     DashboardModule,
+    ExtracuricularModule,
   ],
   controllers: [AppController],
   providers: [AppService, UserService, HashPassword, UserRepository],

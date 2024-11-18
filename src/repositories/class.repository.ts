@@ -17,19 +17,23 @@ export class ClassRepository extends Repository<ClassEntity> {
   }
 
   findClass(filter: QueryClassDto, pageOptionsDto: PageOptionsDto) {
-    const { take, skip, order, page } = pageOptionsDto;
-    const qb = this.dataSource
-      .createQueryBuilder(ClassEntity, 'class')
-      .leftJoin('class.students', 'student')
-      .leftJoinAndSelect('class.studyGroup', 'studyGroup')
-      .addSelect(['student.id'])
-      .skip(skip);
-    this.applyFilters(qb, filter);
-    if (page && skip) {
-      qb.take(take);
+    try {
+      const { take, skip, order, page } = pageOptionsDto;
+      const qb = this.dataSource
+        .createQueryBuilder(ClassEntity, 'class')
+        .leftJoin('class.students', 'student')
+        .leftJoinAndSelect('class.studyGroup', 'studyGroup')
+        .addSelect(['student.id', 'studyGroup.id']);
+      this.applyFilters(qb, filter);
+      if (page && skip) {
+        qb.take(take).skip(skip);
+      }
+      qb.orderBy('class.id', order);
+      return qb.getManyAndCount();
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
-    qb.orderBy('class.id', order);
-    return qb.getManyAndCount();
   }
 
   applyFilters(qb: SelectQueryBuilder<ClassEntity>, filter: QueryClassDto) {

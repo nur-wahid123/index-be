@@ -46,14 +46,11 @@ export class StudentRepository extends Repository<Student> {
    */
   async findAll(filter: FilterStudentDto, pageOptionsDto: PageOptionsDto) {
     try {
-      const { take, skip, order } = pageOptionsDto;
+      const { take, page, skip, order } = pageOptionsDto;
       const qb = this.dataSource
         .createQueryBuilder(Student, 'student')
         .leftJoin('student.religion', 'religion')
-        .leftJoin('student.mother', 'mother')
-        .leftJoin('student.father', 'father')
         .leftJoin('student.studentClass', 'studentClass')
-        .leftJoin('student.semesterReports', 'semesterReports')
         .select([
           'student.id',
           'student.name',
@@ -64,9 +61,11 @@ export class StudentRepository extends Repository<Student> {
         .addSelect(['studentClass.name', 'studentClass.id'])
         .where((qb) => {
           this.applyFilters(qb, filter);
-        })
-        .skip(skip)
-        .take(take);
+        });
+
+      if (page && take) {
+        qb.skip(skip).take(take);
+      }
       qb.orderBy('student.id', order);
       const result = await qb.getManyAndCount();
       return result;
@@ -79,7 +78,7 @@ export class StudentRepository extends Repository<Student> {
     qb: SelectQueryBuilder<Student>,
     filter: FilterStudentDto,
   ) {
-    const { search, name, studentSchoolId } = filter;
+    const { search, name, studentSchoolId, classId } = filter;
 
     if (search) {
       qb.andWhere('LOWER(student.name) LIKE LOWER(:search)', {
@@ -97,6 +96,10 @@ export class StudentRepository extends Repository<Student> {
       qb.andWhere('student.student_school_id = :studentSchoolId', {
         studentSchoolId,
       });
+    }
+
+    if (classId) {
+      qb.andWhere('studentClass.id = :classId', { classId });
     }
   }
 
