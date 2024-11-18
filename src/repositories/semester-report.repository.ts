@@ -55,57 +55,57 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
     const newSemesterReport = new SemesterReport();
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
-    await queryRunner.startTransaction();
-    const student: Student = await queryRunner.manager.findOne(Student, {
-      where: { studentNationalId: studentNationalId },
-      select: { id: true, semesterReports: { id: true, semester: true } },
-    });
-    if (!student) {
-      await queryRunner.rollbackTransaction();
-      throw new NotFoundException('student not found');
-    }
-    for (let index = 0; index < student.semesterReports.length; index++) {
-      const semesterReport = student.semesterReports[index];
-      if (semesterReport.semester === semester) {
-        await queryRunner.rollbackTransaction();
-        throw new NotFoundException('semester report already exist');
-      }
-    }
-    newSemesterReport.semester = semester;
-    const scoreDatas: Score[] = [];
-    for (let index = 0; index < scores.length; index++) {
-      const score = scores[index];
-      const subject = await queryRunner.manager.findOne(Subject, {
-        where: { name: score.subjectName },
-      });
-      if (!subject) {
-        await queryRunner.rollbackTransaction();
-        throw new NotFoundException('subject not found');
-      }
-      const nwScore = new Score();
-      nwScore.scoreValue = score.score;
-      nwScore.subject = subject;
-      nwScore.semesterReport = newSemesterReport;
-      scoreDatas.push(nwScore);
-    }
-    const arrayOfxtracurricularScores: ExtracurricularScore[] = [];
-    for (let index = 0; index < extracurricularScores.length; index++) {
-      const extracurricularScore = extracurricularScores[index];
-      const extracurricular = await queryRunner.manager.findOne(
-        Extracurricular,
-        { where: { name: extracurricularScore.extracurricularName } },
-      );
-      if (!extracurricular) {
-        await queryRunner.rollbackTransaction();
-        throw new NotFoundException('extracurricular not found');
-      }
-      const nwScore = new ExtracurricularScore();
-      nwScore.extracurricular = extracurricular;
-      nwScore.score = extracurricularScore.score;
-      nwScore.semesterReport = newSemesterReport;
-      arrayOfxtracurricularScores.push(nwScore);
-    }
     try {
+      await queryRunner.startTransaction();
+      const student: Student = await queryRunner.manager.findOne(Student, {
+        where: { studentNationalId: studentNationalId },
+        select: { id: true, semesterReports: { id: true, semester: true } },
+      });
+      if (!student) {
+        await queryRunner.rollbackTransaction();
+        throw new NotFoundException('student not found');
+      }
+      for (let index = 0; index < student.semesterReports.length; index++) {
+        const semesterReport = student.semesterReports[index];
+        if (semesterReport.semester === semester) {
+          await queryRunner.rollbackTransaction();
+          throw new NotFoundException('semester report already exist');
+        }
+      }
+      newSemesterReport.semester = semester;
+      const scoreDatas: Score[] = [];
+      for (let index = 0; index < scores.length; index++) {
+        const score = scores[index];
+        const subject = await queryRunner.manager.findOne(Subject, {
+          where: { name: score.subjectName },
+        });
+        if (!subject) {
+          await queryRunner.rollbackTransaction();
+          throw new NotFoundException('subject not found');
+        }
+        const nwScore = new Score();
+        nwScore.scoreValue = score.score;
+        nwScore.subject = subject;
+        nwScore.semesterReport = newSemesterReport;
+        scoreDatas.push(nwScore);
+      }
+      const arrayOfxtracurricularScores: ExtracurricularScore[] = [];
+      for (let index = 0; index < extracurricularScores.length; index++) {
+        const extracurricularScore = extracurricularScores[index];
+        const extracurricular = await queryRunner.manager.findOne(
+          Extracurricular,
+          { where: { name: extracurricularScore.extracurricularName } },
+        );
+        if (!extracurricular) {
+          await queryRunner.rollbackTransaction();
+          throw new NotFoundException('extracurricular not found');
+        }
+        const nwScore = new ExtracurricularScore();
+        nwScore.extracurricular = extracurricular;
+        nwScore.score = extracurricularScore.score;
+        nwScore.semesterReport = newSemesterReport;
+        arrayOfxtracurricularScores.push(nwScore);
+      }
       newSemesterReport.absentDays = absentDays;
       newSemesterReport.extracurricularScores = arrayOfxtracurricularScores;
       newSemesterReport.scores = scoreDatas;
@@ -121,7 +121,7 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
     } catch (error) {
       await queryRunner.rollbackTransaction();
       console.log(error);
-      throw new InternalServerErrorException('Internal Server Error');
+      throw error;
     } finally {
       await queryRunner.release();
     }
