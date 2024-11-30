@@ -1,0 +1,2433 @@
+{
+    "body": [
+        {
+            "studentNationalId": "0062672838",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "PMR",
+                    "score": "SB"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 77
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 82
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 1004,
+            "ranking": 23,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 1,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0076159270",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 82
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 92
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 92
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 77
+                }
+            ],
+            "totalScore": 1016,
+            "ranking": 15,
+            "absentDays": 2,
+            "sickDays": 5,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0077617312",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "PMR",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "KIR",
+                    "score": "SB"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 92
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 90
+                }
+            ],
+            "totalScore": 1060,
+            "ranking": 4,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0078880929",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 82
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 1000,
+            "ranking": 29,
+            "absentDays": 0,
+            "sickDays": 11,
+            "leaveDays": 1,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0065404113",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 79
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 78
+                }
+            ],
+            "totalScore": 1023,
+            "ranking": 11,
+            "absentDays": 0,
+            "sickDays": 2,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0065893825",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Paskibraka",
+                    "score": "SB"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 81
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 79
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 77
+                }
+            ],
+            "totalScore": 1013,
+            "ranking": 17,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0063499745",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Bola Volly",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Fotografi",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 77
+                }
+            ],
+            "totalScore": 1021,
+            "ranking": 12,
+            "absentDays": 0,
+            "sickDays": 1,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0068392721",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Teater",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Musik",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 77
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 77
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 1000,
+            "ranking": 20,
+            "absentDays": 0,
+            "sickDays": 9,
+            "leaveDays": 5,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0068333954",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 81
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 77
+                }
+            ],
+            "totalScore": 1025,
+            "ranking": 10,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 1,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0061725297",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 91
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 88
+                }
+            ],
+            "totalScore": 1052,
+            "ranking": 6,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0078041294",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 82
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 79
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 1006,
+            "ranking": 19,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 2,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0077461167",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 77
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 997,
+            "ranking": 30,
+            "absentDays": 0,
+            "sickDays": 1,
+            "leaveDays": 1,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0071557741",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "PMR",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "KIR",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 93
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 93
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 92
+                }
+            ],
+            "totalScore": 1071,
+            "ranking": 1,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0064804257",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "SBQ",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 81
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 77
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 81
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 82
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 999,
+            "ranking": 22,
+            "absentDays": 0,
+            "sickDays": 5,
+            "leaveDays": 1,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0066632275",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "SB"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 77
+                }
+            ],
+            "totalScore": 1006,
+            "ranking": 18,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0068530062",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "SBQ",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Fotografi",
+                    "score": "SB"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 93
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 91
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 93
+                }
+            ],
+            "totalScore": 1069,
+            "ranking": 2,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0079405596",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Paskibraka",
+                    "score": "SB"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 1019,
+            "ranking": 16,
+            "absentDays": 0,
+            "sickDays": 6,
+            "leaveDays": 1,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0074522426",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Teater",
+                    "score": "SB"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 79
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 1001,
+            "ranking": 25,
+            "absentDays": 0,
+            "sickDays": 2,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0063546607",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Paduan Suara",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 92
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 89
+                }
+            ],
+            "totalScore": 1055,
+            "ranking": 5,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0066047476",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "PMR",
+                    "score": "SB"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 92
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 92
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 91
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 91
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 89
+                }
+            ],
+            "totalScore": 1070,
+            "ranking": 3,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0067957378",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Bola Volly",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 77
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 82
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 989,
+            "ranking": 34,
+            "absentDays": 0,
+            "sickDays": 4,
+            "leaveDays": 2,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0072859110",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Fotografi",
+                    "score": "SB"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 997,
+            "ranking": 27,
+            "absentDays": 0,
+            "sickDays": 3,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0061720658",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Teater",
+                    "score": "SB"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 79
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 77
+                }
+            ],
+            "totalScore": 1005,
+            "ranking": 21,
+            "absentDays": 0,
+            "sickDays": 3,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0065144041",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 81
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 999,
+            "ranking": 28,
+            "absentDays": 0,
+            "sickDays": 2,
+            "leaveDays": 2,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0063289791",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Paskibraka",
+                    "score": "SB"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 77
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 1002,
+            "ranking": 24,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0062406897",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 77
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 995,
+            "ranking": 31,
+            "absentDays": 0,
+            "sickDays": 4,
+            "leaveDays": 2,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0068172957",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 81
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 77
+                }
+            ],
+            "totalScore": 987,
+            "ranking": 35,
+            "absentDays": 0,
+            "sickDays": 2,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0051304978",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Musik",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 82
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 89
+                }
+            ],
+            "totalScore": 1042,
+            "ranking": 7,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0064156194",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 79
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 82
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 992,
+            "ranking": 32,
+            "absentDays": 0,
+            "sickDays": 6,
+            "leaveDays": 2,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0019449890",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 78
+                }
+            ],
+            "totalScore": 1017,
+            "ranking": 14,
+            "absentDays": 0,
+            "sickDays": 1,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0062902332",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 77
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 996,
+            "ranking": 33,
+            "absentDays": 0,
+            "sickDays": 5,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0077534857",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [],
+            "totalScore": 0,
+            "ranking": 36,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0068745686",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Musik",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 82
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 89
+                }
+            ],
+            "totalScore": 1036,
+            "ranking": 8,
+            "absentDays": 0,
+            "sickDays": 2,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0061441691",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "PMR",
+                    "score": "B"
+                },
+                {
+                    "extracurricularName": "Karawitan",
+                    "score": "SB"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 82
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 79
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 83
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 91
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 86
+                }
+            ],
+            "totalScore": 1028,
+            "ranking": 9,
+            "absentDays": 0,
+            "sickDays": 1,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0073494304",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 87
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 79
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 90
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 88
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 77
+                }
+            ],
+            "totalScore": 1020,
+            "ranking": 13,
+            "absentDays": 0,
+            "sickDays": 7,
+            "leaveDays": 2,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        },
+        {
+            "studentNationalId": "0077149612",
+            "extracurricularScores": [
+                {
+                    "extracurricularName": "Pramuka Kelas XI",
+                    "score": "B"
+                }
+            ],
+            "scores": [
+                {
+                    "subjectName": "Pendidikan Pancasila dan Kewarganegaraan",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Bahasa Indonesia",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Bahasa Inggris",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Kimia",
+                    "score": 80
+                },
+                {
+                    "subjectName": "Biologi",
+                    "score": 78
+                },
+                {
+                    "subjectName": "Sejarah",
+                    "score": 85
+                },
+                {
+                    "subjectName": "Seni Budaya",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Penjasorkes",
+                    "score": 89
+                },
+                {
+                    "subjectName": "Bahasa Jawa",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Informatika",
+                    "score": 84
+                },
+                {
+                    "subjectName": "Pendidikan Agama Dan Budi Pekerti",
+                    "score": 86
+                },
+                {
+                    "subjectName": "Matematika Wajib",
+                    "score": 76
+                }
+            ],
+            "totalScore": 999,
+            "ranking": 26,
+            "absentDays": 0,
+            "sickDays": 0,
+            "leaveDays": 0,
+            "semester": "II",
+            "schoolYear": "2024/2025"
+        }
+    ],
+    "schoolYear": "2024/2025",
+    "semester": "II"
+}

@@ -59,7 +59,12 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
       await queryRunner.startTransaction();
       const student: Student = await queryRunner.manager.findOne(Student, {
         where: { studentNationalId: studentNationalId },
-        select: { id: true, semesterReports: { id: true, semester: true } },
+        select: {
+          id: true,
+          studentClass: { id: true, classType: true },
+          semesterReports: { id: true, semester: true },
+        },
+        relations: { semesterReports: true, studentClass: true },
       });
       if (!student) {
         await queryRunner.rollbackTransaction();
@@ -78,6 +83,7 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
         const score = scores[index];
         const subject = await queryRunner.manager.findOne(Subject, {
           where: { name: score.subjectName },
+          select: { id: true },
         });
         if (!subject) {
           await queryRunner.rollbackTransaction();
@@ -94,7 +100,10 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
         const extracurricularScore = extracurricularScores[index];
         const extracurricular = await queryRunner.manager.findOne(
           Extracurricular,
-          { where: { name: extracurricularScore.extracurricularName } },
+          {
+            where: { name: extracurricularScore.extracurricularName },
+            select: { id: true },
+          },
         );
         if (!extracurricular) {
           await queryRunner.rollbackTransaction();
@@ -113,6 +122,7 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
       newSemesterReport.ranking = ranking;
       newSemesterReport.sickDays = sickDays;
       newSemesterReport.totalScore = totalScore;
+      newSemesterReport.classType = student.studentClass.classType;
       newSemesterReport.semester = semester;
       newSemesterReport.student = student;
       await queryRunner.manager.save(newSemesterReport);
@@ -149,8 +159,12 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
       } = element;
       const student: Student = await queryRunner.manager.findOne(Student, {
         where: { studentNationalId: studentNationalId },
-        select: { id: true, semesterReports: { id: true, semester: true } },
-        relations: { semesterReports: true },
+        select: {
+          id: true,
+          studentClass: { id: true, classType: true },
+          semesterReports: { id: true, semester: true },
+        },
+        relations: { semesterReports: true, studentClass: true },
       });
       if (!student) {
         await queryRunner.rollbackTransaction();
@@ -168,6 +182,7 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
         const score = scores[index];
         let subject = await queryRunner.manager.findOne(Subject, {
           where: { name: score.subjectName },
+          select: { id: true },
         });
         if (!subject) {
           subject = new Subject();
@@ -186,7 +201,10 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
         const extracurricularScore = extracurricularScores[index];
         let extracurricular = await queryRunner.manager.findOne(
           Extracurricular,
-          { where: { name: extracurricularScore.extracurricularName } },
+          {
+            where: { name: extracurricularScore.extracurricularName },
+            select: { id: true },
+          },
         );
         if (!extracurricular) {
           extracurricular = new Extracurricular();
@@ -203,6 +221,7 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
       newSemesterReport.extracurricularScores = arrayOfxtracurricularScores;
       newSemesterReport.scores = scoreDatas;
       newSemesterReport.absentDays = absentDays;
+      newSemesterReport.classType = student.studentClass.classType;
       newSemesterReport.leaveDays = leaveDays;
       newSemesterReport.schholYear = schoolYear;
       newSemesterReport.averageScore = Number(totalScore) / scoreDatas.length;

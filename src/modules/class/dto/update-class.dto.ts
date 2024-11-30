@@ -1,5 +1,6 @@
 import { Expose } from 'class-transformer';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import { ClassType } from 'src/enums/class-type.enum';
 
 export class UpdateClassDto {
   @IsOptional()
@@ -10,4 +11,9 @@ export class UpdateClassDto {
   @IsNumber()
   @Expose({ name: 'study_group_id' })
   studyGroupId?: number;
+
+  @IsOptional()
+  @IsEnum(ClassType)
+  @Expose({ name: 'class_type' })
+  classType?: ClassType;
 }

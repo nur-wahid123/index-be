@@ -25,7 +25,7 @@ export class ClassRepository extends Repository<ClassEntity> {
         .leftJoinAndSelect('class.studyGroup', 'studyGroup')
         .addSelect(['student.id', 'studyGroup.id']);
       this.applyFilters(qb, filter);
-      if (page && skip) {
+      if (page && take) {
         qb.take(take).skip(skip);
       }
       qb.orderBy('class.id', order);

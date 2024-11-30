@@ -1,5 +1,6 @@
 import { Expose } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { ClassType } from 'src/enums/class-type.enum';
 
 export class CreateClassDto {
   @IsNotEmpty()
@@ -10,4 +11,9 @@ export class CreateClassDto {
   @IsNumber()
   @Expose({ name: 'study_group_id' })
   studyGroupId: number;
+
+  @IsNotEmpty()
+  @IsEnum(ClassType)
+  @Expose({ name: 'class_type' })
+  classType?: ClassType;
 }

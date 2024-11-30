@@ -5,6 +5,7 @@ import { Score } from './score.entity';
 import { Expose } from 'class-transformer';
 import { ExtracurricularScore } from './extracurricular-score.entity';
 import { Semester } from './../enums/semester.enum';
+import { ClassType } from './../enums/class-type.enum';
 
 @Entity('semester_reports')
 export class SemesterReport extends BaseEntity {
@@ -49,4 +50,8 @@ export class SemesterReport extends BaseEntity {
 
   @Column({ nullable: false, default: 0 })
   ranking?: number;
+
+  @Column({ nullable: false, enum: ClassType })
+  @Expose({ name: 'class_type' })
+  classType?: ClassType;
 }

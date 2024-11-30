@@ -18,6 +18,7 @@ export class ClassService {
     const stGr = new StudyGroup();
     stGr.id = createClassDto.studyGroupId;
     classEntity.studyGroup = stGr;
+    classEntity.classType = createClassDto.classType;
     classEntity.name = createClassDto.name.toUpperCase();
     classEntity.createdBy = userId;
     return this.classRepository.saveClass(classEntity);
@@ -26,11 +27,15 @@ export class ClassService {
   updateClass(id: number, updateClassDto: UpdateClassDto, userId: number) {
     const classEntity = new ClassEntity();
     classEntity.id = id;
-    classEntity.name = updateClassDto.name;
+    if (updateClassDto.classType)
+      classEntity.classType = updateClassDto.classType;
+    if (updateClassDto.name) classEntity.name = updateClassDto.name;
     classEntity.updatedBy = userId;
-    const stGr = new StudyGroup();
-    stGr.id = updateClassDto.studyGroupId;
-    classEntity.studyGroup = stGr;
+    if (updateClassDto.studyGroupId) {
+      const stGr = new StudyGroup();
+      stGr.id = updateClassDto.studyGroupId;
+      classEntity.studyGroup = stGr;
+    }
     return this.classRepository.updateClass(classEntity);
   }
 
@@ -46,6 +51,7 @@ export class ClassService {
     return this.classRepository.findOne({
       where: { id: id },
       relations: { studyGroup: true },
+      order: { studyGroup: { name: 'ASC' } },
     });
   }
 
