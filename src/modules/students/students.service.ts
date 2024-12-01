@@ -9,6 +9,11 @@ import { PageDto } from './../../commons/dto/page.dto';
 @Injectable()
 export class StudentsService {
   constructor(private readonly studentRepository: StudentRepository) {}
+
+  createStudent(createStudentDto: CreateStudentDto) {
+    return this.studentRepository.createStudent(createStudentDto);
+  }
+
   createBatch(createStudentDto: CreateStudentDto[]) {
     return this.studentRepository.createBatch(createStudentDto);
   }

@@ -23,6 +23,11 @@ export class StudentsController {
     return this.studentsService.createBatch(createStudentDto);
   }
 
+  @Post('create')
+  createStudent(@Body() createStudentDto: CreateStudentDto) {
+    return this.studentsService.createStudent(createStudentDto);
+  }
+
   @Get('list')
   findAll(
     @Query() filter: FilterStudentDto,

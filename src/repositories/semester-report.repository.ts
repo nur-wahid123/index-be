@@ -13,7 +13,8 @@ import {
   CreateBatchSemesterReportDto,
   CreateSemesterReportDto,
 } from '../modules/semester-report/dto/create-semester-report.dto';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, Repository, SelectQueryBuilder } from 'typeorm';
+import { QueryGetStudentDto } from 'src/modules/semester-report/dto/query-get-student.dto';
 
 @Injectable()
 export class SemesterReportRepository extends Repository<SemesterReport> {
@@ -38,6 +39,57 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
         'extracurricular',
       );
     return await query.getMany();
+  }
+
+  findOneReport(studentId: number, filterReport: QueryGetStudentDto) {
+    try {
+      const query = this.dataSource
+        .createQueryBuilder(SemesterReport, 'semesterReport')
+        .leftJoin('semesterReport.student', 'student')
+        .leftJoin('semesterReport.scores', 'scores')
+        .leftJoin('scores.subject', 'subject')
+        .leftJoin(
+          'semesterReport.extracurricularScores',
+          'extracurricularScores',
+        )
+        .leftJoin('extracurricularScores.extracurricular', 'extracurricular')
+        .addSelect('student.id')
+        .addSelect('student.name')
+        .addSelect('subject.id')
+        .addSelect('subject.name')
+        .addSelect('scores.id')
+        .addSelect('scores.scoreValue')
+        .addSelect('extracurricularScores.id')
+        .addSelect('extracurricularScores.score')
+        .addSelect('extracurricular.id')
+        .addSelect('extracurricular.name')
+        .where((qb) => {
+          this.applyFilters(qb, studentId, filterReport);
+        });
+      return query.getOne();
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException('Internal server error');
+    }
+  }
+
+  applyFilters(
+    qb: SelectQueryBuilder<SemesterReport>,
+    studentId: number,
+    filterReport: QueryGetStudentDto,
+  ) {
+    const { semester, classType } = filterReport;
+    if (studentId) {
+      qb.andWhere('student.id = :studentId', { studentId });
+    }
+
+    if (semester) {
+      qb.andWhere('semesterReport.semester = :semester', { semester });
+    }
+
+    if (classType) {
+      qb.andWhere('semesterReport.classType = :classType', { classType });
+    }
   }
 
   async createSemesterReport(body: CreateSemesterReportDto) {
@@ -72,7 +124,10 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
       }
       for (let index = 0; index < student.semesterReports.length; index++) {
         const semesterReport = student.semesterReports[index];
-        if (semesterReport.semester === semester) {
+        if (
+          semesterReport.semester === semester &&
+          semesterReport.classType === student.studentClass.classType
+        ) {
           await queryRunner.rollbackTransaction();
           throw new NotFoundException('semester report already exist');
         }
