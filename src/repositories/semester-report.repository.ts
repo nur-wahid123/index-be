@@ -202,7 +202,7 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
     await queryRunner.connect();
     await queryRunner.startTransaction();
     const { body, schoolYear, semester } = batch;
-    const failedId: number[] = [];
+    const failedId: string[] = [];
     const createSemesterReport: SemesterReport[] = [];
     for (let index = 0; index < body.length; index++) {
       const newSemesterReport = new SemesterReport();
@@ -232,8 +232,10 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
         relations: { semesterReports: true, studentClass: true },
       });
       if (!student) {
-        await queryRunner.rollbackTransaction();
-        throw new NotFoundException('student not found');
+        failedId.push(studentNationalId);
+        // await queryRunner.rollbackTransaction();
+        // throw new NotFoundException('student not found');
+        continue;
       }
       try {
         const compositeKey = `${semester}-${student.studentClass.classType}`;
@@ -241,7 +243,7 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
           (sr) => `${sr.semester}-${sr.classType}`,
         );
         if (semesterReportKeys.includes(compositeKey)) {
-          failedId.push(student.id);
+          failedId.push(String(student.id));
           throw new BadRequestException(
             `student already have semester report with composite key ${compositeKey}`,
           );
@@ -307,7 +309,7 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
       newSemesterReport.totalScore = totalScore;
       newSemesterReport.semester = semester;
       newSemesterReport.student = student;
-      if (!failedId.includes(newSemesterReport.student.id)) {
+      if (!failedId.includes(String(newSemesterReport.student.id))) {
         createSemesterReport.push(newSemesterReport);
       }
     }
