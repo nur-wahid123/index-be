@@ -8,6 +8,11 @@ export class UpdateClassDto {
   name?: string;
 
   @IsOptional()
+  @IsString()
+  @Expose({ name: 'homeroom_teacher' })
+  homeroomTeacher: string;
+
+  @IsOptional()
   @IsNumber()
   @Expose({ name: 'study_group_id' })
   studyGroupId?: number;

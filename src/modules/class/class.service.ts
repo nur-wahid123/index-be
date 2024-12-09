@@ -18,6 +18,7 @@ export class ClassService {
     const stGr = new StudyGroup();
     stGr.id = createClassDto.studyGroupId;
     classEntity.studyGroup = stGr;
+    classEntity.homeroomTeacher = createClassDto.homeroomTeacher;
     classEntity.classType = createClassDto.classType;
     classEntity.name = createClassDto.name.toUpperCase();
     classEntity.createdBy = userId;
@@ -35,6 +36,10 @@ export class ClassService {
       const stGr = new StudyGroup();
       stGr.id = updateClassDto.studyGroupId;
       classEntity.studyGroup = stGr;
+    }
+
+    if (updateClassDto.homeroomTeacher) {
+      classEntity.homeroomTeacher = updateClassDto.homeroomTeacher;
     }
     return this.classRepository.updateClass(classEntity);
   }

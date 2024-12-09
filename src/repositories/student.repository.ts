@@ -22,14 +22,36 @@ export class StudentRepository extends Repository<Student> {
     super(Student, dataSource.createEntityManager());
   }
 
+  exportStudent(id: string) {
+    return this.findOne({
+      where: { studentNationalId: id },
+      relations: {
+        semesterReports: {
+          scores: { subject: true },
+          extracurricularScores: { extracurricular: true },
+        },
+        bank: true,
+        father: true,
+        mother: true,
+        guardian: true,
+        kindOfStay: true,
+        studentClass: true,
+        religion: true,
+        transportation: true,
+        subDistrict: true,
+      },
+      order: { semesterReports: { classType: 'ASC', semester: 'ASC' } },
+    });
+  }
+
   findOneStudent(id: string) {
     return this.findOne({
       where: { studentNationalId: id },
       relations: {
         bank: true,
-        father: true,
-        mother: true,
-        guardian: true,
+        father: { income: true, job: true, education: true },
+        mother: { income: true, job: true, education: true },
+        guardian: { income: true, job: true, education: true },
         kindOfStay: true,
         studentClass: true,
         religion: true,
@@ -451,7 +473,7 @@ export class StudentRepository extends Repository<Student> {
       console.log(error);
       throw new InternalServerErrorException();
     } finally {
-      // await queryRunner.release()
+      await queryRunner.release();
     }
   }
 
@@ -801,7 +823,7 @@ export class StudentRepository extends Repository<Student> {
       console.log(error);
       throw new InternalServerErrorException();
     } finally {
-      // await queryRunner.release()
+      await queryRunner.release();
     }
   }
 }

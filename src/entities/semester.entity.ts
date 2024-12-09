@@ -22,6 +22,7 @@ export class SemesterReport extends BaseEntity {
     () => ExtracurricularScore,
     (extracurricularScore) => extracurricularScore.semesterReport,
   )
+  @Expose({ name: 'extracurricular_scores' })
   extracurricularScores?: ExtracurricularScore[];
 
   @Column({ nullable: false, type: 'varchar' })
@@ -54,4 +55,7 @@ export class SemesterReport extends BaseEntity {
   @Column({ nullable: false, enum: ClassType })
   @Expose({ name: 'class_type' })
   classType?: ClassType;
+
+  @Column({ nullable: true, type: 'jsonb' })
+  metadata?: object;
 }

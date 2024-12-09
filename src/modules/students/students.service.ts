@@ -5,10 +5,22 @@ import { FilterStudentDto } from './dto/filter-student.dto';
 import { PageOptionsDto } from './../../commons/dto/page-option.dto';
 import { PageMetaDto } from './../../commons/dto/page-meta.dto';
 import { PageDto } from './../../commons/dto/page.dto';
+import { Response } from 'express';
+import { StudentExportPdfUtil } from './util/student-export.pdf.util';
 
 @Injectable()
 export class StudentsService {
   constructor(private readonly studentRepository: StudentRepository) {}
+
+  async getReport(studentId: string, userName: string, res: Response) {
+    const data = await this.studentRepository.exportStudent(studentId);
+    const pdf = new StudentExportPdfUtil(data, userName);
+    pdf.generate(res);
+  }
+
+  exportStudent(id: string) {
+    return this.studentRepository.exportStudent(id);
+  }
 
   createStudent(createStudentDto: CreateStudentDto) {
     return this.studentRepository.createStudent(createStudentDto);

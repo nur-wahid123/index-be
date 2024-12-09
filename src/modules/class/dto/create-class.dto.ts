@@ -8,6 +8,11 @@ export class CreateClassDto {
   name: string;
 
   @IsNotEmpty()
+  @IsString()
+  @Expose({ name: 'homeroom_teacher' })
+  homeroomTeacher: string;
+
+  @IsNotEmpty()
   @IsNumber()
   @Expose({ name: 'study_group_id' })
   studyGroupId: number;

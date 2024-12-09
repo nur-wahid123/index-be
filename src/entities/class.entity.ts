@@ -24,4 +24,8 @@ export class ClassEntity extends BaseEntity {
   @Column({ nullable: false, enum: ClassType, default: ClassType.X })
   @Expose({ name: 'class_type' })
   classType?: ClassType;
+
+  @Column({ nullable: true })
+  @Expose({ name: 'homeroom_teacher' })
+  homeroomTeacher?: string;
 }
