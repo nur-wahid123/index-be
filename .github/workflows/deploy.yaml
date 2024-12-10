@@ -44,3 +44,20 @@ jobs:
             docker run -d --name index-be --env-file ~/index-be/.env --restart unless-stopped --network pos-app -p 3100:3000 indrafajar/index-be:latest
             docker image prune -f
           EOF
+
+      - name: Deploy to second VM
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_KEY }}
+          HOST: ${{ secrets.VM_HOST2 }}  # Update with your VM IP
+          USER: ${{ secrets.VM_USERNAME }}
+        run: |
+          echo "${SSH_PRIVATE_KEY}" > /tmp/vm_key
+          chmod 600 /tmp/vm_key
+
+          ssh -o StrictHostKeyChecking=no -i /tmp/vm_key $USER@$HOST << 'EOF'
+            podman pull docker.io/indrafajar/index-be:latest
+            podman stop index-be || true
+            podman rm index-be || true
+            podman run -d --name index-be --env-file ~/index-be/.env --restart unless-stopped --network pos-app -p 3100:3000 docker.io/indrafajar/index-be:latest
+            podman image prune -f
+          EOF
