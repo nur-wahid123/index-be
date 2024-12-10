@@ -5,11 +5,17 @@ import { Job } from './job.entity';
 import { Income } from './income.entity';
 import { Student } from './student.entity';
 import { Expose } from 'class-transformer';
+import { Citizenship } from './citizenship.entity';
+import { Religion } from './religion.entity';
 
 @Entity('parents')
 export class Parents extends BaseEntity {
   @Column({ nullable: true })
   name?: string;
+
+  @Column({ nullable: false, default: true })
+  @Expose({ name: 'is_alive' })
+  isAlive?: boolean = true;
 
   @Column({ nullable: true, default: 0 })
   @Expose({ name: 'year_of_birth' })
@@ -31,4 +37,10 @@ export class Parents extends BaseEntity {
 
   @OneToMany(() => Student, (student) => student.father)
   students?: Student[];
+
+  @ManyToOne(() => Citizenship)
+  citizenship?: Citizenship;
+
+  @ManyToOne(() => Religion)
+  religion?: Religion;
 }

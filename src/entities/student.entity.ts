@@ -11,6 +11,8 @@ import { Bank } from './bank.entity';
 import { Parents } from './parents.entity';
 import { SemesterReport } from './semester.entity';
 import { ClassEntity } from './class.entity';
+import { Citizenship } from './citizenship.entity';
+import { TypeOfBlood } from './type-of-blood.entity';
 
 @Entity('students')
 export class Student extends BaseEntity {
@@ -197,6 +199,38 @@ export class Student extends BaseEntity {
   @Expose({ name: 'distance_from_school' })
   distanceFromSchool?: number;
 
+  @Column({ nullable: true })
+  @Expose({ name: 'number_of_step_siblings' })
+  numberOfStepSiblings?: number;
+
+  @Column({ nullable: true })
+  @Expose({ name: 'number_of_adopted_siblings' })
+  numberOfAdoptedSiblings?: number;
+
+  @Column({ nullable: true })
+  @Expose({ name: 'accepted_first_time_in_class' })
+  acceptedFirstTimeInClass?: number;
+
+  @Column({ nullable: true })
+  @Expose({ name: 'years_on_junior_school' })
+  yearsOnJuniorSchool?: number;
+
+  @Column({ nullable: true })
+  @Expose({ name: 'accepted_first_time_in_date' })
+  acceptedFirstTimeInDate?: Date;
+
+  @Column({ nullable: true })
+  @Expose({ name: 'favourite_art' })
+  favouriteArt?: string;
+
+  @Column({ nullable: true })
+  @Expose({ name: 'favourite_sport' })
+  favouriteSport?: string;
+
+  @Column({ nullable: true })
+  @Expose({ name: 'social_organization' })
+  socialOrganization?: string;
+
   /**
    * Relations
    */
@@ -208,4 +242,11 @@ export class Student extends BaseEntity {
   @ManyToOne(() => ClassEntity, (classEntity) => classEntity.students)
   @Expose({ name: 'student_class' })
   studentClass?: ClassEntity;
+
+  @ManyToOne(() => Citizenship)
+  citizenship?: Citizenship;
+
+  @ManyToOne(() => TypeOfBlood)
+  @Expose({ name: 'type_of_blood' })
+  typeOfBlood?: TypeOfBlood;
 }

@@ -4,14 +4,25 @@ import { Education } from './education.entity';
 import { Job } from './job.entity';
 import { Income } from './income.entity';
 import { Student } from './student.entity';
+import { Expose } from 'class-transformer';
+import { Citizenship } from './citizenship.entity';
+import { Religion } from './religion.entity';
 
 @Entity('guardians')
 export class Guardian extends BaseEntity {
   @Column({ nullable: true })
   name?: string;
 
+  @Column({ nullable: false, default: true })
+  @Expose({ name: 'is_alive' })
+  isAlive?: boolean = true;
+
   @Column({ nullable: true, default: 0 })
+  @Expose({ name: 'year_of_birth' })
   yearOfBirth?: number;
+
+  @ManyToOne(() => Citizenship)
+  citizenship?: Citizenship;
 
   @ManyToOne(() => Education, (education) => education.guardians, {
     nullable: true,
@@ -29,4 +40,7 @@ export class Guardian extends BaseEntity {
 
   @OneToMany(() => Student, (student) => student.guardian)
   students?: Student[];
+
+  @ManyToOne(() => Religion)
+  religion?: Religion;
 }

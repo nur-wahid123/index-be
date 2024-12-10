@@ -4,6 +4,8 @@ import { Student } from 'src/entities/student.entity';
 import { SemesterReport } from 'src/entities/semester.entity';
 import { Gender } from 'src/enums/gender.enum';
 import { formatDateToExactString } from 'src/commons/utils/date.util';
+import { Parents } from 'src/entities/parents.entity';
+import { Guardian } from 'src/entities/guardian.entity';
 
 type TData = Student;
 
@@ -105,6 +107,77 @@ export class StudentExportPdfUtil extends PDFUtil {
     startX: number,
     y: number,
   ) {
+    const generateData = (
+      parent: Parents | Guardian,
+    ): { title: string; value: string }[] => {
+      if (!parent) {
+        return [
+          { title: 'Nama', value: dotDot },
+          { title: 'Tahun Lahir', value: dotDot },
+          {
+            title: 'Agama',
+            value: dotDot,
+          },
+          {
+            title: 'Kewarganegaraan',
+            value: dotDot,
+          },
+          {
+            title: 'Pendidikan',
+            value: dotDot,
+          },
+          {
+            title: 'Pekerjaan',
+            value: dotDot,
+          },
+          {
+            title: 'Penghasilan per bulan',
+            value: dotDot,
+          },
+          {
+            title: 'Alamat Rumah',
+            value: `${dotDot}`,
+          },
+          {
+            title: 'Masih Hidup/ Meninggal',
+            value: dotDot,
+          },
+        ];
+      }
+      return [
+        { title: 'Nama', value: parent ? parent.name : dotDot },
+        { title: 'Tahun Lahir', value: `${parent.yearOfBirth ?? dotDot}` },
+        {
+          title: 'Agama',
+          value: `${parent.religion ? parent.religion.name : dotDot}`,
+        },
+        {
+          title: 'Kewarganegaraan',
+          value: `${parent.citizenship ? parent.citizenship.name : dotDot}`,
+        },
+        {
+          title: 'Pendidikan',
+          value: `${parent.education ? parent.education.name : dotDot}`,
+        },
+        {
+          title: 'Pekerjaan',
+          value: `${parent.job ? parent.job.name : dotDot}`,
+        },
+        {
+          title: 'Penghasilan per bulan',
+          value: `${parent.income ? parent.income.name : dotDot}`,
+        },
+        {
+          title: 'Alamat Rumah',
+          value: `${dotDot}`,
+        },
+        {
+          title: 'Masih Hidup/ Meninggal',
+          value: `${parent.isAlive ? 'Masih Hidup' : 'Meninggal'}`,
+        },
+      ];
+    };
+    const dotDot = '..............................................';
     const headerData: {
       title: string;
       items: { title: string; value: string }[];
@@ -115,7 +188,7 @@ export class StudentExportPdfUtil extends PDFUtil {
           { title: 'Nama', value: this.data.name },
           { title: 'NISN', value: this.data.studentNationalId },
           { title: 'NIK', value: this.data.nik },
-          { title: 'NIS', value: this.data.studentSchoolId ?? '-' },
+          { title: 'NIS', value: this.data.studentSchoolId ?? dotDot },
           {
             title: 'Jenis Kelamin',
             value: this.data.gender === Gender.L ? 'Laki-laki' : 'Perempuan',
@@ -124,14 +197,92 @@ export class StudentExportPdfUtil extends PDFUtil {
             title: 'Tempat dan Tanggal Lahir',
             value: `${this.data.placeOfBirth}, ${formatDateToExactString(new Date(this.data.dateOfBirth))}`,
           },
-          { title: 'Agama', value: this.data.religion.name ?? '-' },
-          { title: 'Kewarganegaraan', value: '-' },
-          { title: 'Anak ke berapa', value: `${this.data.childOrder ?? '-'}` },
+          { title: 'Agama', value: this.data.religion.name ?? dotDot },
+          {
+            title: 'Kewarganegaraan',
+            value: this.data.citizenship ? this.data.citizenship.name : dotDot,
+          },
+          {
+            title: 'Anak ke berapa',
+            value: `${this.data.childOrder ?? dotDot}`,
+          },
           {
             title: 'Jumlah Saudara',
-            value: `${this.data.numberOfSiblings ?? '-'}`,
+            value: `${this.data.numberOfSiblings ?? dotDot}`,
           },
         ],
+      },
+      {
+        title: `B. KETERANGAN TEMPAT TINGGAL`,
+        items: [
+          { title: 'Alamat', value: this.data.address ?? dotDot },
+          {
+            title: 'Nomor Telepon/HP',
+            value: `${this.data.telephone ?? dotDot} / ${this.data.phoneNumber ?? dotDot}`,
+          },
+          {
+            title: 'Jenis Tempat Tinggal',
+            value: this.data.kindOfStay.name ?? dotDot,
+          },
+          {
+            title: 'Jarak tempat tinggal ke sekolah',
+            value: `${this.data.distanceFromSchool ?? dotDot} KM`,
+          },
+        ],
+      },
+      {
+        title: `C. KETERANGAN KESEHATAN`,
+        items: [
+          {
+            title: 'Golongan Darah',
+            value: this.data.typeOfBlood ? this.data.typeOfBlood.name : dotDot,
+          },
+          {
+            title: 'Penyakit yang pernah diderita',
+            value: `${this.data.disability ?? dotDot}`,
+          },
+          {
+            title: 'Kelainan Jasmani',
+            value: dotDot,
+          },
+          {
+            title: 'Tinggi dan Berat Badan',
+            value: `${this.data.height ?? dotDot} cm / ${this.data.weight ?? dotDot} kg`,
+          },
+        ],
+      },
+      {
+        title: `D. KETERANGAN PENDIDIKAN`,
+        items: [
+          {
+            title: 'Pendidikan Sebelumnya',
+            value: this.data.juniorSchoolName ?? dotDot,
+          },
+          {
+            title: 'Tanggal dan Nomor Ijazah',
+            value: `${this.data.graduationSertificateNumber ?? dotDot}`,
+          },
+          {
+            title: 'Tanggal dan Nomor STL',
+            value: dotDot,
+          },
+          {
+            title: 'Lama Belajar',
+            value: `${this.data.yearsOnJuniorSchool ?? dotDot} Tahun`,
+          },
+        ],
+      },
+      {
+        title: `E. KETERANGAN TENTANG AYAH KANDUNG`,
+        items: generateData(this.data.father),
+      },
+      {
+        title: `F. KETERANGAN TENTANG IBU KANDUNG`,
+        items: generateData(this.data.mother),
+      },
+      {
+        title: `G. KETERANGAN TENTANG WALI`,
+        items: generateData(this.data.guardian),
       },
     ];
     const marginY = 3;
@@ -153,23 +304,37 @@ export class StudentExportPdfUtil extends PDFUtil {
         const addMargin = 18;
         doc
           .fontSize(this.fontSize)
-          .font(this.boldFont)
+          .font(this.font)
           .text(`${itemHeader.title} `, startX + addMargin, y, {
-            width: 150,
+            width: 200,
             align: 'left',
           });
 
         doc
           .fontSize(this.fontSize)
           .font(this.font)
-          .text(`: ` + itemHeader.value, startX + 153 + addMargin, y, {
-            width: 200,
+          .text(`: ` + itemHeader.value, startX + 203 + addMargin, y, {
+            width: 300,
             align: 'left',
           });
 
         y = doc.y + marginY;
       }
+      y = doc.y + marginY + 15;
+      this.addPageAuto(
+        this.computeHeight(headerData[index + 1].items.length),
+        startX,
+        'halo boi',
+      );
     }
+  }
+
+  private computeHeight(length: number) {
+    const textHeight = 16;
+    const titleHeight = 20;
+    const marginY = 3;
+
+    return textHeight * length + titleHeight + marginY * length;
   }
 
   private drawHeaderContentNewPage(
