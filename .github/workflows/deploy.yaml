@@ -58,6 +58,6 @@ jobs:
             podman pull docker.io/indrafajar/index-be:latest
             podman stop index-be || true
             podman rm index-be || true
-            podman run -d --name index-be --env-file ~/index-be/.env --restart unless-stopped --network pos-app -p 3100:3000 docker.io/indrafajar/index-be:latest
+            podman run -d --name index-be --env-file ~/index-be/.env --restart always --network pos-app --pod index-app -p 3100:3000 docker.io/indrafajar/index-be:latest
             podman image prune -f
           EOF

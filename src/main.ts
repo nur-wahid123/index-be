@@ -26,6 +26,8 @@ async function bootstrap() {
   });
   if (process.env.NODE_ENV === 'development') {
     userService.init();
+  } else if (process.env.NODE_ENV === 'production') {
+    userService.init2();
   }
   await app.listen(port, () => {
     console.log('listening to port : ' + port);

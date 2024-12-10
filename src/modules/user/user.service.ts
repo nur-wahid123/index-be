@@ -35,6 +35,22 @@ export class UserService {
     console.log('superadmin created!!');
   }
 
+  async init2() {
+    const user = new User();
+    user.username = 'superadmin';
+    user.name = 'super admin';
+    user.password = await this.hashPassword.generate(
+      process.env.USER_PASSWORD ?? 'password12345',
+    );
+    const username = await this.userRepository.findOneBy({
+      username: user.username,
+    });
+    if (username === null) {
+      await this.userRepository.createUser(user);
+    }
+    console.log('superadmin created!!');
+  }
+
   async isUsernameAndEmailExist(
     username: string,
     email: string,
