@@ -1,0 +1,52 @@
+{
+    "student": {
+        "name": "A'LINA LAILATUL ZUKIYA",
+        "studentSchoolId": 13181,
+        "gender": "perempuan",
+        "studentNationalId": "0061034136",
+        "placeOfBirth": "Blitar",
+        "dateOfBirth": "2006-07-18",
+        "nik": "3505035807060001",
+        "religion": "Islam",
+        "address": "Jl. Manggar RT/RW 2/2",
+        "ward": "Desa/Kel. Srengat",
+        "subDistrict": "Kec. Srengat",
+        "postalCode": 66152,
+        "kindOfStay": "Bersama orang tua",
+        "transportation": "Sepeda",
+        "isKps": false,
+        "father": {
+            "name": "DASTO UTOMO",
+            "yearOfBirth": 1974,
+            "education": "SMA / sederajat",
+            "job": "Karyawan Swasta",
+            "income": "Rp. 1,000,000 - Rp. 1,999,999",
+            "nik": "3505031212740003"
+        },
+        "mother": {
+            "name": "Yuni Rahmawati",
+            "yearOfBirth": 1977,
+            "education": "SMA / sederajat",
+            "job": "Tidak bekerja",
+            "income": "Tidak Berpenghasilan",
+            "nik": "3505037006770001"
+        },
+        "guardian": {},
+        "studyGroup": "XI-C1",
+        "isKip": false,
+        "isNameInKip": true,
+        "birthCertificateRegistrationId": "3505-LT-170720120131",
+        "isPipWorthy": false,
+        "disability": "Tidak ada",
+        "juniorSchoolName": "UPT SMP NEGERI 2 SRENGAT",
+        "childOrder": 2,
+        "latitude": "-8.0626",
+        "longitude": "112.0722",
+        "familyCardId": "3505032006061895",
+        "weight": 56,
+        "height": 158,
+        "headCircumference": 53,
+        "numberOfSiblings": 1,
+        "distanceFromSchool": 1
+    }
+}

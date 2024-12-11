@@ -23,11 +23,17 @@ export class StudentsService {
   }
 
   createStudent(createStudentDto: CreateStudentDto) {
-    return this.studentRepository.createStudent(createStudentDto);
+    return this.studentRepository.createStudentUsingMicroservice(
+      createStudentDto,
+    );
+    // return this.studentRepository.createStudent(createStudentDto);
   }
 
   createBatch(createStudentDto: CreateStudentDto[]) {
-    return this.studentRepository.createBatch(createStudentDto);
+    return this.studentRepository.createBatchStudentUsingMicroservice(
+      createStudentDto,
+    );
+    // return this.studentRepository.createBatch(createStudentDto);
   }
 
   async findAll(filter: FilterStudentDto, pageOptionsDto: PageOptionsDto) {

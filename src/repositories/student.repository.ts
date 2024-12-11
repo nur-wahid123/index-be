@@ -15,6 +15,7 @@ import { DataSource, Repository, SelectQueryBuilder } from 'typeorm';
 import { FilterStudentDto } from '../modules/students/dto/filter-student.dto';
 import { PageOptionsDto } from '../commons/dto/page-option.dto';
 import { ClassEntity } from 'src/entities/class.entity';
+import { axiosInstance } from 'src/commons/utils/axios.util';
 
 @Injectable()
 export class StudentRepository extends Repository<Student> {
@@ -148,6 +149,30 @@ export class StudentRepository extends Repository<Student> {
 
     if (classId) {
       qb.andWhere('studentClass.id = :classId', { classId });
+    }
+  }
+
+  async createStudentUsingMicroservice(student: CreateStudentDto) {
+    const baseUrl = process.env.MICROSERVICE_URL;
+    try {
+      await axiosInstance.post(`${baseUrl}/students/create`, student);
+      return true;
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException('Internal server error');
+    }
+  }
+
+  async createBatchStudentUsingMicroservice(student: CreateStudentDto[]) {
+    const baseUrl = process.env.MICROSERVICE_URL;
+    try {
+      await axiosInstance.post(`${baseUrl}/students/create-batch`, {
+        items: student,
+      });
+      return true;
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException('Internal server error');
     }
   }
 

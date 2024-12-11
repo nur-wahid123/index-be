@@ -28,22 +28,22 @@ jobs:
           push: true
           tags: indrafajar/index-be:latest  # Update this
 
-      - name: Deploy to VM
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_KEY }}
-          HOST: ${{ secrets.VM_HOST }}  # Update with your VM IP
-          USER: ${{ secrets.VM_USERNAME }}
-        run: |
-          echo "${SSH_PRIVATE_KEY}" > /tmp/vm_key
-          chmod 600 /tmp/vm_key
+      # - name: Deploy to VM
+      #   env:
+      #     SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_KEY }}
+      #     HOST: ${{ secrets.VM_HOST }}  # Update with your VM IP
+      #     USER: ${{ secrets.VM_USERNAME }}
+      #   run: |
+      #     echo "${SSH_PRIVATE_KEY}" > /tmp/vm_key
+      #     chmod 600 /tmp/vm_key
 
-          ssh -o StrictHostKeyChecking=no -i /tmp/vm_key $USER@$HOST << 'EOF'
-            docker pull indrafajar/index-be:latest
-            docker stop index-be || true
-            docker rm index-be || true
-            docker run -d --name index-be --env-file ~/index-be/.env --restart unless-stopped --network pos-app -p 3100:3000 indrafajar/index-be:latest
-            docker image prune -f
-          EOF
+      #     ssh -o StrictHostKeyChecking=no -i /tmp/vm_key $USER@$HOST << 'EOF'
+      #       docker pull indrafajar/index-be:latest
+      #       docker stop index-be || true
+      #       docker rm index-be || true
+      #       docker run -d --name index-be --env-file ~/index-be/.env --restart unless-stopped --network pos-app -p 3100:3000 indrafajar/index-be:latest
+      #       docker image prune -f
+      #     EOF
 
       - name: Deploy to second VM
         env:
