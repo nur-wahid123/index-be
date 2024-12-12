@@ -44,7 +44,11 @@ jobs:
             docker run -d --name index-be --env-file ~/index-be/.env --restart unless-stopped --network pos-app -p 3100:3000 indrafajar/index-be:latest
             docker image prune -f
           EOF
-
+    
+  deploy-vm2:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
       - name: Deploy to second VM
         env:
           SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_KEY }}
@@ -61,7 +65,10 @@ jobs:
             podman run -d --name index-be --env-file ~/index-be/.env --restart always --network pos-app --pod index-app -p 3100:3000 docker.io/indrafajar/index-be:latest
             podman image prune -f
           EOF
-
+  deploy-vm3:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
       - name: Deploy to third VM
         env:
           HOST: ${{ secrets.VM3_HOST }}  # Update with your VM IP
@@ -69,9 +76,9 @@ jobs:
           PASSWORD: ${{ secrets.VM3_PASSWORD }}
         run: |
           sshpass -p "${PASSWORD}" ssh -o StrictHostKeyChecking=no $USER@$HOST << 'EOF'
-            docker pull docker.io/indrafajar/index-be:latest
+            docker pull indrafajar/index-be:latest
             docker stop index-be || true
             docker rm index-be || true
-            docker run -d --name index-be --env-file ~/index-be/.env --restart always --network pos-app --pod index-app -p 3100:3000 docker.io/indrafajar/index-be:latest
+            docker run -d --name index-be --env-file ~/index-be/.env --restart unless-stopped --network pos-app -p 3100:3000 indrafajar/index-be:latest
             docker image prune -f
           EOF
