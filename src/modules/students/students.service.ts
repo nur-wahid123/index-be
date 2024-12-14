@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { StudentRepository } from './../../repositories/student.repository';
 import { FilterStudentDto } from './dto/filter-student.dto';
@@ -13,9 +13,15 @@ export class StudentsService {
   constructor(private readonly studentRepository: StudentRepository) {}
 
   async getReport(studentId: string, userName: string, res: Response) {
-    const data = await this.studentRepository.exportStudent(studentId);
-    const pdf = new StudentExportPdfUtil(data, userName);
-    pdf.generate(res);
+    try {
+      const data = await this.studentRepository.exportStudent(studentId);
+      const pdf = new StudentExportPdfUtil(data, userName);
+      pdf.generate(res);
+    } catch (error) {
+      console.log(error);
+      throw error;
+      throw new InternalServerErrorException('Internal server error');
+    }
   }
 
   exportStudent(id: string) {

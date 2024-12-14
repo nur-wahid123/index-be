@@ -6,8 +6,17 @@ import { Gender } from 'src/enums/gender.enum';
 import { formatDateToExactString } from 'src/commons/utils/date.util';
 import { Parents } from 'src/entities/parents.entity';
 import { Guardian } from 'src/entities/guardian.entity';
+import { ClassType } from 'src/enums/class-type.enum';
 
 type TData = Student;
+
+class ClassReport {
+  classType: ClassType;
+  schoolYears: string[];
+  homeRoomTeachers: string[];
+  className: string[];
+  reports: SemesterReport[];
+}
 
 export class StudentExportPdfUtil extends PDFUtil {
   private readonly title = 'Index Siswa';
@@ -23,82 +32,158 @@ export class StudentExportPdfUtil extends PDFUtil {
 
     y = doc.y + 3;
     this.drawHeaderNewPage(doc, doc.page.margins.left, y);
-    this.drawFooter();
-    this.addPage();
-    doc
-      .fontSize(20)
-      .font(this.boldFont)
-      .text('Nilai Siswa', 0, y, { align: 'center' });
-    y = doc.y + 10;
-    for (let index = 0; index < this.data.semesterReports.length; index++) {
-      const element = this.data.semesterReports[index];
-      if (index !== 0) {
-        this.drawFooter();
-        this.addPage();
-        y = doc.y + 10;
-      }
+    if (this.data.semesterReports.length > 0) {
+      this.drawFooter();
+      this.addPage();
       doc
-        .fontSize(15)
+        .fontSize(20)
         .font(this.boldFont)
-        .text(
-          `Nilai kelas ${element.classType} semester ${element.semester}`,
-          0,
+        .text('Nilai Siswa', 0, y, { align: 'center' });
+      y = doc.y + 10;
+      const classReport: ClassReport[] = [];
+      for (let index = 0; index < this.data.semesterReports.length; index++) {
+        const element = this.data.semesterReports[index];
+        let clsRpt = classReport.find((v) => {
+          return v.classType === element.classType;
+        });
+        const metadata = element.metadata as any;
+        if (!clsRpt) {
+          clsRpt = new ClassReport();
+          clsRpt.classType = element.classType;
+          clsRpt.schoolYears = [element.schholYear];
+          clsRpt.className = [metadata ? metadata.class_name : ''];
+          clsRpt.homeRoomTeachers = [metadata ? metadata.homeroom_teacher : ''];
+          clsRpt.reports = [element];
+          classReport.push(clsRpt);
+        } else {
+          clsRpt.schoolYears.push(element.schholYear);
+          clsRpt.className.push(metadata ? metadata.class_name : '');
+          clsRpt.homeRoomTeachers.push(
+            metadata ? metadata.homeroom_teacher : '',
+          );
+          clsRpt.reports.push(element);
+        }
+      }
+      for (let index = 0; index < classReport.length; index++) {
+        const element = classReport[index];
+        if (index !== 0) {
+          this.drawFooter();
+          this.addPage();
+          y = doc.y + 10;
+        }
+        doc
+          .fontSize(15)
+          .font(this.boldFont)
+          .text(`Nilai kelas ${element.classType}`, 0, y, { align: 'center' });
+        y = doc.y + 10;
+        this.drawHeaderContentNewPage(doc, doc.page.margins.left, y, element);
+        y = doc.y + 10;
+        const tableData = this.mappingTableData(element);
+        const columns: TPdfColumn[] = [
+          { text: 'No.', alignment: 'left', width: 30 },
+          { text: 'Mata Pelajaran', alignment: 'left', width: 400 },
+        ];
+
+        for (let i = 0; i < tableData.numberOfSemester; i++) {
+          columns.push({ text: 'Nilai', alignment: 'center', width: 70 });
+        }
+        this.drawTable(
+          columns,
+          tableData.tableData,
+          doc.page.margins.left,
           y,
-          { align: 'center' },
+          this.title,
         );
-      y = doc.y + 10;
-      this.drawHeaderContentNewPage(doc, doc.page.margins.left, y, element);
-      y = doc.y + 10;
-      const columns: TPdfColumn[] = [
-        { text: 'No.', alignment: 'left', width: 30 },
-        { text: 'Mata Pelajaran', alignment: 'left', width: 400 },
-        { text: 'Nilai', alignment: 'center', width: 70 },
-      ];
-      const tableData = this.mappingTableData(element);
-      this.drawTable(columns, tableData, doc.page.margins.left, y, this.title);
-      y = doc.y;
-      const columnsExtra: TPdfColumn[] = [
-        { text: 'No.', alignment: 'left', width: 30 },
-        { text: 'Ekstrakurikuler', alignment: 'left', width: 400 },
-        { text: 'Nilai', alignment: 'center', width: 70 },
-      ];
-      const tableDataExtra = this.mappingTableDataEkstra(element);
-      this.drawTable(
-        columnsExtra,
-        tableDataExtra,
-        doc.page.margins.left,
-        y,
-        this.title,
-      );
+        y = doc.y;
+        const columnsExtra: TPdfColumn[] = [
+          { text: 'No.', alignment: 'left', width: 30 },
+          { text: 'Ekstrakurikuler', alignment: 'left', width: 400 },
+        ];
+        for (let index = 0; index < tableData.numberOfSemester; index++) {
+          columnsExtra.push({ text: 'Nilai', alignment: 'center', width: 70 });
+        }
+        const tableDataExtra = this.mappingTableDataEkstra(element);
+        this.drawTable(
+          columnsExtra,
+          tableDataExtra,
+          doc.page.margins.left,
+          y,
+          this.title,
+        );
+      }
     }
     this.drawFooter();
-
     doc.end();
   }
 
-  private mappingTableData(dataItem: SemesterReport): string[][] {
+  private mappingTableData(dataItem: ClassReport): {
+    tableData: string[][];
+    numberOfSemester: number;
+  } {
     const data: string[][] = [];
-    for (let i = 0; i < dataItem.scores.length; i++) {
-      const item = dataItem.scores[i];
-      data.push([`${i + 1}`, item.subject.name, `${item.scoreValue}`]);
+    const reportData: {
+      index: string;
+      name: string;
+      id: number;
+      scores: string[];
+    }[] = [];
+    for (let index = 0; index < dataItem.reports.length; index++) {
+      const element = dataItem.reports[index];
+      for (let j = 0; j < element.scores.length; j++) {
+        const score = element.scores[j];
+        const rpt = reportData.find((report) => report.id === score.subject.id);
+        if (rpt) {
+          rpt.scores.push(score.scoreValue.toString());
+        } else {
+          reportData.push({
+            index: `${j + 1}`,
+            name: `${score.subject.name}`,
+            id: score.subject.id,
+            scores: [score.scoreValue.toString()],
+          });
+        }
+      }
     }
-    data.push(['', 'Total Nilai', `${dataItem.totalScore}`]);
-    data.push(['', 'Rata-rata', `${Number(dataItem.averageScore).toFixed(2)}`]);
+    for (let index = 0; index < reportData.length; index++) {
+      const element = reportData[index];
+      data.push([element.index, element.name, ...element.scores]);
+    }
 
-    return data;
+    return { tableData: data, numberOfSemester: dataItem.reports.length };
   }
 
-  private mappingTableDataEkstra(dataItem: SemesterReport): string[][] {
+  private mappingTableDataEkstra(dataItem: ClassReport): string[][] {
     const data: string[][] = [];
-    for (let i = 0; i < dataItem.extracurricularScores.length; i++) {
-      const item = dataItem.extracurricularScores[i];
-      data.push([`${i + 1}`, item.extracurricular.name, `${item.score}`]);
+    const reportData: {
+      index: string;
+      name: string;
+      id: number;
+      scores: string[];
+    }[] = [];
+    for (let index = 0; index < dataItem.reports.length; index++) {
+      const element = dataItem.reports[index];
+      for (let j = 0; j < element.extracurricularScores.length; j++) {
+        const score = element.extracurricularScores[j];
+        const rpt = reportData.find(
+          (report) => report.id === score.extracurricular.id,
+        );
+        if (rpt) {
+          rpt.scores.push(score.score.toString());
+        } else {
+          reportData.push({
+            index: `${j + 1}`,
+            name: `${score.extracurricular.name}`,
+            id: score.extracurricular.id,
+            scores: [score.score.toString()],
+          });
+        }
+      }
     }
-    data.push(['', '', ``]);
-    data.push(['', 'Absen', `${dataItem.absentDays}`]);
-    data.push(['', 'Izin', `${dataItem.leaveDays}`]);
-    data.push(['', 'Sakit', `${dataItem.sickDays}`]);
-    data.push(['', 'Ranking', `${dataItem.ranking}`]);
+    for (let index = 0; index < reportData.length; index++) {
+      const element = reportData[index];
+      data.push([element.index, element.name, ...element.scores]);
+    }
+
     return data;
   }
 
@@ -177,7 +262,7 @@ export class StudentExportPdfUtil extends PDFUtil {
         },
       ];
     };
-    const dotDot = '..............................................';
+    const dotDot = '....................................';
     const headerData: {
       title: string;
       items: { title: string; value: string }[];
@@ -284,6 +369,57 @@ export class StudentExportPdfUtil extends PDFUtil {
         title: `G. KETERANGAN TENTANG WALI`,
         items: generateData(this.data.guardian),
       },
+      {
+        title: `H. KEGEMARAN PESERTA DIDIK`,
+        items: [
+          { title: 'Kesenian', value: this.data.favouriteArt ?? dotDot },
+          { title: 'Olah Raga', value: this.data.favouriteSport ?? dotDot },
+          {
+            title: 'Kemasyarakatan / Organisasi',
+            value: this.data.favouriteSport ?? dotDot,
+          },
+          { title: 'lain-lain', value: dotDot },
+        ],
+      },
+      {
+        title: `I. KETERANGAN PERKEMBANGAN PESERTA DIDIK`,
+        items: [
+          {
+            title: 'Menerima Beasiswa',
+            value: `Tahun....................../Kls......................dari......................`,
+          },
+          {
+            title: '',
+            value: `Tahun....................../Kls......................dari......................`,
+          },
+          {
+            title: '',
+            value: `Tahun....................../Kls......................dari......................`,
+          },
+          { title: 'Olah Raga', value: this.data.favouriteSport ?? dotDot },
+          {
+            title: 'Meninggalkan sekolah ini',
+            value: dotDot,
+          },
+          {
+            title: 'Tanggal Meninggalkan Sekolah',
+            value: dotDot,
+          },
+          { title: 'Alasan', value: dotDot },
+          { title: 'Akhir Pendidikan', value: dotDot },
+          { title: 'Lulus', value: dotDot },
+          { title: 'Ijazah', value: dotDot },
+          { title: 'Nomor Surat Tanda Lulus/STL', value: dotDot },
+          { title: 'Nilai rata-rata yang dicapai', value: dotDot },
+        ],
+      },
+      {
+        title: 'J. KETERANGAN SETELAH SELESAI PENDIDIKAN',
+        items: [
+          { title: 'Akan melanjutkan ke', value: dotDot },
+          { title: 'Akan bekerja di', value: dotDot },
+        ],
+      },
     ];
     const marginY = 3;
 
@@ -291,6 +427,11 @@ export class StudentExportPdfUtil extends PDFUtil {
 
     for (let index = 0; index < headerData.length; index++) {
       const element = headerData[index];
+      if (
+        this.addPageAuto(this.computeHeight(element.items.length), startX, '')
+      ) {
+        y = 40 + marginY;
+      }
       doc
         .fontSize(16)
         .font(this.boldFont)
@@ -314,18 +455,12 @@ export class StudentExportPdfUtil extends PDFUtil {
           .fontSize(this.fontSize)
           .font(this.font)
           .text(`: ` + itemHeader.value, startX + 203 + addMargin, y, {
-            width: 300,
+            width: 370,
             align: 'left',
           });
-
         y = doc.y + marginY;
       }
-      y = doc.y + marginY + 15;
-      this.addPageAuto(
-        this.computeHeight(headerData[index + 1].items.length),
-        startX,
-        'halo boi',
-      );
+      y = doc.y + marginY;
     }
   }
 
@@ -341,24 +476,24 @@ export class StudentExportPdfUtil extends PDFUtil {
     doc: PDFKit.PDFDocument,
     startX: number,
     y: number,
-    semesterReport: SemesterReport,
+    classReport: ClassReport,
   ) {
-    const metadata = semesterReport.metadata as any;
     const headerData: { title: string; value: string }[] = [
-      { title: 'Tipe Kelas', value: semesterReport.classType },
-      { title: 'Semester', value: semesterReport.semester },
-      { title: 'Tahun', value: semesterReport.schholYear },
-    ];
-    if (metadata) {
-      headerData.unshift({
+      { title: 'Tipe Kelas', value: classReport.classType },
+      {
+        title: 'Semester',
+        value: `${classReport.reports.map((v) => ` ${v.semester}`)}`,
+      },
+      {
+        title: 'Tahun',
+        value: `${classReport.schoolYears.map((v) => `${v} `)}`,
+      },
+      {
         title: 'Wali Kelas',
-        value: String(metadata.homeroom_teacher ?? '-'),
-      });
-      headerData.unshift({
-        title: 'Kelas',
-        value: String(metadata.class_name ?? '-'),
-      });
-    }
+        value: `${classReport.homeRoomTeachers.map((v) => `${v} `)}`,
+      },
+    ];
+
     const marginY = 3;
 
     y += 10;
@@ -377,43 +512,6 @@ export class StudentExportPdfUtil extends PDFUtil {
         .fontSize(this.fontSize)
         .font(this.font)
         .text(`: ` + itemHeader.value, startX + 153, y, {
-          width: 200,
-          align: 'left',
-        });
-
-      y = doc.y + marginY;
-    }
-  }
-
-  private drawFooterData(
-    doc: PDFKit.PDFDocument,
-    startX: number,
-    y: number,
-    semesterReport: SemesterReport,
-  ) {
-    const footerData: { title: string; value: string }[] = [
-      { title: 'Tipe Kelas', value: semesterReport.classType },
-      { title: 'Semester', value: semesterReport.semester },
-      { title: 'Tahun', value: semesterReport.schholYear },
-    ];
-    const marginY = 3;
-
-    y += 10;
-
-    for (let index2 = 0; index2 < footerData.length; index2++) {
-      const itemFooter = footerData[index2];
-      doc
-        .fontSize(this.fontSize)
-        .font(this.boldFont)
-        .text(`${itemFooter.title} `, startX, y, {
-          width: 150,
-          align: 'left',
-        });
-
-      doc
-        .fontSize(this.fontSize)
-        .font(this.font)
-        .text(`: ` + itemFooter.value, startX + 153, y, {
           width: 200,
           align: 'left',
         });

@@ -3,6 +3,15 @@ import { Response } from 'express';
 import { jakartaTZdate } from './date.util';
 
 export class TPdfColumn {
+  constructor(
+    text: string,
+    alignment: 'left' | 'right' | 'center' = 'left',
+    width: number,
+  ) {
+    this.text = text;
+    this.alignment = alignment;
+    this.width = width;
+  }
   text: string;
   alignment?: 'left' | 'right' | 'center' = 'left';
   width? = 70;

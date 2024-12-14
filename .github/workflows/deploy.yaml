@@ -6,7 +6,7 @@ on:
       - master  # Adjust this to your deployment branch
 
 jobs:
-  deploy:
+  build-and-upload-to-docker-hub:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,6 +28,10 @@ jobs:
           push: true
           tags: indrafajar/index-be:latest  # Update this
 
+  deploy-vm1:
+    runs-on: ubuntu-latest
+    needs: build-and-upload-to-docker-hub
+    steps:
       - name: Deploy to VM
         env:
           SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_KEY }}
@@ -47,7 +51,7 @@ jobs:
     
   deploy-vm2:
     runs-on: ubuntu-latest
-    needs: deploy
+    needs: build-and-upload-to-docker-hub
     steps:
       - name: Deploy to second VM
         env:
@@ -67,7 +71,7 @@ jobs:
           EOF
   deploy-vm3:
     runs-on: ubuntu-latest
-    needs: deploy
+    needs: build-and-upload-to-docker-hub
     steps:
       - name: Deploy to third VM
         env:
