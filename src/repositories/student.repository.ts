@@ -152,10 +152,13 @@ export class StudentRepository extends Repository<Student> {
     }
   }
 
-  async createStudentUsingMicroservice(student: CreateStudentDto) {
+  async createStudentUsingMicroservice(students: CreateStudentDto[]) {
     const baseUrl = process.env.MICROSERVICE_URL;
     try {
-      await axiosInstance.post(`${baseUrl}/students/create`, student);
+      for (let index = 0; index < students.length; index++) {
+        const student = students[index];
+        await axiosInstance.post(`${baseUrl}/students/create`, student);
+      }
       return true;
     } catch (error) {
       console.log(error);

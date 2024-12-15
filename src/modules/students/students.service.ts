@@ -28,7 +28,7 @@ export class StudentsService {
     return this.studentRepository.exportStudent(id);
   }
 
-  createStudent(createStudentDto: CreateStudentDto) {
+  createStudent(createStudentDto: CreateStudentDto[]) {
     return this.studentRepository.createStudentUsingMicroservice(
       createStudentDto,
     );

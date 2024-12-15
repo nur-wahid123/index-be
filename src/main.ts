@@ -5,6 +5,7 @@ import { TransformInterceptor } from './commons/interceptors/transform.intercept
 import { HttpExceptionFilter } from './commons/filters/http-exception.filter';
 import { AppModule } from './app.module';
 import { UserService } from './modules/user/user.service';
+import { json, urlencoded } from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -13,6 +14,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.use(json({ limit: '50mb' }));
+  app.use(urlencoded({ extended: true, limit: '50mb' }));
   const port: number = +process.env.APP_PORT || 3000;
   app.use(cookieParser());
   const userService = app.get(UserService);
