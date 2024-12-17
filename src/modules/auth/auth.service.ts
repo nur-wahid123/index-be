@@ -2,7 +2,6 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/modules/user/user.service';
 import { UserLoginDto } from './dto/login-user.dto';
-import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
 import HashPassword from 'src/commons/utils/hash-password.util';
 import { User } from 'src/entities/user.entity';
 import { Token } from 'src/commons/types/token.type';
@@ -14,9 +13,6 @@ export class AuthService {
     private readonly usersService: UserService,
     private readonly hashPassword: HashPassword,
   ) {}
-  register(createUserDto: CreateUserDto): Promise<User> {
-    return this.usersService.createUser(createUserDto);
-  }
 
   async validateUser(userLoginDto: UserLoginDto): Promise<User> {
     const user: User = await this.usersService.findByUsername(
@@ -33,6 +29,10 @@ export class AuthService {
       return result;
     }
     throw new ForbiddenException('Username Or Password are incorrect');
+  }
+
+  getProfile(userId: number) {
+    return this.usersService.findById(userId);
   }
 
   async login(dto: UserLoginDto): Promise<Token> {
@@ -55,8 +55,10 @@ export class AuthService {
   async getToken(user: User): Promise<Token> {
     const payload = {
       username: user.username,
+      name: user.name,
       sub: user.id,
       email: user.email,
+      role: user.role,
     };
     const token = await this.jwtService.signAsync(payload, {
       secret: process.env.USER_KEY_SECRET,

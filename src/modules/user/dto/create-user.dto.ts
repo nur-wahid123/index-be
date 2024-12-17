@@ -8,6 +8,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { Gender } from 'src/enums/gender.enum';
+import { Roles } from 'src/enums/roles.enum';
 
 export class CreateUserDto {
   @IsString()
@@ -32,6 +33,11 @@ export class CreateUserDto {
   @IsString()
   @IsEnum(Gender)
   gender: Gender;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsEnum(Roles)
+  role: Roles;
 
   @IsNotEmpty()
   @IsStrongPassword({

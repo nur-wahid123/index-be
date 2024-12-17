@@ -19,7 +19,7 @@ class ClassReport {
 }
 
 export class StudentExportPdfUtil extends PDFUtil {
-  private readonly title = 'Index Siswa';
+  private readonly title = 'BIODATA SISWA';
   private data: TData;
 
   constructor(student: TData, userName: string) {
@@ -35,10 +35,11 @@ export class StudentExportPdfUtil extends PDFUtil {
     if (this.data.semesterReports.length > 0) {
       this.drawFooter();
       this.addPage();
+      y = doc.y - 8;
       doc
         .fontSize(20)
         .font(this.boldFont)
-        .text('Nilai Siswa', 0, y, { align: 'center' });
+        .text('LAPORAN CAPAIAN KOMPETENSI', 0, y, { align: 'center' });
       y = doc.y + 10;
       const classReport: ClassReport[] = [];
       for (let index = 0; index < this.data.semesterReports.length; index++) {
@@ -71,21 +72,25 @@ export class StudentExportPdfUtil extends PDFUtil {
           this.addPage();
           y = doc.y + 10;
         }
-        doc
-          .fontSize(15)
-          .font(this.boldFont)
-          .text(`Nilai kelas ${element.classType}`, 0, y, { align: 'center' });
-        y = doc.y + 10;
+        const tableWidth = 545;
         this.drawHeaderContentNewPage(doc, doc.page.margins.left, y, element);
         y = doc.y + 10;
         const tableData = this.mappingTableData(element);
         const columns: TPdfColumn[] = [
           { text: 'No.', alignment: 'left', width: 30 },
-          { text: 'Mata Pelajaran', alignment: 'left', width: 400 },
+          {
+            text: 'Mata Pelajaran',
+            alignment: 'left',
+            width: tableWidth - tableData.numberOfSemester * 80,
+          },
         ];
 
         for (let i = 0; i < tableData.numberOfSemester; i++) {
-          columns.push({ text: 'Nilai', alignment: 'center', width: 70 });
+          columns.push({
+            text: `Semester ${i + 1}`,
+            alignment: 'center',
+            width: 80,
+          });
         }
         this.drawTable(
           columns,
@@ -97,10 +102,14 @@ export class StudentExportPdfUtil extends PDFUtil {
         y = doc.y;
         const columnsExtra: TPdfColumn[] = [
           { text: 'No.', alignment: 'left', width: 30 },
-          { text: 'Ekstrakurikuler', alignment: 'left', width: 400 },
+          {
+            text: 'Ekstrakurikuler',
+            alignment: 'left',
+            width: tableWidth - tableData.numberOfSemester * 80,
+          },
         ];
         for (let index = 0; index < tableData.numberOfSemester; index++) {
-          columnsExtra.push({ text: 'Nilai', alignment: 'center', width: 70 });
+          columnsExtra.push({ text: 'Nilai', alignment: 'center', width: 80 });
         }
         const tableDataExtra = this.mappingTableDataEkstra(element);
         this.drawTable(
@@ -157,7 +166,7 @@ export class StudentExportPdfUtil extends PDFUtil {
     const reportData: {
       index: string;
       name: string;
-      id: number;
+      id?: number;
       scores: string[];
     }[] = [];
     for (let index = 0; index < dataItem.reports.length; index++) {
@@ -175,6 +184,32 @@ export class StudentExportPdfUtil extends PDFUtil {
             name: `${score.extracurricular.name}`,
             id: score.extracurricular.id,
             scores: [score.score.toString()],
+          });
+        }
+      }
+    }
+    reportData.push({
+      index: ``,
+      name: ``,
+      scores: [...dataItem.reports.map(() => ``)],
+    });
+    const addedRow = [
+      { title: 'sickDays', value: 'Sakit' },
+      { title: 'absentDays', value: 'Izin' },
+      { title: 'leaveDays', value: 'Alpha' },
+    ];
+    for (let index = 0; index < dataItem.reports.length; index++) {
+      const element = dataItem.reports[index];
+      for (let j = 0; j < addedRow.length; j++) {
+        const row = addedRow[j];
+        const rpt = reportData.find((report) => report.name === row.value);
+        if (rpt) {
+          rpt.scores.push(String(element[row.title]));
+        } else {
+          reportData.push({
+            index: ``,
+            name: `${row.value}`,
+            scores: [String(element[row.title])],
           });
         }
       }
@@ -479,18 +514,18 @@ export class StudentExportPdfUtil extends PDFUtil {
     classReport: ClassReport,
   ) {
     const headerData: { title: string; value: string }[] = [
-      { title: 'Tipe Kelas', value: classReport.classType },
-      {
-        title: 'Semester',
-        value: `${classReport.reports.map((v) => ` ${v.semester}`)}`,
-      },
+      { title: 'Kelas', value: classReport.classType },
       {
         title: 'Tahun',
-        value: `${classReport.schoolYears.map((v) => `${v} `)}`,
+        value: Array.from(new Set(classReport.schoolYears)).join(' '),
+      },
+      {
+        title: 'Nama Kelas',
+        value: Array.from(new Set(classReport.className)).join(' '),
       },
       {
         title: 'Wali Kelas',
-        value: `${classReport.homeRoomTeachers.map((v) => `${v} `)}`,
+        value: Array.from(new Set(classReport.homeRoomTeachers)).join(' '),
       },
     ];
 

@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ForbiddenException,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -9,6 +10,10 @@ import { genSalt, hash } from 'bcrypt';
 import { User } from 'src/entities/user.entity';
 import { UserRepository } from 'src/repositories/user.repository';
 import HashPassword from 'src/commons/utils/hash-password.util';
+import { FilterDto } from 'src/commons/dto/filter.dto';
+import { PageOptionsDto } from 'src/commons/dto/page-option.dto';
+import { PageMetaDto } from 'src/commons/dto/page-meta.dto';
+import { PageDto } from 'src/commons/dto/page.dto';
 
 @Injectable()
 export class UserService {
@@ -73,7 +78,10 @@ export class UserService {
    * we have defined what are the keys we are expecting from body
    * @returns promise of user
    */
-  async createUser(createUserDto: CreateUserDto): Promise<User> {
+  async createUser(
+    createUserDto: CreateUserDto,
+    userId: number,
+  ): Promise<User> {
     const user: User = new User();
     user.name = createUserDto.name;
     user.age = createUserDto.age;
@@ -85,6 +93,8 @@ export class UserService {
       throw new BadRequestException('Email Sudah digunakan');
     }
     user.email = createUserDto.email;
+    user.role = createUserDto.role;
+    user.createdBy = userId;
     const salt = await genSalt(10);
     user.password = await hash(createUserDto.password, salt);
     user.gender = createUserDto.gender;
@@ -106,8 +116,17 @@ export class UserService {
    * this function is used to get all the user's list
    * @returns promise of array of users
    */
-  findAllUser(): Promise<User[]> {
-    return this.userRepository.find();
+  async findAllUser(filter: FilterDto, pageOptionsDto: PageOptionsDto) {
+    const [data, itemCount] = await this.userRepository.findUser(
+      filter,
+      pageOptionsDto,
+    );
+    const meta = new PageMetaDto({ pageOptionsDto, itemCount });
+    return new PageDto(data, meta);
+  }
+
+  findById(id: number): Promise<User> {
+    return this.userRepository.findOneBy({ id });
   }
 
   async findByUsername(username: string): Promise<User> {
@@ -119,6 +138,7 @@ export class UserService {
         'user.gender',
         'user.username',
         'user.age',
+        'user.role',
         'user.email',
         'user.password',
       ])
@@ -142,8 +162,32 @@ export class UserService {
    * @param updateUserDto this is partial type of createUserDto.
    * @returns promise of udpate user
    */
-  updateUser(id: number, updateUserDto: UpdateUserDto) {
-    return { id, updateUserDto };
+  async updateUser(
+    id: number,
+    updateUserDto: UpdateUserDto,
+    userId: number,
+  ): Promise<User> {
+    const existingUser = await this.userRepository.findOneBy({ id });
+
+    if (!existingUser) {
+      throw new BadRequestException('User not found');
+    }
+
+    if (
+      updateUserDto.username &&
+      updateUserDto.username !== existingUser.username
+    ) {
+      const isUsernameExists = await this.isUsernameExists(
+        updateUserDto.username,
+      );
+      if (isUsernameExists) {
+        throw new BadRequestException('Username already in use');
+      }
+    }
+
+    Object.assign(existingUser, updateUserDto);
+    existingUser.updatedBy = userId;
+    return this.userRepository.save(existingUser);
   }
 
   /**
@@ -151,7 +195,19 @@ export class UserService {
    * @param id is the type of number, which represent id of user
    * @returns nuber of rows deleted or affected
    */
-  removeUser(id: number): Promise<{ affected?: number }> {
-    return this.userRepository.delete(id);
+  async removeUser(id: number, userId: number): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      select: ['id', 'deletedBy', 'deletedAt'],
+    });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    if (user.deletedAt) {
+      throw new BadRequestException('User already deleted');
+    }
+    user.deletedAt = new Date();
+    user.deletedBy = userId;
+    return this.userRepository.deleteUser(user);
   }
 }

@@ -13,7 +13,6 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserLoginDto } from './dto/login-user.dto';
-import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
 import { JwtPayload } from './jwt-payload.interface';
 import { Payload } from 'src/commons/decorators/payload.decorator';
 import { JwtAuthGuard } from 'src/commons/guards/jwt-auth.guard';
@@ -33,15 +32,10 @@ export class AuthController {
     return this.authService.login(req);
   }
 
-  @Post('register')
-  register(@Body() createUserDto: CreateUserDto) {
-    return this.authService.register(createUserDto);
-  }
-
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Payload() payload: JwtPayload) {
-    return payload;
+    return this.authService.getProfile(payload.sub);
   }
 
   @Delete('logout')
