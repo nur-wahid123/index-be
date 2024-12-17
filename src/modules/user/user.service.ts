@@ -14,6 +14,7 @@ import { FilterDto } from 'src/commons/dto/filter.dto';
 import { PageOptionsDto } from 'src/commons/dto/page-option.dto';
 import { PageMetaDto } from 'src/commons/dto/page-meta.dto';
 import { PageDto } from 'src/commons/dto/page.dto';
+import { Roles } from 'src/enums/roles.enum';
 
 @Injectable()
 export class UserService {
@@ -30,6 +31,7 @@ export class UserService {
     const user = new User();
     user.username = 'superadmin';
     user.name = 'super admin';
+    user.role = Roles.SUPERADMIN;
     user.password = await this.hashPassword.generate('password12345');
     const username = await this.userRepository.findOneBy({
       username: user.username,
@@ -44,6 +46,7 @@ export class UserService {
     const user = new User();
     user.username = 'superadmin';
     user.name = 'super admin';
+    user.role = Roles.SUPERADMIN;
     user.password = await this.hashPassword.generate(
       process.env.USER_PASSWORD ?? 'password12345',
     );
