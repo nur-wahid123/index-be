@@ -63,6 +63,51 @@ export class StudentRepository extends Repository<Student> {
     });
   }
 
+  exportStudents(filter: FilterStudentDto) {
+    return this.createQueryBuilder('student')
+      .leftJoinAndSelect('student.semesterReports', 'semesterReports')
+      .leftJoinAndSelect('semesterReports.scores', 'scores')
+      .leftJoinAndSelect('scores.subject', 'subject')
+      .leftJoinAndSelect(
+        'semesterReports.extracurricularScores',
+        'extracurricularScores',
+      )
+      .leftJoinAndSelect(
+        'extracurricularScores.extracurricular',
+        'extracurricular',
+      )
+      .leftJoinAndSelect('student.bank', 'bank')
+      .leftJoinAndSelect('student.father', 'father')
+      .leftJoinAndSelect('father.education', 'fatherEducation')
+      .leftJoinAndSelect('father.job', 'fatherJob')
+      .leftJoinAndSelect('father.income', 'fatherIncome')
+      .leftJoinAndSelect('father.citizenship', 'fatherCitizenship')
+      .leftJoinAndSelect('father.religion', 'fatherReligion')
+      .leftJoinAndSelect('student.mother', 'mother')
+      .leftJoinAndSelect('mother.education', 'motherEducation')
+      .leftJoinAndSelect('mother.job', 'motherJob')
+      .leftJoinAndSelect('mother.income', 'motherIncome')
+      .leftJoinAndSelect('mother.citizenship', 'motherCitizenship')
+      .leftJoinAndSelect('mother.religion', 'motherReligion')
+      .leftJoinAndSelect('student.guardian', 'guardian')
+      .leftJoinAndSelect('guardian.education', 'guardianEducation')
+      .leftJoinAndSelect('guardian.job', 'guardianJob')
+      .leftJoinAndSelect('guardian.income', 'guardianIncome')
+      .leftJoinAndSelect('guardian.citizenship', 'guardianCitizenship')
+      .leftJoinAndSelect('guardian.religion', 'guardianReligion')
+      .leftJoinAndSelect('student.kindOfStay', 'kindOfStay')
+      .leftJoinAndSelect('student.studentClass', 'studentClass')
+      .leftJoinAndSelect('student.religion', 'studentReligion')
+      .leftJoinAndSelect('student.transportation', 'transportation')
+      .leftJoinAndSelect('student.subDistrict', 'subDistrict')
+      .where((qb) => {
+        this.applyFilters(qb, filter);
+      })
+      .orderBy('semesterReports.classType', 'ASC')
+      .addOrderBy('semesterReports.semester', 'ASC')
+      .getMany();
+  }
+
   findOneStudent(id: string) {
     return this.findOne({
       where: { studentNationalId: id },
@@ -119,7 +164,7 @@ export class StudentRepository extends Repository<Student> {
     qb: SelectQueryBuilder<Student>,
     filter: FilterStudentDto,
   ) {
-    const { search, name, studentSchoolId, classId } = filter;
+    const { search, name, studentSchoolId, classId, classType } = filter;
 
     if (search) {
       qb.andWhere(
@@ -135,6 +180,10 @@ export class StudentRepository extends Repository<Student> {
       );
     }
 
+    if (classType) {
+      qb.andWhere('studentClass.classType = :classType', { classType });
+    }
+
     if (name) {
       qb.andWhere('LOWER(student.name) LIKE LOWER(:name)', {
         name: `%${name}%`,
@@ -142,9 +191,12 @@ export class StudentRepository extends Repository<Student> {
     }
 
     if (studentSchoolId) {
-      qb.andWhere('student.student_school_id = :studentSchoolId', {
-        studentSchoolId,
-      });
+      qb.andWhere(
+        'lower(student.student_school_id) like lower(:studentSchoolId)',
+        {
+          studentSchoolId,
+        },
+      );
     }
 
     if (classId) {

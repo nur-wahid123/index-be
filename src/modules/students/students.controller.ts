@@ -60,4 +60,15 @@ export class StudentsController {
     res.setHeader('Content-Disposition', 'attachment; filename=invoices.pdf');
     return this.studentsService.getReport(code, payload.username, res);
   }
+
+  @Get('reports/pdf')
+  getReports(
+    @Query() filter: FilterStudentDto,
+    @Payload() payload: JwtPayload,
+    @Res() res: Response,
+  ) {
+    res.setHeader('Content-Type', 'application/zip');
+    res.setHeader('Content-Disposition', 'attachment; filename=siswa.zip');
+    return this.studentsService.getReports(filter, payload.username, res);
+  }
 }

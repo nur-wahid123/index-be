@@ -1,4 +1,3 @@
-import { Response } from 'express';
 import { PDFUtil, TPdfColumn } from 'src/commons/utils/pdf.util';
 import { Student } from 'src/entities/student.entity';
 import { SemesterReport } from 'src/entities/semester.entity';
@@ -7,6 +6,8 @@ import { formatDateToExactString } from 'src/commons/utils/date.util';
 import { Parents } from 'src/entities/parents.entity';
 import { Guardian } from 'src/entities/guardian.entity';
 import { ClassType } from 'src/enums/class-type.enum';
+import { PassThrough } from 'stream';
+import { Response } from 'express';
 
 type TData = Student;
 
@@ -26,8 +27,108 @@ export class StudentExportPdfUtil extends PDFUtil {
     super(userName);
     this.data = student;
   }
+
   public async generate(res: Response) {
     const doc = this.start(res);
+    let [{}, y] = this.setLayout(this.title);
+
+    y = doc.y + 3;
+    this.drawHeaderNewPage(doc, doc.page.margins.left, y);
+    if (this.data.semesterReports.length > 0) {
+      this.drawFooter();
+      this.addPage();
+      y = doc.y - 8;
+      doc
+        .fontSize(20)
+        .font(this.boldFont)
+        .text('LAPORAN CAPAIAN KOMPETENSI', 0, y, { align: 'center' });
+      y = doc.y + 10;
+      const classReport: ClassReport[] = [];
+      for (let index = 0; index < this.data.semesterReports.length; index++) {
+        const element = this.data.semesterReports[index];
+        let clsRpt = classReport.find((v) => {
+          return v.classType === element.classType;
+        });
+        const metadata = element.metadata as any;
+        if (!clsRpt) {
+          clsRpt = new ClassReport();
+          clsRpt.classType = element.classType;
+          clsRpt.schoolYears = [element.schholYear];
+          clsRpt.className = [metadata ? metadata.class_name : ''];
+          clsRpt.homeRoomTeachers = [metadata ? metadata.homeroom_teacher : ''];
+          clsRpt.reports = [element];
+          classReport.push(clsRpt);
+        } else {
+          clsRpt.schoolYears.push(element.schholYear);
+          clsRpt.className.push(metadata ? metadata.class_name : '');
+          clsRpt.homeRoomTeachers.push(
+            metadata ? metadata.homeroom_teacher : '',
+          );
+          clsRpt.reports.push(element);
+        }
+      }
+      for (let index = 0; index < classReport.length; index++) {
+        const element = classReport[index];
+        if (index !== 0) {
+          this.drawFooter();
+          this.addPage();
+          y = doc.y + 10;
+        }
+        const tableWidth = 545;
+        this.drawHeaderContentNewPage(doc, doc.page.margins.left, y, element);
+        y = doc.y + 10;
+        const tableData = this.mappingTableData(element);
+        const columns: TPdfColumn[] = [
+          { text: 'No.', alignment: 'left', width: 30 },
+          {
+            text: 'Mata Pelajaran',
+            alignment: 'left',
+            width: tableWidth - tableData.numberOfSemester * 80,
+          },
+        ];
+
+        for (let i = 0; i < tableData.numberOfSemester; i++) {
+          columns.push({
+            text: `Semester ${i + 1}`,
+            alignment: 'center',
+            width: 80,
+          });
+        }
+        this.drawTable(
+          columns,
+          tableData.tableData,
+          doc.page.margins.left,
+          y,
+          this.title,
+        );
+        y = doc.y;
+        const columnsExtra: TPdfColumn[] = [
+          { text: 'No.', alignment: 'left', width: 30 },
+          {
+            text: 'Ekstrakurikuler',
+            alignment: 'left',
+            width: tableWidth - tableData.numberOfSemester * 80,
+          },
+        ];
+        for (let index = 0; index < tableData.numberOfSemester; index++) {
+          columnsExtra.push({ text: 'Nilai', alignment: 'center', width: 80 });
+        }
+        const tableDataExtra = this.mappingTableDataEkstra(element);
+        this.drawTable(
+          columnsExtra,
+          tableDataExtra,
+          doc.page.margins.left,
+          y,
+          this.title,
+        );
+      }
+    }
+    this.drawFooter();
+    doc.end();
+  }
+
+  public async generateStream(outputStream: PassThrough) {
+    const doc = this.startStream(outputStream);
     let [{}, y] = this.setLayout(this.title);
 
     y = doc.y + 3;

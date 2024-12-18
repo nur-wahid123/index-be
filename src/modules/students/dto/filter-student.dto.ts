@@ -1,5 +1,6 @@
 import { Expose, Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import { ClassType } from 'src/enums/class-type.enum';
 
 export class FilterStudentDto {
   @IsOptional()
@@ -20,4 +21,9 @@ export class FilterStudentDto {
   @Type(() => Number)
   @Expose({ name: 'class_id' })
   classId?: number;
+
+  @IsOptional()
+  @IsEnum(ClassType)
+  @Expose({ name: 'class_type' })
+  classType?: ClassType;
 }

@@ -35,6 +35,27 @@ export class PDFUtil {
     // Stream the PDF to the response
   }
 
+  public startStream(outputStream: NodeJS.WritableStream) {
+    this.currentPage = 0;
+    this.doc.on('pageAdded', () => {
+      this.currentPage += 1;
+    });
+
+    this.doc.pipe(outputStream); // Pipe the PDF document to the provided stream
+
+    this.doc.registerFont(
+      this.boldFont,
+      `${__dirname}/../../../../font/arial-narrow/arialnarrow_bold.ttf`,
+    );
+
+    this.doc.registerFont(
+      this.font,
+      `${__dirname}/../../../../font/arial-narrow/arialnarrow.ttf`,
+    );
+
+    return this.doc;
+  }
+
   public start(res: Response) {
     this.currentPage = 0;
     this.doc.on('pageAdded', () => {
