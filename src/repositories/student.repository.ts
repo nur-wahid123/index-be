@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Bank } from '../entities/bank.entity';
 import { Education } from '../entities/education.entity';
 import { Parents } from '../entities/parents.entity';
@@ -215,6 +219,33 @@ export class StudentRepository extends Repository<Student> {
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException('Internal server error');
+    }
+  }
+
+  async updateStudentClass(student: Student) {
+    const qR = this.dataSource.createQueryRunner();
+    qR.connect();
+    try {
+      qR.startTransaction();
+      const studentEtt = await qR.manager.findOne(Student, {
+        where: { studentNationalId: student.studentNationalId },
+        select: { id: true, studentClass: { id: true } },
+      });
+      if (!studentEtt) {
+        throw new NotFoundException('Student not found');
+      }
+      const classEntity = await qR.manager.findOne(ClassEntity, {
+        where: { id: student.studentClass.id },
+        select: { id: true },
+      });
+      if (!classEntity) {
+        throw new NotFoundException('Class not found');
+      }
+      studentEtt.studentClass = classEntity;
+      await qR.manager.save(studentEtt);
+      await qR.commitTransaction();
+    } catch (error) {
+      throw error;
     }
   }
 

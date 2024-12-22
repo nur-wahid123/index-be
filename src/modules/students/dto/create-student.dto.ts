@@ -41,7 +41,7 @@ export class CreateStudentDto {
   bankAccountName?: string;
   isPipWorthy?: boolean = false;
   reasonPipWorthy?: string;
-  disability?: string;
+  disability?: string | null;
   juniorSchoolName?: string;
   childOrder?: number = 1;
   latitude?: string;

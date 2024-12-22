@@ -9,6 +9,9 @@ import { Response } from 'express';
 import * as archiver from 'archiver';
 import { StudentExportPdfUtil } from './util/student-export.pdf.util';
 import { PassThrough } from 'stream';
+import { UpdateStudentClassDto } from './dto/update-class.dto';
+import { Student } from 'src/entities/student.entity';
+import { ClassEntity } from 'src/entities/class.entity';
 
 @Injectable()
 export class StudentsService {
@@ -33,14 +36,13 @@ export class StudentsService {
       archive.pipe(res);
 
       for (const element of data) {
-        const pdfStream = new PassThrough(); // Create a PassThrough stream
+        const pdfStream = new PassThrough();
         const pdf = new StudentExportPdfUtil(element, userName);
 
-        // Generate the PDF and write to the stream
         await pdf.generateStream(pdfStream);
 
         const fileName = `${element.name}.pdf`;
-        archive.append(pdfStream, { name: fileName }); // Append the stream to the archive
+        archive.append(pdfStream, { name: fileName });
       }
 
       await archive.finalize();
@@ -57,14 +59,21 @@ export class StudentsService {
 
   createStudent(createStudentDto: CreateStudentDto) {
     return this.studentRepository.createStudent(createStudentDto);
-    // return this.studentRepository.createStudent(createStudentDto);
   }
 
   createBatch(createStudentDto: CreateStudentDto[]) {
     return this.studentRepository.createBatchStudentUsingMicroservice(
       createStudentDto,
     );
-    // return this.studentRepository.createBatch(createStudentDto);
+  }
+
+  updateClass(updateStudentClass: UpdateStudentClassDto) {
+    const student = new Student();
+    student.studentNationalId = updateStudentClass.studentNationalId;
+    const studentClass = new ClassEntity();
+    studentClass.id = updateStudentClass.classId;
+    student.studentClass = studentClass;
+    return this.studentRepository.updateStudentClass(student);
   }
 
   async findAll(filter: FilterStudentDto, pageOptionsDto: PageOptionsDto) {

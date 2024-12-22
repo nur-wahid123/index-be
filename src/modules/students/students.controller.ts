@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   Res,
@@ -16,6 +17,7 @@ import { JwtAuthGuard } from 'src/commons/guards/jwt-auth.guard';
 import { Payload } from 'src/commons/decorators/payload.decorator';
 import { JwtPayload } from '../auth/jwt-payload.interface';
 import { Response } from 'express';
+import { UpdateStudentClassDto } from './dto/update-class.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('students')
@@ -38,6 +40,11 @@ export class StudentsController {
     @Query() pageOptionsDto: PageOptionsDto,
   ) {
     return this.studentsService.findAll(filter, pageOptionsDto);
+  }
+
+  @Patch('update-class')
+  updateClass(@Body() updateClassDto: UpdateStudentClassDto) {
+    return this.studentsService.updateClass(updateClassDto);
   }
 
   @Get('detail/:id')
