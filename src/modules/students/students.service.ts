@@ -12,15 +12,20 @@ import { PassThrough } from 'stream';
 import { UpdateStudentClassDto } from './dto/update-class.dto';
 import { Student } from 'src/entities/student.entity';
 import { ClassEntity } from 'src/entities/class.entity';
+import { SchoolProfileRepository } from 'src/repositories/school-profile.repository';
 
 @Injectable()
 export class StudentsService {
-  constructor(private readonly studentRepository: StudentRepository) {}
+  constructor(
+    private readonly studentRepository: StudentRepository,
+    private readonly schoolProfileRepository: SchoolProfileRepository,
+  ) {}
 
   async getReport(studentId: string, userName: string, res: Response) {
     try {
       const data = await this.studentRepository.exportStudent(studentId);
-      const pdf = new StudentExportPdfUtil(data, userName);
+      const schoolProfile = await this.schoolProfileRepository.getProfile();
+      const pdf = new StudentExportPdfUtil(data, userName, schoolProfile);
       pdf.generate(res);
     } catch (error) {
       console.log(error);

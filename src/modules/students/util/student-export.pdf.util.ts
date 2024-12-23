@@ -8,6 +8,7 @@ import { Guardian } from 'src/entities/guardian.entity';
 import { ClassType } from 'src/enums/class-type.enum';
 import { PassThrough } from 'stream';
 import { Response } from 'express';
+import { SchoolProfile } from 'src/entities/school-profile.entity';
 
 type TData = Student;
 
@@ -22,15 +23,17 @@ class ClassReport {
 export class StudentExportPdfUtil extends PDFUtil {
   private readonly title = 'BIODATA SISWA';
   private data: TData;
+  private schoolProfile: SchoolProfile;
 
-  constructor(student: TData, userName: string) {
+  constructor(student: TData, userName: string, schoolProfile?: SchoolProfile) {
     super(userName);
     this.data = student;
+    this.schoolProfile = schoolProfile;
   }
 
   public async generate(res: Response) {
     const doc = this.start(res);
-    let [{}, y] = this.setLayout(this.title);
+    let [{}, y] = this.setLayout('');
 
     y = doc.y + 3;
     this.drawHeaderNewPage(doc, doc.page.margins.left, y);
@@ -47,7 +50,7 @@ export class StudentExportPdfUtil extends PDFUtil {
       for (let index = 0; index < this.data.semesterReports.length; index++) {
         const element = this.data.semesterReports[index];
         let clsRpt = classReport.find((v) => {
-          return v.classType === element.classType;
+          return v.classType === element.classType && v.reports.length < 2;
         });
         const metadata = element.metadata as any;
         if (!clsRpt) {
@@ -59,12 +62,12 @@ export class StudentExportPdfUtil extends PDFUtil {
           clsRpt.reports = [element];
           classReport.push(clsRpt);
         } else {
+          clsRpt.reports.push(element);
           clsRpt.schoolYears.push(element.schholYear);
           clsRpt.className.push(metadata ? metadata.class_name : '');
           clsRpt.homeRoomTeachers.push(
             metadata ? metadata.homeroom_teacher : '',
           );
-          clsRpt.reports.push(element);
         }
       }
       for (let index = 0; index < classReport.length; index++) {
@@ -121,6 +124,7 @@ export class StudentExportPdfUtil extends PDFUtil {
           y,
           this.title,
         );
+        this.drawFooterContent(doc, doc.page.margins.left, y, element);
       }
     }
     this.drawFooter();
@@ -617,16 +621,12 @@ export class StudentExportPdfUtil extends PDFUtil {
     const headerData: { title: string; value: string }[] = [
       { title: 'Kelas', value: classReport.classType },
       {
-        title: 'Tahun',
+        title: 'Tahun Ajaran',
         value: Array.from(new Set(classReport.schoolYears)).join(' '),
       },
       {
         title: 'Nama Kelas',
         value: Array.from(new Set(classReport.className)).join(' '),
-      },
-      {
-        title: 'Wali Kelas',
-        value: Array.from(new Set(classReport.homeRoomTeachers)).join(' '),
       },
     ];
 
@@ -654,6 +654,61 @@ export class StudentExportPdfUtil extends PDFUtil {
 
       y = doc.y + marginY;
     }
+  }
+
+  private drawFooterContent(
+    doc: PDFKit.PDFDocument,
+    startX: number,
+    y: number,
+    classReport: ClassReport,
+  ) {
+    const marginY = 3;
+
+    y += 10;
+
+    y = doc.y + marginY + 10;
+    let width = 0;
+    for (let index = 0; index < classReport.reports.length; index++) {
+      const element = classReport.reports[index];
+      doc
+        .fontSize(this.fontSize)
+        .font(this.boldFont)
+        .text(`Wali Kelas Semester ${element.semester} `, startX + width, y, {
+          width: 150,
+          align: 'center',
+        });
+      width += 150;
+    }
+    width += 75;
+    doc
+      .fontSize(this.fontSize)
+      .font(this.boldFont)
+      .text(`Kepala Sekolah`, startX + width, y, {
+        width: 150,
+        align: 'center',
+      });
+    y = doc.y + marginY + 40;
+    width = 0;
+    for (let index = 0; index < classReport.homeRoomTeachers.length; index++) {
+      const element = classReport.homeRoomTeachers[index];
+      doc
+        .fontSize(this.fontSize)
+        .font(this.boldFont)
+        .text(`${element} `, startX + width, y, {
+          width: 150,
+          align: 'center',
+        });
+      width += 150;
+    }
+    width += 75;
+    doc
+      .fontSize(this.fontSize)
+      .font(this.boldFont)
+      .text(`${this.schoolProfile?.schoolChiefName}`, startX + width, y, {
+        width: 150,
+        align: 'center',
+      });
+    y = doc.y + marginY;
   }
 
   public drawTableCustom(

@@ -16,6 +16,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ClassModule } from './modules/class/class.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { ExtracuricularModule } from './modules/extracuricular/extracuricular.module';
+import { SchoolProfileModule } from './modules/school-profile/school-profile.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ExtracuricularModule } from './modules/extracuricular/extracuricular.mo
     ClassModule,
     DashboardModule,
     ExtracuricularModule,
+    SchoolProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService, UserService, HashPassword, UserRepository],

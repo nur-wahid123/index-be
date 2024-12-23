@@ -63,7 +63,13 @@ export class StudentRepository extends Repository<Student> {
         transportation: true,
         subDistrict: true,
       },
-      order: { semesterReports: { classType: 'ASC', semester: 'ASC' } },
+      order: {
+        semesterReports: {
+          classType: 'ASC',
+          semester: 'ASC',
+          schholYear: 'ASC',
+        },
+      },
     });
   }
 
