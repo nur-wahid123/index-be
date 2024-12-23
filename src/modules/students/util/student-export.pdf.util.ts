@@ -621,7 +621,7 @@ export class StudentExportPdfUtil extends PDFUtil {
     const headerData: { title: string; value: string }[] = [
       { title: 'Kelas', value: classReport.classType },
       {
-        title: 'Tahun Ajaran',
+        title: 'Tahun Pelajaran',
         value: Array.from(new Set(classReport.schoolYears)).join(' '),
       },
       {
