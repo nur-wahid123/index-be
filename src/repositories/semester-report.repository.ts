@@ -16,6 +16,7 @@ import {
 } from '../modules/semester-report/dto/create-semester-report.dto';
 import { DataSource, Repository, SelectQueryBuilder } from 'typeorm';
 import { QueryGetStudentDto } from 'src/modules/semester-report/dto/query-get-student.dto';
+import { SchoolProfile } from 'src/entities/school-profile.entity';
 
 @Injectable()
 export class SemesterReportRepository extends Repository<SemesterReport> {
@@ -171,10 +172,14 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
         nwScore.semesterReport = newSemesterReport;
         arrayOfxtracurricularScores.push(nwScore);
       }
+      const schoolProfile = await queryRunner.manager.findOne(SchoolProfile, {
+        where: { id: 1 },
+      });
       newSemesterReport.absentDays = absentDays;
       newSemesterReport.metadata = {
         class_name: student.studentClass.name ?? '',
         homeroom_teacher: student.studentClass.homeroomTeacher ?? '',
+        school_chief_name: schoolProfile?.schoolChiefName ?? '',
       };
       newSemesterReport.extracurricularScores = arrayOfxtracurricularScores;
       newSemesterReport.scores = scoreDatas;
@@ -197,6 +202,25 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
     }
   }
 
+  async deleteReports() {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      await queryRunner.manager.delete(Score, {});
+      await queryRunner.manager.delete(ExtracurricularScore, {});
+      await queryRunner.manager.delete(SemesterReport, {});
+      await queryRunner.commitTransaction();
+      return true;
+    } catch (error) {
+      console.log(error);
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
   async createBatchSemesterReport(batch: CreateBatchSemesterReportDto) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
@@ -204,6 +228,9 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
     const { body, schoolYear, semester } = batch;
     const failedId: string[] = [];
     const createSemesterReport: SemesterReport[] = [];
+    const schoolProfile = await queryRunner.manager.findOne(SchoolProfile, {
+      where: { id: 1 },
+    });
     for (let index = 0; index < body.length; index++) {
       const newSemesterReport = new SemesterReport();
       const element = body[index];
@@ -298,6 +325,7 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
       newSemesterReport.metadata = {
         class_name: student.studentClass.name ?? '',
         homeroom_teacher: student.studentClass.homeroomTeacher ?? '',
+        school_chief_name: schoolProfile?.schoolChiefName ?? '',
       };
       newSemesterReport.absentDays = absentDays;
       newSemesterReport.classType = student.studentClass.classType;

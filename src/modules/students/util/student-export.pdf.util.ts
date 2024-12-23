@@ -18,6 +18,7 @@ class ClassReport {
   homeRoomTeachers: string[];
   className: string[];
   reports: SemesterReport[];
+  schoolChiefName: string;
 }
 
 export class StudentExportPdfUtil extends PDFUtil {
@@ -60,6 +61,7 @@ export class StudentExportPdfUtil extends PDFUtil {
           clsRpt.className = [metadata ? metadata.class_name : ''];
           clsRpt.homeRoomTeachers = [metadata ? metadata.homeroom_teacher : ''];
           clsRpt.reports = [element];
+          clsRpt.schoolChiefName = metadata ? metadata.school_chief_name : '';
           classReport.push(clsRpt);
         } else {
           clsRpt.reports.push(element);
@@ -704,7 +706,7 @@ export class StudentExportPdfUtil extends PDFUtil {
     doc
       .fontSize(this.fontSize)
       .font(this.boldFont)
-      .text(`${this.schoolProfile?.schoolChiefName}`, startX + width, y, {
+      .text(`${classReport.schoolChiefName}`, startX + width, y, {
         width: 150,
         align: 'center',
       });

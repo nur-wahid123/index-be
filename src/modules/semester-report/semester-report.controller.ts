@@ -2,6 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -45,5 +46,10 @@ export class SemesterReportController {
   @Post('create/batch')
   async createBatchSemesterReport(@Body() body: CreateBatchSemesterReportDto) {
     return await this.semesterReportService.createBatchSemesterReport(body);
+  }
+
+  @Delete('delete-reports')
+  deleteReports() {
+    return this.semesterReportService.deleteReports();
   }
 }
