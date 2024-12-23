@@ -37,4 +37,8 @@ export class SemesterReportService {
   createBatchSemesterReport(body: CreateBatchSemesterReportDto) {
     return this.semesterReportRepository.createBatchSemesterReport(body);
   }
+
+  deleteReports() {
+    return this.semesterReportRepository.deleteReports();
+  }
 }
