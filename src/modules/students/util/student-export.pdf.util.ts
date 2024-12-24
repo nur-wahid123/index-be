@@ -18,7 +18,7 @@ class ClassReport {
   homeRoomTeachers: string[];
   className: string[];
   reports: SemesterReport[];
-  schoolChiefName: string;
+  schoolChiefName: string[];
 }
 
 export class StudentExportPdfUtil extends PDFUtil {
@@ -61,12 +61,15 @@ export class StudentExportPdfUtil extends PDFUtil {
           clsRpt.className = [metadata ? metadata.class_name : ''];
           clsRpt.homeRoomTeachers = [metadata ? metadata.homeroom_teacher : ''];
           clsRpt.reports = [element];
-          clsRpt.schoolChiefName = metadata ? metadata.school_chief_name : '';
+          clsRpt.schoolChiefName = [metadata ? metadata.school_chief_name : ''];
           classReport.push(clsRpt);
         } else {
           clsRpt.reports.push(element);
           clsRpt.schoolYears.push(element.schholYear);
           clsRpt.className.push(metadata ? metadata.class_name : '');
+          clsRpt.schoolChiefName.push(
+            metadata ? metadata.school_chief_name : '',
+          );
           clsRpt.homeRoomTeachers.push(
             metadata ? metadata.homeroom_teacher : '',
           );
@@ -670,46 +673,95 @@ export class StudentExportPdfUtil extends PDFUtil {
 
     y = doc.y + marginY + 10;
     let width = 0;
+    doc
+      .fontSize(this.fontSize)
+      .font(this.font)
+      .text(`Status Akhir Tahun Pelajaran :`, startX, y, {
+        width: 200,
+        align: 'center',
+      });
+    width += 200;
+    doc
+      .fontSize(this.fontSize)
+      .font(this.font)
+      .text(
+        `${classReport.classType === ClassType.XII ? 'Lulus/Tidak Lulus' : 'Naik Kelas/Tidak Naik Kelas'}`,
+        startX + width,
+        y,
+        {
+          width: 150,
+          align: 'center',
+        },
+      );
+    y = doc.y + marginY + 10;
+    width = 0;
+    for (let index = 0; index < classReport.reports.length; index++) {
+      doc
+        .fontSize(this.fontSize)
+        .font(this.boldFont)
+        .text(`Wali Kelas`, startX + width, y, {
+          width: 110,
+          align: 'center',
+        });
+      width += 110;
+      width += 26;
+      doc
+        .fontSize(this.fontSize)
+        .font(this.boldFont)
+        .text(`Kepala Sekolah`, startX + width, y, {
+          width: 110,
+          align: 'center',
+        });
+      width += 110;
+      width += 26;
+    }
+    y = doc.y + marginY;
+    width = 0;
     for (let index = 0; index < classReport.reports.length; index++) {
       const element = classReport.reports[index];
       doc
         .fontSize(this.fontSize)
         .font(this.boldFont)
-        .text(`Wali Kelas Semester ${element.semester} `, startX + width, y, {
-          width: 150,
+        .text(`Semester ${element.semester}`, startX + width, y, {
+          width: 110,
           align: 'center',
         });
-      width += 150;
-    }
-    width += 75;
-    doc
-      .fontSize(this.fontSize)
-      .font(this.boldFont)
-      .text(`Kepala Sekolah`, startX + width, y, {
-        width: 150,
-        align: 'center',
-      });
-    y = doc.y + marginY + 40;
-    width = 0;
-    for (let index = 0; index < classReport.homeRoomTeachers.length; index++) {
-      const element = classReport.homeRoomTeachers[index];
+      width += 110;
+      width += 26;
       doc
         .fontSize(this.fontSize)
         .font(this.boldFont)
-        .text(`${element} `, startX + width, y, {
-          width: 150,
+        .text(`Semester ${element.semester}`, startX + width, y, {
+          width: 110,
           align: 'center',
         });
-      width += 150;
+      width += 110;
+      width += 26;
     }
-    width += 75;
-    doc
-      .fontSize(this.fontSize)
-      .font(this.boldFont)
-      .text(`${classReport.schoolChiefName}`, startX + width, y, {
-        width: 150,
-        align: 'center',
-      });
+    y = doc.y + marginY + 40;
+    width = 0;
+    for (let index = 0; index < classReport.homeRoomTeachers.length; index++) {
+      const homeroom = classReport.homeRoomTeachers[index];
+      const school_chief_name = classReport.schoolChiefName[index];
+      doc
+        .fontSize(this.fontSize)
+        .font(this.font)
+        .text(`${homeroom} `, startX + width, y, {
+          width: 110,
+          align: 'center',
+        });
+      width += 110;
+      width += 26;
+      doc
+        .fontSize(this.fontSize)
+        .font(this.font)
+        .text(`${school_chief_name} `, startX + width, y, {
+          width: 110,
+          align: 'center',
+        });
+      width += 110;
+      width += 26;
+    }
     y = doc.y + marginY;
   }
 
