@@ -284,7 +284,7 @@ export class StudentExportPdfUtil extends PDFUtil {
       const element = dataItem.reports[index];
       for (let j = 0; j < element.extracurricularScores.length; j++) {
         const score = element.extracurricularScores[j];
-        let rpt = reportData.find(
+        const rpt = reportData.find(
           (report) => report.id === score.extracurricular.id,
         );
         if (rpt) {
@@ -296,9 +296,6 @@ export class StudentExportPdfUtil extends PDFUtil {
             id: score.extracurricular.id,
             scores: [score.score.toString()],
           });
-          rpt = reportData.find(
-            (report) => report.id === score.extracurricular.id,
-          );
         }
       }
       if (element.semester === Semester.II) {
