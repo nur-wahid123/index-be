@@ -42,7 +42,7 @@ export class StudentExportPdfUtil extends PDFUtil {
     if (this.data.semesterReports.length > 0) {
       this.drawFooter();
       this.addPage();
-      y = doc.y - 8;
+      y = doc.y + 8;
       doc
         .fontSize(20)
         .font(this.boldFont)
@@ -713,26 +713,25 @@ export class StudentExportPdfUtil extends PDFUtil {
         },
       );
     y = doc.y + marginY + 10;
+    const marginX = 145;
     width = 0;
     for (let index = 0; index < classReport.reports.length; index++) {
       doc
         .fontSize(this.fontSize)
         .font(this.boldFont)
         .text(`Wali Kelas`, startX + width, y, {
-          width: 110,
+          width: marginX,
           align: 'center',
         });
-      width += 110;
-      width += 26;
+      width += marginX;
       doc
         .fontSize(this.fontSize)
         .font(this.boldFont)
         .text(`Kepala Sekolah`, startX + width, y, {
-          width: 110,
+          width: marginX,
           align: 'center',
         });
-      width += 110;
-      width += 26;
+      width += marginX;
     }
     y = doc.y + marginY;
     width = 0;
@@ -742,20 +741,18 @@ export class StudentExportPdfUtil extends PDFUtil {
         .fontSize(this.fontSize)
         .font(this.boldFont)
         .text(`Semester ${element.semester}`, startX + width, y, {
-          width: 110,
+          width: marginX,
           align: 'center',
         });
-      width += 110;
-      width += 26;
+      width += marginX;
       doc
         .fontSize(this.fontSize)
         .font(this.boldFont)
         .text(`Semester ${element.semester}`, startX + width, y, {
-          width: 110,
+          width: marginX,
           align: 'center',
         });
-      width += 110;
-      width += 26;
+      width += marginX;
     }
     y = doc.y + marginY + 40;
     width = 0;
@@ -766,20 +763,18 @@ export class StudentExportPdfUtil extends PDFUtil {
         .fontSize(this.fontSize)
         .font(this.font)
         .text(`${homeroom} `, startX + width, y, {
-          width: 110,
+          width: marginX,
           align: 'center',
         });
-      width += 110;
-      width += 26;
+      width += marginX;
       doc
         .fontSize(this.fontSize)
         .font(this.font)
         .text(`${school_chief_name} `, startX + width, y, {
-          width: 110,
+          width: marginX,
           align: 'center',
         });
-      width += 110;
-      width += 26;
+      width += marginX;
     }
     y = doc.y + marginY;
   }
