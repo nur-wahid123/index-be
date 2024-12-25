@@ -9,6 +9,7 @@ import { ClassType } from 'src/enums/class-type.enum';
 import { PassThrough } from 'stream';
 import { Response } from 'express';
 import { SchoolProfile } from 'src/entities/school-profile.entity';
+import { Semester } from 'src/enums/semester.enum';
 
 type TData = Student;
 
@@ -283,7 +284,7 @@ export class StudentExportPdfUtil extends PDFUtil {
       const element = dataItem.reports[index];
       for (let j = 0; j < element.extracurricularScores.length; j++) {
         const score = element.extracurricularScores[j];
-        const rpt = reportData.find(
+        let rpt = reportData.find(
           (report) => report.id === score.extracurricular.id,
         );
         if (rpt) {
@@ -295,6 +296,24 @@ export class StudentExportPdfUtil extends PDFUtil {
             id: score.extracurricular.id,
             scores: [score.score.toString()],
           });
+          rpt = reportData.find(
+            (report) => report.id === score.extracurricular.id,
+          );
+        }
+      }
+      if (element.semester === Semester.II) {
+        for (let k = 0; k < reportData.length; k++) {
+          const rptDt = reportData[k];
+          if (rptDt.scores.length === 1) {
+            const extr = element.extracurricularScores.find(
+              (extr) => extr.extracurricular.id === rptDt.id,
+            );
+            if (extr) {
+              rptDt.scores.unshift('-');
+            } else {
+              rptDt.scores.push('-');
+            }
+          }
         }
       }
     }
@@ -678,7 +697,7 @@ export class StudentExportPdfUtil extends PDFUtil {
     let width = 0;
     doc
       .fontSize(this.fontSize)
-      .font(this.font)
+      .font(this.boldFont)
       .text(`Status Akhir Tahun Pelajaran :`, startX, y, {
         width: 200,
         align: 'center',
