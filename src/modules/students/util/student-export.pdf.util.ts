@@ -9,6 +9,7 @@ import { ClassType } from 'src/enums/class-type.enum';
 import { PassThrough } from 'stream';
 import { Response } from 'express';
 import { SchoolProfile } from 'src/entities/school-profile.entity';
+import { Semester } from 'src/enums/semester.enum';
 
 type TData = Student;
 
@@ -41,7 +42,7 @@ export class StudentExportPdfUtil extends PDFUtil {
     if (this.data.semesterReports.length > 0) {
       this.drawFooter();
       this.addPage();
-      y = doc.y - 8;
+      y = doc.y + 8;
       doc
         .fontSize(20)
         .font(this.boldFont)
@@ -295,6 +296,21 @@ export class StudentExportPdfUtil extends PDFUtil {
             id: score.extracurricular.id,
             scores: [score.score.toString()],
           });
+        }
+      }
+      if (element.semester === Semester.II) {
+        for (let k = 0; k < reportData.length; k++) {
+          const rptDt = reportData[k];
+          if (rptDt.scores.length === 1) {
+            const extr = element.extracurricularScores.find(
+              (extr) => extr.extracurricular.id === rptDt.id,
+            );
+            if (extr) {
+              rptDt.scores.unshift('-');
+            } else {
+              rptDt.scores.push('-');
+            }
+          }
         }
       }
     }
@@ -678,7 +694,7 @@ export class StudentExportPdfUtil extends PDFUtil {
     let width = 0;
     doc
       .fontSize(this.fontSize)
-      .font(this.font)
+      .font(this.boldFont)
       .text(`Status Akhir Tahun Pelajaran :`, startX, y, {
         width: 200,
         align: 'center',
@@ -697,26 +713,25 @@ export class StudentExportPdfUtil extends PDFUtil {
         },
       );
     y = doc.y + marginY + 10;
+    const marginX = 145;
     width = 0;
     for (let index = 0; index < classReport.reports.length; index++) {
       doc
         .fontSize(this.fontSize)
         .font(this.boldFont)
         .text(`Wali Kelas`, startX + width, y, {
-          width: 110,
+          width: marginX,
           align: 'center',
         });
-      width += 110;
-      width += 26;
+      width += marginX;
       doc
         .fontSize(this.fontSize)
         .font(this.boldFont)
         .text(`Kepala Sekolah`, startX + width, y, {
-          width: 110,
+          width: marginX,
           align: 'center',
         });
-      width += 110;
-      width += 26;
+      width += marginX;
     }
     y = doc.y + marginY;
     width = 0;
@@ -726,20 +741,18 @@ export class StudentExportPdfUtil extends PDFUtil {
         .fontSize(this.fontSize)
         .font(this.boldFont)
         .text(`Semester ${element.semester}`, startX + width, y, {
-          width: 110,
+          width: marginX,
           align: 'center',
         });
-      width += 110;
-      width += 26;
+      width += marginX;
       doc
         .fontSize(this.fontSize)
         .font(this.boldFont)
         .text(`Semester ${element.semester}`, startX + width, y, {
-          width: 110,
+          width: marginX,
           align: 'center',
         });
-      width += 110;
-      width += 26;
+      width += marginX;
     }
     y = doc.y + marginY + 40;
     width = 0;
@@ -750,20 +763,18 @@ export class StudentExportPdfUtil extends PDFUtil {
         .fontSize(this.fontSize)
         .font(this.font)
         .text(`${homeroom} `, startX + width, y, {
-          width: 110,
+          width: marginX,
           align: 'center',
         });
-      width += 110;
-      width += 26;
+      width += marginX;
       doc
         .fontSize(this.fontSize)
         .font(this.font)
         .text(`${school_chief_name} `, startX + width, y, {
-          width: 110,
+          width: marginX,
           align: 'center',
         });
-      width += 110;
-      width += 26;
+      width += marginX;
     }
     y = doc.y + marginY;
   }

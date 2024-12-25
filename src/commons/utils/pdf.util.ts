@@ -136,7 +136,7 @@ export class PDFUtil {
   }
 
   public addPage(
-    size = 'A4',
+    size = [595.276, 935.433],
     margins = {
       top: 10,
       left: 10,
