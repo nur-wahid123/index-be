@@ -34,7 +34,7 @@ export class StudentExportPdfUtil extends PDFUtil {
 
   public async generate(res: Response) {
     const doc = this.start(res);
-    let [{}, y] = this.setLayout('');
+    let [{}, y] = this.setLayout(this.title, 'SMAN 1 Srengat', false);
 
     y = doc.y + 3;
     this.drawHeaderNewPage(doc, doc.page.margins.left, y);

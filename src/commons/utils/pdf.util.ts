@@ -76,20 +76,34 @@ export class PDFUtil {
     return this.doc;
   }
 
+  /**
+   * Sets the layout for a new page in the PDF document.
+   * Adds a new page, sets the title, and optionally sets a document title.
+   *
+   * @param title - The title to be displayed on the page.
+   * @param docTitle - The document title to be displayed if `isWithTitle` is true. Defaults to 'SMAN 1 Srengat'.
+   * @param isWithTitle - A boolean flag indicating whether the document title should be included.
+   *
+   * @returns A tuple containing the x and y coordinates for further drawing on the page.
+   */
+
   public setLayout(
     title: string,
     docTitle = 'SMAN 1 Srengat',
+    isWithTitle?: boolean,
   ): [x: number, y: number] {
     this.addPage();
 
     const x = this.doc.page.margins.left;
     let y = this.doc.page.margins.top;
 
-    this.doc
-      .fontSize(20)
-      .font(this.boldFont)
-      .text(docTitle, x, y, { align: 'center' });
-    y += 25;
+    if (isWithTitle) {
+      this.doc
+        .fontSize(20)
+        .font(this.boldFont)
+        .text(docTitle, x, y, { align: 'center' });
+      y += 25;
+    }
     this.doc
       .fontSize(15)
       .font(this.boldFont)
