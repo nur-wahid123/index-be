@@ -624,13 +624,16 @@ export class StudentExportPdfUtil extends PDFUtil {
     classReport: ClassReport,
   ) {
     const headerData: { title: string; value: string }[] = [
-      { title: 'Kelas', value: classReport.classType },
+      {
+        title: 'Nama',
+        value: this.data.name ?? `...............................`,
+      },
       {
         title: 'Tahun Pelajaran',
         value: Array.from(new Set(classReport.schoolYears)).join(' '),
       },
       {
-        title: 'Nama Kelas',
+        title: 'Kelas',
         value: Array.from(new Set(classReport.className)).join(' '),
       },
     ];
