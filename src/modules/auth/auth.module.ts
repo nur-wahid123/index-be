@@ -7,6 +7,7 @@ import { AuthController } from './auth.controller';
 import { JwtStrategy } from 'src/commons/auth/jwt.strategy';
 import HashPassword from 'src/commons/utils/hash-password.util';
 import { UserRepository } from 'src/repositories/user.repository';
+import { SchoolProfileRepository } from 'src/repositories/school-profile.repository';
 
 @Module({
   providers: [
@@ -15,6 +16,7 @@ import { UserRepository } from 'src/repositories/user.repository';
     UserService,
     HashPassword,
     UserRepository,
+    SchoolProfileRepository,
   ],
   imports: [
     JwtModule.register({

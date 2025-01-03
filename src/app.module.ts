@@ -17,6 +17,7 @@ import { ClassModule } from './modules/class/class.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { ExtracuricularModule } from './modules/extracuricular/extracuricular.module';
 import { SchoolProfileModule } from './modules/school-profile/school-profile.module';
+import { SchoolProfileRepository } from './repositories/school-profile.repository';
 
 @Module({
   imports: [
@@ -35,7 +36,13 @@ import { SchoolProfileModule } from './modules/school-profile/school-profile.mod
     SchoolProfileModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UserService, HashPassword, UserRepository],
+  providers: [
+    AppService,
+    UserService,
+    SchoolProfileRepository,
+    HashPassword,
+    UserRepository,
+  ],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

@@ -4,9 +4,15 @@ import { UserController } from './user.controller';
 import { UserRepository } from 'src/repositories/user.repository';
 import HashPassword from 'src/commons/utils/hash-password.util';
 import { JwtModule } from '@nestjs/jwt';
+import { SchoolProfileRepository } from 'src/repositories/school-profile.repository';
 
 @Module({
-  providers: [UserService, UserRepository, HashPassword],
+  providers: [
+    UserService,
+    UserRepository,
+    HashPassword,
+    SchoolProfileRepository,
+  ],
   controllers: [UserController],
   imports: [
     JwtModule.register({

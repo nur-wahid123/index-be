@@ -15,6 +15,8 @@ import { PageOptionsDto } from 'src/commons/dto/page-option.dto';
 import { PageMetaDto } from 'src/commons/dto/page-meta.dto';
 import { PageDto } from 'src/commons/dto/page.dto';
 import { Roles } from 'src/enums/roles.enum';
+import { SchoolProfile } from 'src/entities/school-profile.entity';
+import { SchoolProfileRepository } from 'src/repositories/school-profile.repository';
 
 @Injectable()
 export class UserService {
@@ -24,6 +26,7 @@ export class UserService {
    */
   constructor(
     private readonly userRepository: UserRepository,
+    private readonly schoolProfileRepository: SchoolProfileRepository,
     private readonly hashPassword: HashPassword,
   ) {}
 
@@ -39,7 +42,24 @@ export class UserService {
     if (username === null) {
       await this.userRepository.createUser(user);
     }
+    this.createDefaultSchoolProfile();
     console.log('superadmin created!!');
+  }
+
+  async createDefaultSchoolProfile() {
+    const schoolProfile = new SchoolProfile();
+    schoolProfile.address = 'Alamat Sekolah';
+    schoolProfile.createdBy = 0;
+    schoolProfile.email = 'email@example.com';
+    schoolProfile.phoneNumber = '+00(000000000)';
+    schoolProfile.schoolChiefName = 'Nama Kepala Sekolah';
+    schoolProfile.schoolChiefNip = 'NIP Kepala Sekolah';
+    schoolProfile.schoolName = 'Nama Sekolah';
+    schoolProfile.id = 1;
+    const scP = await this.schoolProfileRepository.findOneBy({ id: 1 });
+    if (!scP) {
+      this.schoolProfileRepository.save(schoolProfile);
+    }
   }
 
   async init2() {
@@ -56,6 +76,7 @@ export class UserService {
     if (username === null) {
       await this.userRepository.createUser(user);
     }
+    this.createDefaultSchoolProfile();
     console.log('superadmin created!!');
   }
 
