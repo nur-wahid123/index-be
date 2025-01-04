@@ -18,6 +18,7 @@ import {
 import { JwtAuthGuard } from 'src/commons/guards/jwt-auth.guard';
 import { QueryGetStudentDto } from './dto/query-get-student.dto';
 import { ResponseInterceptor } from 'src/commons/interceptors/response.interceptor';
+import { QueryDeleteReportDto } from './dto/query-delete-reports.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('semester-report')
@@ -49,7 +50,7 @@ export class SemesterReportController {
   }
 
   @Delete('delete-reports')
-  deleteReports() {
-    return this.semesterReportService.deleteReports();
+  deleteReports(@Query() deleteSemesterReportDto: QueryDeleteReportDto) {
+    return this.semesterReportService.deleteReports(deleteSemesterReportDto);
   }
 }

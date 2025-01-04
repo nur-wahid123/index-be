@@ -280,6 +280,7 @@ export class StudentExportPdfUtil extends PDFUtil {
       id?: number;
       scores: string[];
     }[] = [];
+    let extraTotal = 1;
     for (let index = 0; index < dataItem.reports.length; index++) {
       const element = dataItem.reports[index];
       for (let j = 0; j < element.extracurricularScores.length; j++) {
@@ -291,7 +292,7 @@ export class StudentExportPdfUtil extends PDFUtil {
           rpt.scores.push(score.score.toString());
         } else {
           reportData.push({
-            index: `${j + 1}`,
+            index: `${extraTotal++}`,
             name: `${score.extracurricular.name}`,
             id: score.extracurricular.id,
             scores: [score.score.toString()],

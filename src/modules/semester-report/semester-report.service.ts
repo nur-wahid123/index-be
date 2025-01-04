@@ -6,6 +6,7 @@ import {
 } from './dto/create-semester-report.dto';
 import { QueryGetStudentDto } from './dto/query-get-student.dto';
 import { ReportDetailDto } from './dto/response/report-detail.dto';
+import { QueryDeleteReportDto } from './dto/query-delete-reports.dto';
 
 @Injectable()
 export class SemesterReportService {
@@ -38,7 +39,7 @@ export class SemesterReportService {
     return this.semesterReportRepository.createBatchSemesterReport(body);
   }
 
-  deleteReports() {
-    return this.semesterReportRepository.deleteReports();
+  deleteReports(deleteSemesterReportDto: QueryDeleteReportDto) {
+    return this.semesterReportRepository.deleteReports(deleteSemesterReportDto);
   }
 }

@@ -14,9 +14,15 @@ import {
   CreateBatchSemesterReportDto,
   CreateSemesterReportDto,
 } from '../modules/semester-report/dto/create-semester-report.dto';
-import { DataSource, Repository, SelectQueryBuilder } from 'typeorm';
+import {
+  DataSource,
+  QueryRunner,
+  Repository,
+  SelectQueryBuilder,
+} from 'typeorm';
 import { QueryGetStudentDto } from 'src/modules/semester-report/dto/query-get-student.dto';
 import { SchoolProfile } from 'src/entities/school-profile.entity';
+import { QueryDeleteReportDto } from 'src/modules/semester-report/dto/query-delete-reports.dto';
 
 @Injectable()
 export class SemesterReportRepository extends Repository<SemesterReport> {
@@ -202,14 +208,65 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
     }
   }
 
-  async deleteReports() {
+  async getDeleteIds(
+    queryRunner: QueryRunner,
+    deleteSemesterReportDto: QueryDeleteReportDto,
+  ) {
+    const { className, semester } = deleteSemesterReportDto;
+    const scoreIds: number[] = [];
+    const extraScoreIds: number[] = [];
+    const semesterReportIds: number[] = [];
+
+    const query = queryRunner.manager
+      .createQueryBuilder(SemesterReport, 'semesterReport')
+      .leftJoinAndSelect('semesterReport.scores', 'scores')
+      .leftJoinAndSelect('semesterReport.extracurricularScores', 'extraScores');
+
+    if (className) {
+      query.andWhere(`"semesterReport".metadata->>'class_name' = :className`, {
+        className,
+      });
+    }
+
+    if (semester) {
+      query.andWhere('semesterReport.semester = :semester', { semester });
+    }
+
+    const results = await query
+      .select(['semesterReport.id', 'scores.id', 'extraScores.id'])
+      .getMany();
+
+    for (const result of results) {
+      semesterReportIds.push(result.id);
+      scoreIds.push(...result.scores.map((score) => score.id));
+      extraScoreIds.push(
+        ...result.extracurricularScores.map((extraScore) => extraScore.id),
+      );
+    }
+
+    return { scoreIds, extraScoreIds, semesterReportIds };
+  }
+
+  async deleteReports(deleteSemesterReportDto: QueryDeleteReportDto) {
+    const { className, semester } = deleteSemesterReportDto;
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
-      await queryRunner.manager.delete(Score, {});
-      await queryRunner.manager.delete(ExtracurricularScore, {});
-      await queryRunner.manager.delete(SemesterReport, {});
+      if (className || semester) {
+        const { scoreIds, extraScoreIds, semesterReportIds } =
+          await this.getDeleteIds(queryRunner, deleteSemesterReportDto);
+        await this.runDeleteQueries(
+          queryRunner,
+          scoreIds,
+          extraScoreIds,
+          semesterReportIds,
+        );
+      } else {
+        await queryRunner.manager.delete(Score, {});
+        await queryRunner.manager.delete(ExtracurricularScore, {});
+        await queryRunner.manager.delete(SemesterReport, {});
+      }
       await queryRunner.commitTransaction();
       return true;
     } catch (error) {
@@ -219,6 +276,32 @@ export class SemesterReportRepository extends Repository<SemesterReport> {
     } finally {
       await queryRunner.release();
     }
+  }
+
+  async runDeleteQueries(
+    qR: QueryRunner,
+    scoreIds: number[],
+    extraScoreIds: number[],
+    semesterReportIds: number[],
+  ) {
+    await qR.manager
+      .createQueryBuilder()
+      .delete()
+      .from(Score)
+      .where('id IN (:...ids)', { ids: scoreIds })
+      .execute();
+    await qR.manager
+      .createQueryBuilder()
+      .delete()
+      .from(ExtracurricularScore)
+      .where('id IN (:...ids)', { ids: extraScoreIds })
+      .execute();
+    await qR.manager
+      .createQueryBuilder()
+      .delete()
+      .from(SemesterReport)
+      .where('id IN (:...ids)', { ids: semesterReportIds })
+      .execute();
   }
 
   async createBatchSemesterReport(batch: CreateBatchSemesterReportDto) {
