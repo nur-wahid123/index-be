@@ -299,22 +299,30 @@ export class StudentExportPdfUtil extends PDFUtil {
           });
         }
       }
-      if (element.semester === Semester.II) {
-        for (let k = 0; k < reportData.length; k++) {
-          const rptDt = reportData[k];
-          if (rptDt.scores.length === 1) {
-            const extr = element.extracurricularScores.find(
-              (extr) => extr.extracurricular.id === rptDt.id,
-            );
-            if (extr) {
-              rptDt.scores.unshift('-');
-            } else {
-              rptDt.scores.push('-');
-            }
-          }
+    }
+
+    if (dataItem.reports.length === 2) {
+      const firstReport = dataItem.reports[0];
+      const secondReport = dataItem.reports[1];
+
+      for (let k = 0; k < reportData.length; k++) {
+        const rptDt = reportData[k];
+        const existsInFirst = firstReport.extracurricularScores.some(
+          (extr) => extr.extracurricular.id === rptDt.id
+        );
+        const existsInSecond = secondReport.extracurricularScores.some(
+          (extr) => extr.extracurricular.id === rptDt.id
+        );
+
+        if (!existsInFirst) {
+          rptDt.scores.unshift('-');
+        }
+        if (!existsInSecond) {
+          rptDt.scores.push('-');
         }
       }
     }
+
     reportData.push({
       index: ``,
       name: ``,
