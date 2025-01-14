@@ -1,11 +1,11 @@
 module.exports = {
     apps: [
       {
-        name: "my-app",
-        script: "npm",
-        args: "run start:prod",
-        instances: 1,
-        exec_mode: "fork",
+        name: "index-be",
+        script: "dist/src/main.js",    // Point to the compiled entry file
+        instances: 2,          // Use all available CPU cores
+        exec_mode: "cluster",      // Use cluster mode for load balancing
+        watch: false,              // Set to true if you want auto-restart on changes
       },
     ],
   };
