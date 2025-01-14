@@ -96,9 +96,10 @@ export class StudentExportPdfUtil extends PDFUtil {
           },
         ];
 
-        for (let i = 0; i < tableData.numberOfSemester; i++) {
+        for (let i = 0; i < element.reports.length; i++) {
+          const report = element.reports[i];
           columns.push({
-            text: `Semester ${i + 1}`,
+            text: `Semester ${report.semester}`,
             alignment: 'center',
             width: 80,
           });
@@ -196,9 +197,10 @@ export class StudentExportPdfUtil extends PDFUtil {
           },
         ];
 
-        for (let i = 0; i < tableData.numberOfSemester; i++) {
+        for (let i = 0; i < element.reports.length; i++) {
+          const report = element.reports[i];
           columns.push({
-            text: `Semester ${i + 1}`,
+            text: `Semester ${report.semester}`,
             alignment: 'center',
             width: 80,
           });
