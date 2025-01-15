@@ -167,6 +167,8 @@ export class StudentRepository extends Repository<Student> {
       return result;
     } catch (error) {
       console.log(error);
+    }finally{
+      await this.dataSource.destroy();
     }
   }
 
@@ -230,9 +232,9 @@ export class StudentRepository extends Repository<Student> {
 
   async updateStudentClass(student: Student) {
     const qR = this.dataSource.createQueryRunner();
-    qR.connect();
+    await qR.connect();
     try {
-      qR.startTransaction();
+      await qR.startTransaction();
       const studentEtt = await qR.manager.findOne(Student, {
         where: { studentNationalId: student.studentNationalId },
         select: { id: true, studentClass: { id: true } },
@@ -251,7 +253,10 @@ export class StudentRepository extends Repository<Student> {
       await qR.manager.save(studentEtt);
       await qR.commitTransaction();
     } catch (error) {
+      await qR.rollbackTransaction();
       throw error;
+    } finally {
+      await qR.release();
     }
   }
 

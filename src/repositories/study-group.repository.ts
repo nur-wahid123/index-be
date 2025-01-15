@@ -84,9 +84,9 @@ export class StudyGroupRepository extends Repository<StudyGroup> {
     const { studyGroupId, subjectId } = subjectDto;
     const queryRunner = this.dataSource.createQueryRunner();
 
-    queryRunner.connect();
-    queryRunner.startTransaction();
+    await queryRunner.connect();
     try {
+      await queryRunner.startTransaction();
       const studyGroup = await queryRunner.manager.findOne(StudyGroup, {
         where: { id: studyGroupId },
         relations: ['subjects'],
@@ -119,8 +119,8 @@ export class StudyGroupRepository extends Repository<StudyGroup> {
     const { studyGroupId, subjectId } = subjectDto;
     const queryRunner = this.dataSource.createQueryRunner();
 
-    queryRunner.connect();
-    queryRunner.startTransaction();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
     try {
       const studyGroup = await queryRunner.manager.findOne(StudyGroup, {
         where: { id: studyGroupId },
@@ -221,9 +221,9 @@ export class StudyGroupRepository extends Repository<StudyGroup> {
     const { studyGroupId, subjectsId } = subjectDto;
     const queryRunner = this.dataSource.createQueryRunner();
 
-    queryRunner.connect();
-    queryRunner.startTransaction();
+    await queryRunner.connect();
     try {
+      await queryRunner.startTransaction();
       const studyGroup = await queryRunner.manager.findOne(StudyGroup, {
         where: { id: studyGroupId },
         relations: ['subjects'],

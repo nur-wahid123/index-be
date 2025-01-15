@@ -19,8 +19,8 @@ import { JwtPayload } from '../auth/jwt-payload.interface';
 import { Response } from 'express';
 import { UpdateStudentClassDto } from './dto/update-class.dto';
 
-@UseGuards(JwtAuthGuard)
 @Controller('students')
+@UseGuards(JwtAuthGuard)
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
 

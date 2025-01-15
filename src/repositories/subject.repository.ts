@@ -132,9 +132,9 @@ export class SubjectRepository extends Repository<Subject> {
 
   async createBatch(createSubjectDto: Subject[]) {
     const queryRunner = this.dataSource.createQueryRunner();
-    queryRunner.connect();
+    await queryRunner.connect();
     try {
-      queryRunner.startTransaction();
+      await queryRunner.startTransaction();
       for (let i = 0; i < createSubjectDto.length; i++) {
         const subject = createSubjectDto[i];
         let newSubject = await queryRunner.manager.findOne(Subject, {
