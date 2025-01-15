@@ -167,8 +167,6 @@ export class StudentRepository extends Repository<Student> {
       return result;
     } catch (error) {
       console.log(error);
-    }finally{
-      await this.dataSource.destroy();
     }
   }
 
