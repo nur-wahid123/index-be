@@ -59,6 +59,12 @@ export class StudyGroupsService {
     const meta = new PageMetaDto({ pageOptionsDto, itemCount });
     return new PageDto(data, meta);
   }
+  
+  async findAllName(filter: FilterDto, pageOptionsDto: PageOptionsDto) {
+    const [data, itemCount] = await this.studyGroupRepository.findAndCount({select: ['id','name']});
+    const meta = new PageMetaDto({ pageOptionsDto, itemCount });
+    return new PageDto(data, meta);
+  }
 
   async remove(id: number, userId: number) {
     const studyGroup = new StudyGroup();

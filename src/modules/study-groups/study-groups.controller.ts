@@ -80,6 +80,11 @@ export class StudyGroupsController {
     return this.studyGroupsService.findAll(query, pageOptionsDto);
   }
 
+  @Get('list/only-name')
+  findAllName(@Query() query: FilterDto, @Query() pageOptionsDto: PageOptionsDto) {
+    return this.studyGroupsService.findAllName(query, pageOptionsDto);
+  }
+
   @Delete('delete/:id')
   remove(@Param('id') id: string, @Payload() payload: JwtPayload) {
     return this.studyGroupsService.remove(+id, +payload.sub);
