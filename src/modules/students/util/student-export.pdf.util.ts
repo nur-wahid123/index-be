@@ -9,7 +9,6 @@ import { ClassType } from 'src/enums/class-type.enum';
 import { PassThrough } from 'stream';
 import { Response } from 'express';
 import { SchoolProfile } from 'src/entities/school-profile.entity';
-import { Semester } from 'src/enums/semester.enum';
 
 type TData = Student;
 
@@ -167,12 +166,16 @@ export class StudentExportPdfUtil extends PDFUtil {
           clsRpt.className = [metadata ? metadata.class_name : ''];
           clsRpt.homeRoomTeachers = [metadata ? metadata.homeroom_teacher : ''];
           clsRpt.reports = [element];
+          clsRpt.schoolChiefName = [metadata ? metadata.school_chief_name : ''];
           classReport.push(clsRpt);
         } else {
           clsRpt.schoolYears.push(element.schholYear);
           clsRpt.className.push(metadata ? metadata.class_name : '');
           clsRpt.homeRoomTeachers.push(
             metadata ? metadata.homeroom_teacher : '',
+          );
+          clsRpt.schoolChiefName.push(
+            metadata ? metadata.school_chief_name : '',
           );
           clsRpt.reports.push(element);
         }
@@ -232,6 +235,7 @@ export class StudentExportPdfUtil extends PDFUtil {
           y,
           this.title,
         );
+        this.drawFooterContent(doc, doc.page.margins.left, y, element);
       }
     }
     this.drawFooter();
@@ -310,10 +314,10 @@ export class StudentExportPdfUtil extends PDFUtil {
       for (let k = 0; k < reportData.length; k++) {
         const rptDt = reportData[k];
         const existsInFirst = firstReport.extracurricularScores.some(
-          (extr) => extr.extracurricular.id === rptDt.id
+          (extr) => extr.extracurricular.id === rptDt.id,
         );
         const existsInSecond = secondReport.extracurricularScores.some(
-          (extr) => extr.extracurricular.id === rptDt.id
+          (extr) => extr.extracurricular.id === rptDt.id,
         );
 
         if (!existsInFirst) {
