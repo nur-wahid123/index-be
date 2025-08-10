@@ -63,6 +63,6 @@ jobs:
             docker pull indrafajar/index-be:latest
             docker stop index-be || true
             docker rm index-be || true
-            docker run -d --name index-be --env-file ~/.env --restart unless-stopped --network pos-app -p 3100:3000 indrafajar/index-be:latest
+            docker run -d --name index-be --env-file ~/.env --restart unless-stopped --network my-app -p 3100:3000 indrafajar/index-be:latest
             docker image prune -f
           EOF
