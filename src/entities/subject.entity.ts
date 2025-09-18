@@ -17,5 +17,10 @@ export class Subject extends BaseEntity {
   studyGroups?: StudyGroup[];
 
   @Column({ nullable: false, default: false })
-  is_primary?: boolean;
+  @Expose({ name: 'is_primary' })
+  isPrimary?: boolean;
+
+  @Column({ nullable: true, unique: true })
+  @Expose({ name: 'display_index' })
+  displayIndex?: number;
 }

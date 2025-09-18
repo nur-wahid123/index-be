@@ -9,6 +9,7 @@ import QuerySubjectDto from './dto/query-subject.dto';
 import { PageOptionsDto } from 'src/commons/dto/page-option.dto';
 import { PageMetaDto } from 'src/commons/dto/page-meta.dto';
 import { PageDto } from 'src/commons/dto/page.dto';
+import { UpdateSubjectDto } from './dto/update-subject.dto';
 
 @Injectable()
 export class SubjectsService {
@@ -31,14 +32,17 @@ export class SubjectsService {
 
   updateSubject(
     id: number,
-    createSubjectDto: CreateSubjectDto,
+    createSubjectDto: UpdateSubjectDto,
     _userId: number,
   ) {
     const newSubject = new Subject();
     newSubject.name = createSubjectDto.name;
     newSubject.id = id;
     newSubject.updatedBy = _userId;
-    return this.subjectRepository.updateSubject(newSubject);
+    return this.subjectRepository.updateSubject(
+      newSubject,
+      createSubjectDto.displayIndex,
+    );
   }
 
   batchCreate(batch: CreateBatchSubjectDto) {
@@ -58,7 +62,7 @@ export class SubjectsService {
   }
 
   async findAll(filter: QuerySubjectDto, pageOptionsDto: PageOptionsDto) {
-    const [data, itemCount] = await this.subjectRepository.findSubjects(
+    const { data, itemCount } = await this.subjectRepository.findSubjects(
       filter,
       pageOptionsDto,
     );
