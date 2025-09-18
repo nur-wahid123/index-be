@@ -65,6 +65,7 @@ export class StudentRepository extends Repository<Student> {
       },
       order: {
         semesterReports: {
+          scores: { subject: { displayIndex: 'ASC' } },
           classType: 'ASC',
           semester: 'ASC',
           schholYear: 'ASC',
@@ -115,6 +116,7 @@ export class StudentRepository extends Repository<Student> {
       })
       .orderBy('semesterReports.classType', 'ASC')
       .addOrderBy('semesterReports.semester', 'ASC')
+      .addOrderBy('subject.displayIndex', 'ASC')
       .getMany();
   }
 

@@ -59,9 +59,11 @@ export class StudyGroupsService {
     const meta = new PageMetaDto({ pageOptionsDto, itemCount });
     return new PageDto(data, meta);
   }
-  
+
   async findAllName(filter: FilterDto, pageOptionsDto: PageOptionsDto) {
-    const [data, itemCount] = await this.studyGroupRepository.findAndCount({select: ['id','name']});
+    const [data, itemCount] = await this.studyGroupRepository.findAndCount({
+      select: ['id', 'name'],
+    });
     const meta = new PageMetaDto({ pageOptionsDto, itemCount });
     return new PageDto(data, meta);
   }

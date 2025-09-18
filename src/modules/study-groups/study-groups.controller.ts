@@ -81,7 +81,10 @@ export class StudyGroupsController {
   }
 
   @Get('list/only-name')
-  findAllName(@Query() query: FilterDto, @Query() pageOptionsDto: PageOptionsDto) {
+  findAllName(
+    @Query() query: FilterDto,
+    @Query() pageOptionsDto: PageOptionsDto,
+  ) {
     return this.studyGroupsService.findAllName(query, pageOptionsDto);
   }
 
