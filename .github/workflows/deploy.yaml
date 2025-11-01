@@ -51,7 +51,7 @@ jobs:
               docker rm index-be-run
             fi
             docker run -d --name index-be-run --restart unless-stopped --network my-app -p 3100:3000 indrafajar/index-be:latest
-            docker cp ~/.env index-be-run:/app/
+            docker cp ~/index-be/.env index-be-run:/app/
             docker restart index-be-run
             docker image prune -f
           '
