@@ -38,7 +38,7 @@ jobs:
           HOST: ${{ secrets.VM_HOST }}  # Update with your VM IP
           USER: ${{ secrets.VM_USERNAME }}
         run: |
-          ssh -o StrictHostKeyChecking=no -p "${PORT}" $USER@$HOST << 'EOF'
+          ssh -o StrictHostKeyChecking=no $USER@$HOST << 'EOF'
             docker pull indrafajar/index-be:latest
             if [ "$(docker ps -aq -f name=index-be-run)" ]; then
               if [ "$(docker ps -q -f name=index-be-run)" ]; then
