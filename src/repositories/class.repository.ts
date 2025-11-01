@@ -36,6 +36,26 @@ export class ClassRepository extends Repository<ClassEntity> {
     }
   }
 
+  findClassSearch(filter: QueryClassDto, pageOptionsDto: PageOptionsDto) {
+    try {
+      const { take, skip, order, page } = pageOptionsDto;
+      const qb = this.dataSource
+        .createQueryBuilder(ClassEntity, 'class')
+        .leftJoin('class.students', 'student')
+        .leftJoin('class.studyGroup', 'studyGroup')
+        .select(['class.id', 'class.name', 'student.id', 'studyGroup.id']);
+      this.applyFilters(qb, filter);
+      if (page && take) {
+        qb.take(take).skip(skip);
+      }
+      qb.orderBy('class.id', order);
+      return qb.getManyAndCount();
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
   applyFilters(qb: SelectQueryBuilder<ClassEntity>, filter: QueryClassDto) {
     const { search, studyGroupId } = filter;
     if (search) {

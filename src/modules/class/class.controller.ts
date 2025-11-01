@@ -39,6 +39,14 @@ export class ClassController {
     return this.classService.findAllClass(query, pageOptionsDto);
   }
 
+  @Get('search-list')
+  findAllClassSearch(
+    @Query() query: QueryClassDto,
+    @Query() pageOptionsDto: PageOptionsDto,
+  ) {
+    return this.classService.findAllClassSearch(query, pageOptionsDto);
+  }
+
   @Get('detail/:id')
   findClass(@Param('id') id: string) {
     return this.classService.findClass(+id);

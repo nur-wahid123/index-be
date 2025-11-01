@@ -16,6 +16,10 @@ import { SchoolProfileRepository } from 'src/repositories/school-profile.reposit
 
 @Injectable()
 export class StudentsService {
+  deleteStudent(filter: FilterStudentDto) {
+    return this.studentRepository.deleteStudent(filter);
+  }
+
   constructor(
     private readonly studentRepository: StudentRepository,
     private readonly schoolProfileRepository: SchoolProfileRepository,

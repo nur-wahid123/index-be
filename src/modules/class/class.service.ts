@@ -68,4 +68,16 @@ export class ClassService {
     const meta = new PageMetaDto({ pageOptionsDto, itemCount });
     return new PageDto(data, meta);
   }
+
+  async findAllClassSearch(
+    query: QueryClassDto,
+    pageOptionsDto: PageOptionsDto,
+  ) {
+    const [data, itemCount] = await this.classRepository.findClassSearch(
+      query,
+      pageOptionsDto,
+    );
+    const meta = new PageMetaDto({ pageOptionsDto, itemCount });
+    return new PageDto(data, meta);
+  }
 }

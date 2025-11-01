@@ -20,9 +20,71 @@ import { FilterStudentDto } from '../modules/students/dto/filter-student.dto';
 import { PageOptionsDto } from '../commons/dto/page-option.dto';
 import { ClassEntity } from 'src/entities/class.entity';
 import { axiosInstance } from 'src/commons/utils/axios.util';
+import { Score } from 'src/entities/score.entity';
+import { ExtracurricularScore } from 'src/entities/extracurricular-score.entity';
+import { SemesterReport } from 'src/entities/semester.entity';
 
 @Injectable()
 export class StudentRepository extends Repository<Student> {
+  async deleteStudent(filter: FilterStudentDto) {
+    const qr = this.dataSource.createQueryRunner();
+    const { classId } = filter;
+    try {
+      await qr.connect();
+      await qr.startTransaction();
+      const students = await qr.manager.find(Student, {
+        where: { studentClass: { id: classId } },
+        relations: {
+          semesterReports: { scores: true, extracurricularScores: true },
+        },
+        select: {
+          id: true,
+          semesterReports: {
+            id: true,
+            scores: { id: true },
+            extracurricularScores: { id: true },
+          },
+        },
+      });
+
+      for (const student of students) {
+        for (const semesterReport of student.semesterReports || []) {
+          const scoreIds = (semesterReport.scores || []).map((s: any) => s.id);
+          const extracurricularScoreIds = (
+            semesterReport.extracurricularScores || []
+          ).map((e: any) => e.id);
+
+          if (scoreIds.length > 0) {
+            await qr.manager.delete(Score, scoreIds);
+          }
+
+          if (extracurricularScoreIds.length > 0) {
+            await qr.manager.delete(
+              ExtracurricularScore,
+              extracurricularScoreIds,
+            );
+          }
+        }
+
+        const semesterReportIds = (student.semesterReports || []).map(
+          (r: any) => r.id,
+        );
+        if (semesterReportIds.length > 0) {
+          await qr.manager.delete(SemesterReport, semesterReportIds);
+        }
+      }
+      await qr.manager.remove(Student, students);
+      await qr.commitTransaction();
+      return true;
+    } catch (error) {
+      await qr.rollbackTransaction();
+      console.log(error);
+      throw new InternalServerErrorException('internal server error');
+    } finally {
+      await qr.release();
+    }
+  }
+
   constructor(private readonly dataSource: DataSource) {
     super(Student, dataSource.createEntityManager());
   }

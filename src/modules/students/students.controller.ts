@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -27,6 +28,11 @@ export class StudentsController {
   @Post('create-batch')
   createBatch(@Body() createStudentDto: CreateStudentDto[]) {
     return this.studentsService.createBatch(createStudentDto);
+  }
+
+  @Delete('delete-all')
+  deleteStudent(@Query() filter: FilterStudentDto) {
+    return this.studentsService.deleteStudent(filter);
   }
 
   @Post('create')
