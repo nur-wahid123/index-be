@@ -28,26 +28,31 @@ jobs:
           push: true
           tags: indrafajar/index-be:latest  # Update this
 
-  deploy-vm1:
+  deploy-vm:
     runs-on: ubuntu-latest
     needs: build-and-upload-to-docker-hub
     steps:
+      - name: Start ssh-agent and add key
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.VM_SSH_KEY }}
       - name: Deploy to VM
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_KEY }}
-          HOST: ${{ secrets.VM_HOST }}  # Update with your VM IP
+          HOST: ${{ secrets.VM_HOST }}
           USER: ${{ secrets.VM_USERNAME }}
+          PORT: ${{ secrets.VM_PORT }}
         run: |
-          ssh -o StrictHostKeyChecking=no $USER@$HOST << 'EOF'
+          ssh -o StrictHostKeyChecking=no -p $PORT $USER@$HOST '
+            set -e
             docker pull indrafajar/index-be:latest
-            if [ "$(docker ps -aq -f name=index-be-run)" ]; then
+            if [ "$(docker ps -a -q -f name=index-be-run)" ]; then
               if [ "$(docker ps -q -f name=index-be-run)" ]; then
                 docker stop index-be-run
               fi
-              docker container rm index-be-run
-              docker run -d --name index-be-run --restart unless-stopped --network my-app -p 6000:3000 indrafajar/index-be:latest
-            else
-              docker run -d --name index-be-run --restart unless-stopped --network my-app -p 6000:3000 indrafajar/index-be:latest
+              docker rm index-be-run
             fi
+            docker run -d --name index-be-run --restart unless-stopped --network my-app -p 3100:3000 indrafajar/index-be:latest
+            docker cp ~/.env index-be-run:/app/
+            docker restart index-be-run
             docker image prune -f
-          EOF
+          '
