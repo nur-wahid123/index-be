@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './base-entity/base.entity';
 import { Student } from './student.entity';
 import { Score } from './score.entity';
@@ -9,6 +9,9 @@ import { ClassType } from './../enums/class-type.enum';
 
 @Entity('semester_reports')
 export class SemesterReport extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @Column({ type: 'enum', enum: Semester, nullable: false })
   semester?: Semester;
 

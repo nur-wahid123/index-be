@@ -8,8 +8,6 @@ import {
 } from 'typeorm';
 
 export class BaseEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
   /**
    * Changelog
    */

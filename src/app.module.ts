@@ -18,6 +18,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { ExtracuricularModule } from './modules/extracuricular/extracuricular.module';
 import { SchoolProfileModule } from './modules/school-profile/school-profile.module';
 import { SchoolProfileRepository } from './repositories/school-profile.repository';
+import { PresetModule } from './modules/preset/preset.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { SchoolProfileRepository } from './repositories/school-profile.repositor
     DashboardModule,
     ExtracuricularModule,
     SchoolProfileModule,
+    PresetModule,
   ],
   controllers: [AppController],
   providers: [

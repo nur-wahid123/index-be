@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './base-entity/base.entity';
 import { Student } from './student.entity';
 import { StudyGroup } from './study-group.entity';
@@ -7,6 +7,9 @@ import { ClassType } from './../enums/class-type.enum';
 
 @Entity('class')
 export class ClassEntity extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @Column({ nullable: false })
   name?: string;
 

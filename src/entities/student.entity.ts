@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './base-entity/base.entity';
 import { Expose } from 'class-transformer';
 import { Gender } from './../enums/gender.enum';
@@ -16,6 +16,9 @@ import { TypeOfBlood } from './type-of-blood.entity';
 
 @Entity('students')
 export class Student extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @Column({ nullable: false })
   name?: string;
 
