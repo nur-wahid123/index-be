@@ -8,6 +8,7 @@ import { JwtStrategy } from 'src/commons/auth/jwt.strategy';
 import HashPassword from 'src/commons/utils/hash-password.util';
 import { UserRepository } from 'src/repositories/user.repository';
 import { SchoolProfileRepository } from 'src/repositories/school-profile.repository';
+import { PresetRepository } from 'src/repositories/preset.repository';
 
 @Module({
   providers: [
@@ -16,6 +17,7 @@ import { SchoolProfileRepository } from 'src/repositories/school-profile.reposit
     UserService,
     HashPassword,
     UserRepository,
+    PresetRepository,
     SchoolProfileRepository,
   ],
   imports: [

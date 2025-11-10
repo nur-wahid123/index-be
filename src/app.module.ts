@@ -19,6 +19,7 @@ import { ExtracuricularModule } from './modules/extracuricular/extracuricular.mo
 import { SchoolProfileModule } from './modules/school-profile/school-profile.module';
 import { SchoolProfileRepository } from './repositories/school-profile.repository';
 import { PresetModule } from './modules/preset/preset.module';
+import { PresetRepository } from './repositories/preset.repository';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { PresetModule } from './modules/preset/preset.module';
     UserService,
     SchoolProfileRepository,
     HashPassword,
+    PresetRepository,
     UserRepository,
   ],
 })

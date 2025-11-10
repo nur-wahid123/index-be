@@ -17,6 +17,7 @@ import { PageDto } from 'src/commons/dto/page.dto';
 import { Roles } from 'src/enums/roles.enum';
 import { SchoolProfile } from 'src/entities/school-profile.entity';
 import { SchoolProfileRepository } from 'src/repositories/school-profile.repository';
+import { PresetRepository } from 'src/repositories/preset.repository';
 
 @Injectable()
 export class UserService {
@@ -26,23 +27,27 @@ export class UserService {
    */
   constructor(
     private readonly userRepository: UserRepository,
+    private readonly presetRepository: PresetRepository,
     private readonly schoolProfileRepository: SchoolProfileRepository,
     private readonly hashPassword: HashPassword,
   ) {}
-
+  
   async init() {
     const user = new User();
     user.username = 'superadmin';
     user.name = 'super admin';
     user.role = Roles.SUPERADMIN;
-    user.password = await this.hashPassword.generate('password12345');
+    user.password = await this.hashPassword.generate(
+      process.env.USER_PASSWORD ?? 'password12345',
+    );
     const username = await this.userRepository.findOneBy({
       username: user.username,
     });
     if (username === null) {
       await this.userRepository.createUser(user);
     }
-    this.createDefaultSchoolProfile();
+    await this.createDefaultSchoolProfile();
+    await this.presetRepository.init();
     console.log('superadmin created!!');
   }
 
@@ -62,23 +67,6 @@ export class UserService {
     }
   }
 
-  async init2() {
-    const user = new User();
-    user.username = 'superadmin';
-    user.name = 'super admin';
-    user.role = Roles.SUPERADMIN;
-    user.password = await this.hashPassword.generate(
-      process.env.USER_PASSWORD ?? 'password12345',
-    );
-    const username = await this.userRepository.findOneBy({
-      username: user.username,
-    });
-    if (username === null) {
-      await this.userRepository.createUser(user);
-    }
-    this.createDefaultSchoolProfile();
-    console.log('superadmin created!!');
-  }
 
   async isUsernameAndEmailExist(
     username: string,

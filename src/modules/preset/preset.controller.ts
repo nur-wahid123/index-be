@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -33,8 +35,18 @@ export class PresetController {
     return this.presetService.findOnePreset(param.id);
   }
 
+  @Patch('update/:id')
+  updatePreset(@Param() param: {id: number},@Payload() payload: JwtPayload, @Body() body: CreatePresetDto){
+    return this.presetService.updatePreset(Number(param.id), body, Number(payload.sub));
+  }
+  
   @Post('create')
   createPreset(@Body() body: CreatePresetDto, @Payload() payload: JwtPayload) {
     return this.presetService.createPreset(body, Number(payload.sub));
+  }
+  
+  @Delete('delete/:id')
+  deletePreset(@Param() param: {id: number}){
+    return this.presetService.deletePreset(Number(param.id));
   }
 }
