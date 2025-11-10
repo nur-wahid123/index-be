@@ -5,6 +5,7 @@ import { UserRepository } from 'src/repositories/user.repository';
 import HashPassword from 'src/commons/utils/hash-password.util';
 import { JwtModule } from '@nestjs/jwt';
 import { SchoolProfileRepository } from 'src/repositories/school-profile.repository';
+import { PresetRepository } from 'src/repositories/preset.repository';
 
 @Module({
   providers: [
@@ -12,6 +13,7 @@ import { SchoolProfileRepository } from 'src/repositories/school-profile.reposit
     UserRepository,
     HashPassword,
     SchoolProfileRepository,
+    PresetRepository
   ],
   controllers: [UserController],
   imports: [

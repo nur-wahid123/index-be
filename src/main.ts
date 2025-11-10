@@ -27,11 +27,7 @@ async function bootstrap() {
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'CONNECT', 'OPTIONS'],
     credentials: true,
   });
-  if (process.env.NODE_ENV === 'development') {
-    userService.init();
-  } else if (process.env.NODE_ENV === 'production') {
-    userService.init2();
-  }
+  await userService.init();
   await app.listen(port, () => {
     console.log('listening to port : ' + port);
     console.log('url : http://localhost:' + port);

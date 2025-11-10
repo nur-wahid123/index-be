@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './base-entity/base.entity';
 import { Education } from './education.entity';
 import { Job } from './job.entity';
@@ -10,6 +10,9 @@ import { Religion } from './religion.entity';
 
 @Entity('guardians')
 export class Guardian extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @Column({ nullable: true })
   name?: string;
 

@@ -1,9 +1,12 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './base-entity/base.entity';
 import { Expose } from 'class-transformer';
 
 @Entity('school_profile')
 export class SchoolProfile extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @Column({ nullable: true })
   @Expose({ name: 'school_name' })
   schoolName?: string;

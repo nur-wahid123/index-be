@@ -1,10 +1,13 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './base-entity/base.entity';
 import { Subject } from './subject.entity';
 import { ClassEntity } from './class.entity';
 
 @Entity('study_groups')
 export class StudyGroup extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
   @Column({ nullable: false })
   name?: string;
 
