@@ -21,7 +21,7 @@ import { Response } from 'express';
 import { UpdateStudentClassDto } from './dto/update-class.dto';
 
 @Controller('students')
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
 
@@ -66,12 +66,12 @@ export class StudentsController {
   @Get('report/:code/pdf')
   getReport(
     @Param('code') code: string,
-    @Payload() payload: JwtPayload,
+    // @Payload() payload: JwtPayload,
     @Res() res: Response,
   ) {
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=invoices.pdf');
-    return this.studentsService.getReport(code, payload.username, res);
+    return this.studentsService.getReport(code, 'payload.username', res);
   }
 
   @Get('reports/pdf')

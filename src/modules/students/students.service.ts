@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { StudentRepository } from './../../repositories/student.repository';
 import { FilterStudentDto } from './dto/filter-student.dto';
@@ -28,6 +28,9 @@ export class StudentsService {
   async getReport(studentId: string, userName: string, res: Response) {
     try {
       const data = await this.studentRepository.exportStudent(studentId);
+      if(!data){
+        throw new NotFoundException('data tidak ada')
+      }
       const schoolProfile = await this.schoolProfileRepository.getProfile();
       const pdf = new StudentExportPdfUtil(data, userName, schoolProfile);
       pdf.generate(res);

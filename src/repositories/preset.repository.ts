@@ -214,19 +214,23 @@ export class PresetRepository extends Repository<PresetEntity> {
       'preset.name',
       'presetSettings.id',
       'presetSettings.name',
+      'presetSettings.displayIndex',
     ]);
-    qb.where((qb) => {
-      qb.andWhere(
-        '(lower(preset.name) like lower(:search) OR lower(presetSettings.name) like lower(:search))',
-        { search: `%${search}%` },
-      );
+    qb.where((qB) => {
+      if(search && search !== ''){
+        qB.andWhere(
+          'lower(preset.name) like lower(:search)',
+          { search: `%${search}%` },
+        );
+      }
     });
 
     if (page && take) {
       qb.take(take).skip(skip);
     }
 
-    qb.orderBy('preset.id', Order.ASC);
+    // qb.orderBy('preset.id', Order.ASC);
+    qb.orderBy('presetSettings.displayIndex', Order.ASC)
 
     return qb.getManyAndCount();
   }
